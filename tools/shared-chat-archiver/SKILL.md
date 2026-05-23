@@ -128,14 +128,21 @@ What the artifact extractor cannot reconstruct:
 - Artifacts edited via `str_replace` on a path that was never `create_file`'d. This happens with the view-then-edit-then-bash-cp pattern (Claude views an existing project file, edits a copy in `/home/claude/`, then `bash` copies the result to outputs). The script reports these as needing manual extraction.
 - Artifacts written but never `present_files`'d. These are treated as temporary working files and skipped.
 
-### Optional companion outputs: creation logs and an artifact index
+### Side effect: artifact bodies are stripped from the chat archive
 
-For projects that want the cataloging character (where the goal is to record how Claude created things, not just have the artifacts), two further conventions go alongside `/chats/` and `/artifacts/`:
+By default, after each artifact is extracted, `extract-artifacts.py` post-processes the chat archive in place: each `create_file` tool_use's `file_text` field is replaced with a short reference pointer, so the body lives only in `/artifacts/` and not duplicated inside the chat. The original chat archive remains structurally complete — the tool_use call is still there, with all its metadata, the description, the path, and the success/failure tool_result — but the body of the artifact is no longer embedded.
 
-- **`<chat-basename>.creation.md`** — one per chat, lives next to its source archive in `/chats/`. A narrative log of the chat's chronological flow: what user prompts triggered each artifact, what was rejected mid-stream, what failed and was retried, what was discussed but never written. These are hand-written commentary, not machine-generated — the value is interpretive, not mechanical. Worth writing for any chat that produced artifacts or that contains decisions affecting the rest of the project.
-- **`/artifacts/INDEX.md`** — one file per project. Groups artifacts by lineage (version chains, branching families), shows where each branches from, and traces cross-cutting threads. Useful when the artifact folder has more than 5-6 items or when there are version chains where the lineage isn't visible from filenames alone.
+A stripped chat carries this kind of marker in the JSON instead of the full body:
 
-Neither file is produced automatically; both are conventions for the curator. They are listed here so future archiver runs in a project that already uses them know to leave them alone, and so projects setting up cataloging from scratch know the shape that has worked.
+```json
+{
+  "description": "Write the extended notes file with cardiac spine, seed, bridge, and chapter spine woven in",
+  "path": "/mnt/user-data/outputs/the-last-interface-notes-v2.md",
+  "file_text": "[artifact body extracted to artifacts/2026-05-22--claudeai__notes-v2.md]"
+}
+```
+
+The script is idempotent: a chat that has already been stripped is detected and left alone. Pass `--keep-chat-bodies` to opt out and preserve the chat as-archived. The verbatim option exists for cases where the chat archive needs to be self-contained (e.g., shared without the artifact files), but the default favors lean storage and a single source of truth per artifact.
 
 ## How to execute the workflow
 

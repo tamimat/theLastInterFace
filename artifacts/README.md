@@ -19,25 +19,13 @@ Examples:
 
 ## Pairing artifacts with their source chats
 
-Every artifact here was created in a chat under `/chats/` with the same date prefix. Open the chat file to find the surrounding context (what prompt produced it, what version came before, what discussion followed).
+Every artifact carries a YAML front matter block at the top recording its source chat, the chat-message timestamp where it was created, how many edits it went through (including failed retries), and whether it was extracted automatically or by hand. Opening any artifact tells you where it came from — no separate index needed.
 
-| Artifact | Originating chat |
-| --- | --- |
-| `2026-05-20--claudeai__pitch.md`, `-v2`, `-v3` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__manifesto.md`, `-v2` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__the-end-of-apps.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` (the manifesto's final form, with title and pizza-scene opening) |
-| `2026-05-20--claudeai__opening.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__position.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__notes.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__short.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__universe-zero.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
-| `2026-05-20--claudeai__complete.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
+For the broader picture (which chat, which discussion), open the matching file in `/chats/`.
 
 ## Promotion to /drafts/
 
-When an artifact graduates from one-shot snapshot to material being actively edited, it should be copied into `/drafts/` under a clean kebab-case filename (e.g., `the-end-of-apps.md`). The artifact stays here in `/artifacts/` as the historical record; `/drafts/` holds the working manuscript.
-
-As of 2026-05-23, `/drafts/` is empty. `the-end-of-apps.md` was previously in `/drafts/` but had not been edited since its original creation on 2026-05-20, so it was moved back to `/artifacts/`. Re-promote it whenever you actually start editing.
+When an artifact graduates from snapshot to material you are actively editing, copy it into `/drafts/` under a clean kebab-case filename. The original stays here as the historical record; `/drafts/` holds the working manuscript. `/drafts/` does not currently exist — create it the first time you actually start editing something.
 
 ## GitHub linking
 

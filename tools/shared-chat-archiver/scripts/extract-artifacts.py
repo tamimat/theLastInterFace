@@ -66,6 +66,13 @@ FENCE_CLOSE_RE = re.compile(r"^```\s*$")
 
 FRONTMATTER_DELIM = "---"
 
+# When a chat archive has been post-processed to strip artifact bodies out (so
+# the body lives only in /artifacts/, not duplicated in the chat), the
+# `file_text` field on each create_file tool_use is replaced with a short
+# reference of this form. The script detects this marker and skips the body
+# replay — the artifact file on disk is the source of truth.
+STRIPPED_BODY_MARKER = "[artifact body extracted to "
+
 
 def parse_blocks(md_text: str) -> tuple[list[dict], dict[str, bool]]:
     """Walk the markdown and return:
@@ -251,7 +258,13 @@ def replay_artifacts(ops: Iterable[dict], errors: dict[str, bool]) -> dict[str, 
             p = inp.get("path")
             ft = inp.get("file_text")
             if isinstance(p, str) and isinstance(ft, str):
-                state[p] = {"content": ft, "presented": False, "edits": 0}
+                # If the chat archive was post-processed to strip artifact bodies
+                # out, mark this path as "stripped" — the body is not in the chat
+                # anymore, but the artifact file on disk is canonical.
+                if ft.startswith(STRIPPED_BODY_MARKER):
+                    state[p] = {"content": None, "presented": False, "edits": 0, "stripped": True}
+                else:
+                    state[p] = {"content": ft, "presented": False, "edits": 0}
 
         elif name == "str_replace":
             p = inp.get("path")
@@ -326,6 +339,103 @@ def split_frontmatter(text: str) -> tuple[str | None, str]:
     return text[len(delim):end], text[body_start:]
 
 
+def strip_artifact_bodies_in_chat(
+    md_text: str,
+    extracted: dict[str, Path],
+    out_dir: Path,
+) -> tuple[str, int]:
+    """Walk the chat archive markdown and replace each `create_file` tool_use's
+    `file_text` field with a short reference pointer to the extracted artifact.
+
+    `extracted` maps the source path (as it appears in the chat, e.g.
+    `/mnt/user-data/outputs/X.md`) to the local artifact `Path` that holds
+    its body. `out_dir` is used to compute the reference (relative to the
+    chat archive's parent, so the pointer looks like `artifacts/...`).
+
+    Returns (modified_text, count_of_bodies_stripped). Idempotent: if a body
+    is already replaced with the marker, it is left alone.
+    """
+    lines = md_text.splitlines()
+    count = 0
+    i = 0
+    while i < len(lines):
+        if not TOOL_USE_HEADER_RE.match(lines[i]):
+            i += 1
+            continue
+
+        # Look ahead for the name line and the input JSON block.
+        is_create_file = False
+        name_line_seen = False
+        for j in range(i + 1, min(i + 20, len(lines))):
+            if NAME_LINE_RE.match(lines[j]):
+                name_line_seen = True
+                if "create_file" in lines[j]:
+                    is_create_file = True
+                break
+            if TOOL_USE_HEADER_RE.match(lines[j]) or TOOL_RESULT_HEADER_RE.match(lines[j]):
+                break
+        if not is_create_file:
+            i += 1
+            continue
+
+        # Find the `input:` line and the fenced JSON block.
+        json_start = None
+        json_end = None
+        for j in range(i + 1, min(i + 30, len(lines))):
+            if lines[j].strip() == "input:" and j + 1 < len(lines) and JSON_FENCE_OPEN_RE.match(lines[j + 1]):
+                json_start = j + 2
+                k = json_start
+                while k < len(lines) and not FENCE_CLOSE_RE.match(lines[k]):
+                    k += 1
+                json_end = k
+                break
+            if TOOL_USE_HEADER_RE.match(lines[j]) or TOOL_RESULT_HEADER_RE.match(lines[j]):
+                break
+        if json_start is None or json_end is None:
+            i += 1
+            continue
+
+        # Parse, modify, re-serialize.
+        body = "\n".join(lines[json_start:json_end])
+        try:
+            obj = json.loads(body)
+        except json.JSONDecodeError:
+            i = json_end + 1
+            continue
+
+        ft = obj.get("file_text")
+        if not isinstance(ft, str):
+            i = json_end + 1
+            continue
+        if ft.startswith(STRIPPED_BODY_MARKER):
+            # Already stripped; skip.
+            i = json_end + 1
+            continue
+
+        src_path = obj.get("path", "")
+        artifact_path = extracted.get(src_path)
+        if artifact_path is None:
+            # We didn't extract this artifact, so don't strip.
+            i = json_end + 1
+            continue
+
+        # Reference is relative to the chat file's parent (so from /chats/,
+        # the pointer reads "artifacts/2026-05-20--claudeai__manifesto.md").
+        try:
+            relative = artifact_path.relative_to(out_dir.parent)
+        except ValueError:
+            relative = artifact_path
+        obj["file_text"] = f"{STRIPPED_BODY_MARKER}{relative}]"
+        new_json = json.dumps(obj, indent=2, ensure_ascii=False)
+        lines[json_start:json_end] = new_json.splitlines()
+        count += 1
+        # Advance past the new block — the rewritten JSON may be shorter, so
+        # recompute end position.
+        i = json_start + len(new_json.splitlines()) + 1
+
+    return ("\n".join(lines) + ("\n" if md_text.endswith("\n") else ""), count)
+
+
 def render_frontmatter(
     source_chat_name: str,
     path: str,
@@ -360,6 +470,13 @@ def main() -> int:
     ap.add_argument("chat_archive", type=Path)
     ap.add_argument("--out", type=Path, default=None, help="Destination folder")
     ap.add_argument("--force", action="store_true", help="Overwrite existing differing files")
+    ap.add_argument(
+        "--keep-chat-bodies",
+        action="store_true",
+        help="Don't strip artifact bodies from the chat archive after extraction. "
+        "By default, each create_file's file_text is replaced with a reference "
+        "to the extracted artifact, so the body lives only in /artifacts/.",
+    )
     args = ap.parse_args()
 
     chat_path: Path = args.chat_archive.resolve()
@@ -395,9 +512,13 @@ def main() -> int:
     unpresented_with_content = [
         (p, s) for p, s in state.items() if not s.get("presented") and s.get("content") is not None
     ]
-    uncreated = [(p, s) for p, s in state.items() if s.get("content") is None]
+    uncreated = [
+        (p, s) for p, s in state.items()
+        if s.get("content") is None and not s.get("stripped")
+    ]
+    stripped = [(p, s) for p, s in state.items() if s.get("stripped")]
 
-    if not presented and not uncreated:
+    if not presented and not uncreated and not stripped:
         print("no artifacts found in this chat.", file=sys.stderr)
         return 0
 
@@ -405,6 +526,19 @@ def main() -> int:
     print(f"  presented (will be written): {len(presented)}", file=sys.stderr)
     print(f"  edited but never presented (skipped): {len(unpresented_with_content)}", file=sys.stderr)
     print(f"  edited without an initial create_file (cannot reconstruct): {len(uncreated)}", file=sys.stderr)
+    print(f"  body already stripped from chat (canonical copy lives in /artifacts/): {len(stripped)}", file=sys.stderr)
+
+    if stripped:
+        print(
+            "\n  note: these paths had their body stripped from the chat archive.",
+            file=sys.stderr,
+        )
+        for p, _ in stripped:
+            print(f"    {p}", file=sys.stderr)
+        print(
+            "  the artifact files on disk are the source of truth. nothing to write.",
+            file=sys.stderr,
+        )
 
     if uncreated:
         print(
@@ -420,11 +554,13 @@ def main() -> int:
         )
 
     any_differs = False
+    extracted_paths: dict[str, Path] = {}  # source path -> local artifact path
     for p, s in presented:
         slug = slug_from_path(p)
         ext = ext_from_path(p)
         out_name = f"{date_prefix}--{source}__{slug}{ext}"
         out_path = out_dir / out_name
+        extracted_paths[p] = out_path
         new_body = s["content"]
         new_frontmatter = render_frontmatter(
             source_chat_name=chat_path.name,
@@ -469,6 +605,20 @@ def main() -> int:
         else:
             out_path.write_text(new_content, encoding="utf-8")
             print(f"  wrote new: {out_name}", file=sys.stderr)
+
+    # Post-process: strip artifact bodies out of the chat archive so they live
+    # only in /artifacts/. Idempotent: already-stripped bodies are left alone.
+    if not args.keep_chat_bodies and extracted_paths:
+        modified_text, count = strip_artifact_bodies_in_chat(
+            md_text, extracted_paths, out_dir
+        )
+        if count > 0:
+            chat_path.write_text(modified_text, encoding="utf-8")
+            print(
+                f"\nstripped {count} artifact body(ies) from {chat_path.name}; "
+                f"bodies now live only in {out_dir.name}/",
+                file=sys.stderr,
+            )
 
     return 1 if any_differs else 0
 
