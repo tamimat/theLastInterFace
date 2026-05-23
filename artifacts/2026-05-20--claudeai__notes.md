@@ -1,3 +1,15 @@
+---
+source_chat: 2026-05-20--claudeai__intent-based-hci-model.md
+source_path: /mnt/user-data/outputs/the-last-interface-notes.md
+created_in_chat: 2026-05-21T12:33:17+02:00
+tool_sequence:
+  create_file: 1
+  str_replace_succeeded: 0
+  str_replace_failed: 0
+  present_files: 1
+extraction_method: automatic
+---
+
 # The Last Interface — Working Notes
 
 *Just the settled conceptual decisions. Not prose. Not chapters. The choices the writing must honor.*

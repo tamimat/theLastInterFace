@@ -1,3 +1,15 @@
+---
+source_chat: 2026-05-22--claudeai__heartbeat-as-biometric-identifier.md
+source_path: /mnt/user-data/outputs/the-last-interface-notes-v2.md
+created_in_chat: 2026-05-22T15:59:37+02:00
+tool_sequence:
+  create_file: 1
+  str_replace_succeeded: 3
+  str_replace_failed: 1
+  present_files: 3
+extraction_method: automatic
+---
+
 # The Last Interface — Working Notes
 
 *Just the settled conceptual decisions. Not prose. Not chapters. The choices the writing must honor.*

@@ -1,3 +1,15 @@
+---
+source_chat: 2026-05-20--claudeai__intent-based-hci-model.md
+source_path: /mnt/user-data/outputs/the-last-interface-position.md
+created_in_chat: 2026-05-20T22:39:41+02:00
+tool_sequence:
+  create_file: 1
+  str_replace_succeeded: 0
+  str_replace_failed: 0
+  present_files: 1
+extraction_method: automatic
+---
+
 # Position
 
 ## Where this manifesto stands in the tradition

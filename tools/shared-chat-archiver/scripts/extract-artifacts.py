@@ -6,13 +6,19 @@ and writes each artifact (file Claude created via `create_file`, optionally
 edited via `str_replace`, and eventually shown to the user via `present_files`)
 as its own file in an output folder.
 
+Each artifact is written with a YAML front matter block describing how it
+was produced — source chat, the chat-message timestamp where it was created,
+counts of how many create_file/str_replace/present_files calls touched it,
+including failed str_replace attempts that the chat retried. The front matter
+makes each artifact self-describing as a record of process.
+
 Usage:
   extract-artifacts.py <chat-archive.md> [--out <dir>] [--force]
 
   <chat-archive.md>   The chat .md file to parse.
   --out <dir>         Destination folder. Default: ../artifacts/ relative to
                       the chat file's parent.
-  --force             Overwrite existing artifact files whose content differs.
+  --force             Overwrite existing artifact files whose body differs.
                       Without --force, the script reports differing files but
                       does not modify them.
 
@@ -22,11 +28,19 @@ Artifact filenames use YYYY-MM-DD--source__slug.ext, where:
   - slug is the artifact's path basename (with a leading "the-last-interface-"
     stripped, since the date+folder already establish the project)
 
+Idempotency rules:
+  - Front matter is compared separately from body. If the body matches but
+    the front matter has drifted (e.g., script schema updated), the front
+    matter is refreshed in place.
+  - Existing artifacts whose front matter says `extraction_method: manual`
+    are never touched — manual extractions (for chats with view-then-bash-cp
+    patterns the script can't auto-reconstruct) are preserved verbatim.
+
 Exit codes:
-  0  Success (everything matched or wrote cleanly).
-  1  At least one artifact differs from an existing file and --force was not
-     passed. The new content is left in the output folder under a *.new.md
-     sidecar for inspection.
+  0  Success (everything matched, refreshed, or wrote cleanly).
+  1  At least one artifact's body differs from an existing file and --force
+     was not passed. The new content is left in the output folder under a
+     *.new sidecar for inspection.
   2  Usage error (bad arguments, missing input file).
 """
 
@@ -42,6 +56,7 @@ from typing import Iterable
 CHAT_FILENAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})--([a-zA-Z]+)__.+\.md$")
 TOOL_USE_HEADER_RE = re.compile(r"^\[\d+\]\s+tool_use\s*$")
 TOOL_RESULT_HEADER_RE = re.compile(r"^\[\d+\]\s+tool_result\s*$")
+MESSAGE_HEADER_RE = re.compile(r"^## (?:Claude|User) — (.+?)\s*$")
 NAME_LINE_RE = re.compile(r"^- name:\s*`?([^`\s]+)`?\s*$")
 TOOL_USE_ID_LINE_RE = re.compile(r"^- id:\s*`?([^`\s]+)`?\s*$")
 TOOL_USE_ID_REF_LINE_RE = re.compile(r"^- tool_use_id:\s*`?([^`\s]+)`?\s*$")
@@ -49,18 +64,32 @@ IS_ERROR_LINE_RE = re.compile(r"^- is_error:\s*(true|false)\s*$")
 JSON_FENCE_OPEN_RE = re.compile(r"^```json\s*$")
 FENCE_CLOSE_RE = re.compile(r"^```\s*$")
 
+FRONTMATTER_DELIM = "---"
+
 
 def parse_blocks(md_text: str) -> tuple[list[dict], dict[str, bool]]:
     """Walk the markdown and return:
-      - ordered list of tool_use blocks: each {id, name, input, line}
+      - ordered list of tool_use blocks: each {id, name, input, line, message_ts}
       - map of tool_use_id -> is_error (from paired tool_result blocks)
+
+    `message_ts` is the ISO 8601 timestamp from the enclosing "## Claude — <ts>"
+    or "## User — <ts>" header — useful for attributing artifact creation to a
+    moment in the chat.
     """
     lines = md_text.splitlines()
     ops: list[dict] = []
     errors: dict[str, bool] = {}
+    current_ts: str | None = None
 
     i = 0
     while i < len(lines):
+        # Track most-recent message header timestamp.
+        mh = MESSAGE_HEADER_RE.match(lines[i])
+        if mh:
+            current_ts = mh.group(1).strip()
+            i += 1
+            continue
+
         if TOOL_USE_HEADER_RE.match(lines[i]):
             header_line = i + 1
             tu_id: str | None = None
@@ -102,7 +131,13 @@ def parse_blocks(md_text: str) -> tuple[list[dict], dict[str, bool]]:
                     j = k + 1
                     break
                 j += 1
-            ops.append({"id": tu_id, "name": name, "input": input_obj, "line": header_line})
+            ops.append({
+                "id": tu_id,
+                "name": name,
+                "input": input_obj,
+                "line": header_line,
+                "message_ts": current_ts,
+            })
             i = max(j, i + 1)
             continue
 
@@ -135,6 +170,60 @@ def parse_blocks(md_text: str) -> tuple[list[dict], dict[str, bool]]:
         i += 1
 
     return ops, errors
+
+
+def collect_per_path_stats(ops: Iterable[dict], errors: dict[str, bool]) -> dict[str, dict]:
+    """Count how each path was touched: create_file, str_replace (succeeded
+    and failed), present_files. Captures the first create_file's message_ts
+    as `created_in_chat`.
+
+    Counts both successful and failed operations so the front matter can
+    reflect the full process, including dead ends.
+    """
+    stats: dict[str, dict] = {}
+
+    def get(p: str) -> dict:
+        if p not in stats:
+            stats[p] = {
+                "create_file": 0,
+                "str_replace_succeeded": 0,
+                "str_replace_failed": 0,
+                "present_files": 0,
+                "created_in_chat": None,
+            }
+        return stats[p]
+
+    for op in ops:
+        name = op.get("name")
+        inp = op.get("input")
+        tu_id = op.get("id")
+        if not isinstance(inp, dict):
+            continue
+        failed = tu_id is not None and errors.get(tu_id) is True
+
+        if name == "create_file":
+            p = inp.get("path")
+            if isinstance(p, str):
+                s = get(p)
+                if not failed:
+                    s["create_file"] += 1
+                    if s["created_in_chat"] is None and op.get("message_ts"):
+                        s["created_in_chat"] = op["message_ts"]
+        elif name == "str_replace":
+            p = inp.get("path")
+            if isinstance(p, str):
+                s = get(p)
+                if failed:
+                    s["str_replace_failed"] += 1
+                else:
+                    s["str_replace_succeeded"] += 1
+        elif name == "present_files":
+            paths = inp.get("filepaths") or []
+            for p in paths:
+                if isinstance(p, str):
+                    get(p)["present_files"] += 1
+
+    return stats
 
 
 def replay_artifacts(ops: Iterable[dict], errors: dict[str, bool]) -> dict[str, dict]:
@@ -217,6 +306,55 @@ def ext_from_path(path: str) -> str:
     return Path(path).suffix or ".md"
 
 
+def split_frontmatter(text: str) -> tuple[str | None, str]:
+    """Return (frontmatter_text, body). frontmatter_text is the YAML between
+    the leading `---` lines, without the delimiters. None if no front matter.
+
+    Consumes one optional blank line between the closing `---` and the body,
+    so that the body returned is what comes after the conventional
+    "front matter + blank line" preamble."""
+    delim = FRONTMATTER_DELIM + "\n"
+    if not text.startswith(delim):
+        return None, text
+    end = text.find("\n" + FRONTMATTER_DELIM + "\n", len(delim))
+    if end == -1:
+        return None, text
+    body_start = end + len("\n" + FRONTMATTER_DELIM + "\n")
+    # Consume one optional blank line after the closing delim.
+    if text[body_start:body_start + 1] == "\n":
+        body_start += 1
+    return text[len(delim):end], text[body_start:]
+
+
+def render_frontmatter(
+    source_chat_name: str,
+    path: str,
+    stats: dict,
+    extraction_method: str = "automatic",
+) -> str:
+    """Render a small YAML front matter block describing how this artifact
+    was produced. Deterministic output for a given chat — re-running the
+    script on the same chat produces byte-identical front matter, so the
+    artifact stays idempotent across runs."""
+    lines = [
+        FRONTMATTER_DELIM,
+        f"source_chat: {source_chat_name}",
+        f"source_path: {path}",
+    ]
+    created = stats.get("created_in_chat")
+    if created:
+        lines.append(f"created_in_chat: {created}")
+    lines.append("tool_sequence:")
+    lines.append(f"  create_file: {stats.get('create_file', 0)}")
+    lines.append(f"  str_replace_succeeded: {stats.get('str_replace_succeeded', 0)}")
+    lines.append(f"  str_replace_failed: {stats.get('str_replace_failed', 0)}")
+    lines.append(f"  present_files: {stats.get('present_files', 0)}")
+    lines.append(f"extraction_method: {extraction_method}")
+    lines.append(FRONTMATTER_DELIM)
+    lines.append("")  # blank line after front matter
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Extract artifacts from a chat archive.")
     ap.add_argument("chat_archive", type=Path)
@@ -251,6 +389,7 @@ def main() -> int:
     print(f"parsed {len(ops)} tool_use blocks from {chat_path.name}", file=sys.stderr)
 
     state = replay_artifacts(ops, errors)
+    per_path_stats = collect_per_path_stats(ops, errors)
 
     presented = [(p, s) for p, s in state.items() if s.get("presented") and s.get("content") is not None]
     unpresented_with_content = [
@@ -286,16 +425,38 @@ def main() -> int:
         ext = ext_from_path(p)
         out_name = f"{date_prefix}--{source}__{slug}{ext}"
         out_path = out_dir / out_name
-        new_content = s["content"]
+        new_body = s["content"]
+        new_frontmatter = render_frontmatter(
+            source_chat_name=chat_path.name,
+            path=p,
+            stats=per_path_stats.get(p, {}),
+            extraction_method="automatic",
+        )
+        new_content = new_frontmatter + new_body
 
         if out_path.exists():
             existing = out_path.read_text(encoding="utf-8")
-            if existing == new_content:
-                print(f"  matches existing: {out_name}", file=sys.stderr)
+            existing_fm, existing_body = split_frontmatter(existing)
+
+            # If the existing file was hand-extracted (extraction_method: manual),
+            # do not touch it — preserve the manual version verbatim.
+            if existing_fm and "extraction_method: manual" in existing_fm:
+                print(f"  skipped (manual extraction): {out_name}", file=sys.stderr)
                 continue
+
+            if existing_body == new_body:
+                if existing == new_content:
+                    print(f"  matches existing: {out_name}", file=sys.stderr)
+                else:
+                    # Body identical, front matter changed (likely a schema
+                    # update). Refresh front matter in place — body is preserved.
+                    out_path.write_text(new_content, encoding="utf-8")
+                    print(f"  refreshed front matter: {out_name}", file=sys.stderr)
+                continue
+
             if args.force:
                 out_path.write_text(new_content, encoding="utf-8")
-                print(f"  overwrote (differed): {out_name}", file=sys.stderr)
+                print(f"  overwrote (body differed): {out_name}", file=sys.stderr)
             else:
                 sidecar = out_path.with_name(out_path.name + ".new")
                 sidecar.write_text(new_content, encoding="utf-8")

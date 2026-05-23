@@ -1,3 +1,23 @@
+---
+source_chat: 2026-05-22--claudeai__sensing-meaning-making-and-storytelling-as-human-connection.md
+source_path: /home/claude/the-last-interface-notes.md
+created_in_chat: 2026-05-23T06:25:58+02:00
+tool_sequence:
+  create_file: 0
+  str_replace_succeeded: 1
+  str_replace_failed: 0
+  present_files: 1
+extraction_method: manual
+seed_from: artifacts/2026-05-20--claudeai__notes.md
+note: |
+  The sensing-meaning chat used view -> bash cp /mnt/project to /home/claude
+  -> str_replace -> bash cp to /mnt/user-data/outputs -> present_files.
+  extract-artifacts.py cannot auto-reconstruct this pattern (no create_file
+  to anchor against), so this artifact was extracted by hand on 2026-05-23:
+  the v1 notes file (the seed_from path) was used as initial content, and
+  the single str_replace from chat line 1210 was applied.
+---
+
 # The Last Interface — Working Notes
 
 *Just the settled conceptual decisions. Not prose. Not chapters. The choices the writing must honor.*

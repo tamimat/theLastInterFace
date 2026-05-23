@@ -101,14 +101,41 @@ ISO 8601 timestamps with the user's local offset (e.g. `2026-05-20T07:00:54+02:0
 
 ### Secondary output: extracted artifacts
 
-After the chat archive is in place, `scripts/extract-artifacts.py` parses it and writes one file per artifact Claude produced during the conversation. An "artifact" here is any path that Claude (a) created via `create_file`, (b) optionally edited via one or more `str_replace` operations, and (c) eventually showed the user via `present_files`. Failed tool calls (those whose paired `tool_result` has `is_error: true`) are silently skipped.
+After the chat archive is in place, `scripts/extract-artifacts.py` parses it and writes one file per artifact Claude produced during the conversation. An "artifact" here is any path that Claude (a) created via `create_file`, (b) optionally edited via one or more `str_replace` operations, and (c) eventually showed the user via `present_files`. Failed tool calls (those whose paired `tool_result` has `is_error: true`) are silently skipped during replay, but counted in the artifact's front matter so the dead end stays visible.
 
 Each artifact gets a date-prefixed filename: `YYYY-MM-DD--claudeai__<slug>.<ext>`, where date and source come from the chat archive's filename and `<slug>` is the artifact path's basename. The destination defaults to `<repo>/artifacts/` (sibling of `<repo>/chats/`).
+
+Each artifact also gets a YAML front matter block at the top describing how it was produced:
+
+```yaml
+---
+source_chat: 2026-05-22--claudeai__heartbeat-as-biometric-identifier.md
+source_path: /mnt/user-data/outputs/the-last-interface-notes-v2.md
+created_in_chat: 2026-05-22T15:59:37+02:00
+tool_sequence:
+  create_file: 1
+  str_replace_succeeded: 3
+  str_replace_failed: 1
+  present_files: 3
+extraction_method: automatic
+---
+```
+
+The front matter is generated deterministically — running the script again on the same chat produces byte-identical front matter, and the script's idempotency logic compares bodies (not front matter) when checking whether a file has changed. Manual extractions (where the script could not reconstruct an artifact) are written with `extraction_method: manual` and a `seed_from:` field, and the script never overwrites them.
 
 What the artifact extractor cannot reconstruct:
 
 - Artifacts edited via `str_replace` on a path that was never `create_file`'d. This happens with the view-then-edit-then-bash-cp pattern (Claude views an existing project file, edits a copy in `/home/claude/`, then `bash` copies the result to outputs). The script reports these as needing manual extraction.
 - Artifacts written but never `present_files`'d. These are treated as temporary working files and skipped.
+
+### Optional companion outputs: creation logs and an artifact index
+
+For projects that want the cataloging character (where the goal is to record how Claude created things, not just have the artifacts), two further conventions go alongside `/chats/` and `/artifacts/`:
+
+- **`<chat-basename>.creation.md`** — one per chat, lives next to its source archive in `/chats/`. A narrative log of the chat's chronological flow: what user prompts triggered each artifact, what was rejected mid-stream, what failed and was retried, what was discussed but never written. These are hand-written commentary, not machine-generated — the value is interpretive, not mechanical. Worth writing for any chat that produced artifacts or that contains decisions affecting the rest of the project.
+- **`/artifacts/INDEX.md`** — one file per project. Groups artifacts by lineage (version chains, branching families), shows where each branches from, and traces cross-cutting threads. Useful when the artifact folder has more than 5-6 items or when there are version chains where the lineage isn't visible from filenames alone.
+
+Neither file is produced automatically; both are conventions for the curator. They are listed here so future archiver runs in a project that already uses them know to leave them alone, and so projects setting up cataloging from scratch know the shape that has worked.
 
 ## How to execute the workflow
 
