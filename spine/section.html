@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Section — The Last Interface</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <a href="index.html" class="back-link">← back to spine</a>
+
+  <header class="spine-header">
+    <h1 id="section-heading">Section</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="label">Spine</div>
+  <p class="section-spine" id="spine"></p>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton" id="skeleton"></div>
+
+  <div class="actions">
+    <button class="copy" id="copy-section">Copy this section (spine + skeleton)</button>
+  </div>
+
+  <div class="nav" id="nav"></div>
+
+</div>
+
+<script src="content.js"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+
+  // Parse ?n=N
+  const params = new URLSearchParams(window.location.search);
+  const n = parseInt(params.get('n'), 10);
+  const sec = S.sections.find(s => s.n === n);
+
+  if (!sec) {
+    document.querySelector('.wrap').innerHTML =
+      '<a href="index.html" class="back-link">← back to spine</a>'
+      + '<p>Section not found.</p>';
+    return;
+  }
+
+  // Header
+  document.title = 'Section ' + sec.n + ' — ' + S.meta.title;
+  document.getElementById('section-heading').textContent =
+    'Section ' + sec.n + '. ' + sec.title;
+
+  const metaEl = document.getElementById('meta');
+  const statusClass = S.meta.status === 'locked' ? 'status-locked' : 'status-working';
+  const lockBit = S.meta.status === 'locked' && S.meta.lockedDate
+    ? ' — locked ' + S.meta.lockedDate
+    : '';
+  metaEl.innerHTML = 'v' + S.meta.version
+    + ' <span class="' + statusClass + '">' + S.meta.status + '</span>'
+    + lockBit;
+
+  // Body — render spine as paragraphs (split on blank lines)
+  const spineEl = document.getElementById('spine');
+  spineEl.innerHTML = '';
+  sec.spine.split(/\n\n+/).forEach(para => {
+    const p = document.createElement('p');
+    p.textContent = para;
+    spineEl.appendChild(p);
+  });
+
+  // Skeleton — also as paragraphs
+  const skelEl = document.getElementById('skeleton');
+  skelEl.innerHTML = '';
+  sec.skeleton.split(/\n\n+/).forEach(para => {
+    const p = document.createElement('p');
+    p.textContent = para;
+    skelEl.appendChild(p);
+  });
+
+  // Prev/next nav
+  const navEl = document.getElementById('nav');
+  const prev = S.sections.find(s => s.n === sec.n - 1);
+  const next = S.sections.find(s => s.n === sec.n + 1);
+  navEl.innerHTML =
+    (prev ? '<a href="section.html?n=' + prev.n + '">← ' + prev.n + '. ' + prev.title + '</a>' : '<span></span>')
+    + (next ? '<a href="section.html?n=' + next.n + '">' + next.n + '. ' + next.title + ' →</a>' : '<span></span>');
+
+  // Copy: thesis (for orientation) + this section's spine + skeleton
+  function header() {
+    const dateStr = S.meta.status === 'locked' && S.meta.lockedDate
+      ? S.meta.lockedDate
+      : new Date().toISOString().slice(0, 10);
+    return 'SPINE — ' + S.meta.title
+      + ' — v' + S.meta.version
+      + ' (' + S.meta.status + ')'
+      + ' — ' + dateStr
+      + ' — focus: section ' + sec.n;
+  }
+
+  function buildSectionContext() {
+    const lines = [header(), ''];
+    lines.push('THESIS');
+    lines.push(S.thesis);
+    lines.push('');
+    lines.push('SECTION ' + sec.n + ': ' + sec.title);
+    lines.push('');
+    lines.push('SPINE');
+    lines.push(sec.spine);
+    lines.push('');
+    lines.push('SKELETON');
+    lines.push(sec.skeleton);
+    return lines.join('\n');
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1400);
+    }).catch(err => {
+      alert('Copy failed: ' + err);
+    });
+  }
+
+  document.getElementById('copy-section').addEventListener('click', function() {
+    copyText(buildSectionContext(), this);
+  });
+})();
+</script>
+</body>
+</html>
