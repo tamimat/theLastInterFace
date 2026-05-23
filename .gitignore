@@ -1,0 +1,10 @@
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# Editor scratch
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
