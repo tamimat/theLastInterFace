@@ -18,4 +18,4 @@ The contents of `/source/` were then either moved into one of those folders or a
 
 **`chat-2026-05-20.md`** — A 28 KB manual paste of the 2026-05-20 claude.ai chat. Superseded by `chats/2026-05-20--claudeai__intent-based-hci-model.md`, which is the full archiver-produced transcript of the same conversation.
 
-**`the-end-of-apps.md`** — Byte-identical to `/drafts/the-end-of-apps.md`. The `/drafts/` copy is the canonical home (per the project folder structure: `/drafts/` holds manuscript drafts being actively edited). This is the duplicate.
+(A third file, `the-end-of-apps.md`, was originally archived here as a duplicate of `/drafts/the-end-of-apps.md`. On 2026-05-23 the canonical copy was moved into `/artifacts/2026-05-20--claudeai__the-end-of-apps.md` and the archived duplicate was deleted — its content remains preserved verbatim inside `chats/2026-05-20--claudeai__intent-based-hci-model.md`.)

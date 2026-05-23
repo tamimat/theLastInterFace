@@ -25,6 +25,7 @@ Every artifact here was created in a chat under `/chats/` with the same date pre
 | --- | --- |
 | `2026-05-20--claudeai__pitch.md`, `-v2`, `-v3` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
 | `2026-05-20--claudeai__manifesto.md`, `-v2` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
+| `2026-05-20--claudeai__the-end-of-apps.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` (the manifesto's final form, with title and pizza-scene opening) |
 | `2026-05-20--claudeai__opening.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
 | `2026-05-20--claudeai__position.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
 | `2026-05-20--claudeai__notes.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
@@ -32,10 +33,11 @@ Every artifact here was created in a chat under `/chats/` with the same date pre
 | `2026-05-20--claudeai__universe-zero.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
 | `2026-05-20--claudeai__complete.md` | `chats/2026-05-20--claudeai__intent-based-hci-model.md` |
 
-## What's not here
+## Promotion to /drafts/
 
-- **Manuscript drafts** — promoted artifacts that are being actively edited live in `/drafts/`. `the-end-of-apps.md` was promoted there from this folder on 2026-05-20.
-- **Earlier-format copies** — when an artifact was originally pasted into `/source/` with an inconsistent filename, the original copy was moved to `/archive/source/` (it was byte-identical to the artifact here, but kept for provenance).
+When an artifact graduates from one-shot snapshot to material being actively edited, it should be copied into `/drafts/` under a clean kebab-case filename (e.g., `the-end-of-apps.md`). The artifact stays here in `/artifacts/` as the historical record; `/drafts/` holds the working manuscript.
+
+As of 2026-05-23, `/drafts/` is empty. `the-end-of-apps.md` was previously in `/drafts/` but had not been edited since its original creation on 2026-05-20, so it was moved back to `/artifacts/`. Re-promote it whenever you actually start editing.
 
 ## GitHub linking
 
