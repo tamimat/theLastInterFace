@@ -1,11 +1,16 @@
 ---
 name: shared-chat-archiver
-description: Archive a publicly-shared claude.ai conversation as a verbatim markdown transcript with full metadata — timestamps in ISO 8601, message UUIDs, threading via parent_message_uuid, input mode (text/voice/retry), stop reasons, all tool calls with inputs and results, attachments with extracted content, and citations. Use this skill whenever the user pastes or mentions a `https://claude.ai/share/` URL and wants it captured, saved, archived, exported, preserved, or downloaded — including phrasings like "archive this share link", "save this conversation URL", "extract this chat", "capture this thread into the repo", "I want a record of this conversation". Also use when the user mentions wanting an archive, log, or persistent file from a shared AI conversation even if they don't explicitly say "archive". Do NOT use for `https://claude.ai/chat/...` URLs — those require authentication and aren't shareable.
+description: Archive a publicly-shared claude.ai conversation as a verbatim markdown transcript with full metadata (timestamps in ISO 8601, message UUIDs, threading via parent_message_uuid, input mode, stop reasons, all tool calls with inputs and results, attachments with extracted content, citations), AND extract each artifact Claude wrote during the chat (via create_file / str_replace + present_files) as its own standalone file. Use this skill whenever the user pastes or mentions a `https://claude.ai/share/` URL and wants it captured, saved, archived, exported, preserved, or downloaded — including phrasings like "archive this share link", "save this conversation URL", "extract this chat", "capture this thread into the repo", "I want a record of this conversation". Also use when the user mentions wanting an archive, log, or persistent file from a shared AI conversation even if they don't explicitly say "archive". Do NOT use for `https://claude.ai/chat/...` URLs — those require authentication and aren't shareable.
 ---
 
 # claude.ai chat archiver
 
-This skill turns a public claude.ai share URL into a single comprehensive markdown file the user can drop into a repo or feed to an LLM later. The reason it exists: claude.ai's share renderer hides almost all metadata. Timestamps only appear on hover (rendered via a Radix UI tooltip that lazy-mounts the time string when you mouse over it), per-message UUIDs aren't shown at all, and tool calls Claude made during the chat are flattened into prose. The data is in the page, but it lives in React component props rather than the rendered DOM. The bundled `scripts/extractor.js` walks the React fiber tree to pull everything out.
+This skill turns a public claude.ai share URL into two kinds of output:
+
+1. A single comprehensive markdown file containing the full conversation transcript with metadata (the chat archive).
+2. One standalone file per artifact Claude produced inside the chat — anything Claude wrote via `create_file`, edited via `str_replace`, and showed the user via `present_files`.
+
+The reason it exists: claude.ai's share renderer hides almost all metadata. Timestamps only appear on hover (rendered via a Radix UI tooltip that lazy-mounts the time string when you mouse over it), per-message UUIDs aren't shown at all, and tool calls Claude made during the chat are flattened into prose. The data is in the page, but it lives in React component props rather than the rendered DOM. The bundled `scripts/extractor.js` walks the React fiber tree to pull everything out into a markdown file; `scripts/extract-artifacts.py` then parses that file to recover every artifact Claude wrote during the chat.
 
 ## When to invoke this skill
 
@@ -21,6 +26,8 @@ Trigger on any user request that combines (a) a `https://claude.ai/share/<uuid>`
 If the URL is `claude.ai/chat/...` instead of `claude.ai/share/...`, the page requires authentication and the share data isn't exposed. Tell the user to click the Share button on the conversation in claude.ai, make it public, and send the resulting `/share/` URL instead.
 
 ## What this skill produces
+
+### Primary output: the chat archive
 
 A single `.md` file with this shape:
 
@@ -92,6 +99,17 @@ content:
 
 ISO 8601 timestamps with the user's local offset (e.g. `2026-05-20T07:00:54+02:00`), plain-text date dividers between calendar days, no emojis. Filename convention: `YYYY-MM-DD--claudeai__short-slug.md` where the date is the first message's local-time day.
 
+### Secondary output: extracted artifacts
+
+After the chat archive is in place, `scripts/extract-artifacts.py` parses it and writes one file per artifact Claude produced during the conversation. An "artifact" here is any path that Claude (a) created via `create_file`, (b) optionally edited via one or more `str_replace` operations, and (c) eventually showed the user via `present_files`. Failed tool calls (those whose paired `tool_result` has `is_error: true`) are silently skipped.
+
+Each artifact gets a date-prefixed filename: `YYYY-MM-DD--claudeai__<slug>.<ext>`, where date and source come from the chat archive's filename and `<slug>` is the artifact path's basename. The destination defaults to `<repo>/artifacts/` (sibling of `<repo>/chats/`).
+
+What the artifact extractor cannot reconstruct:
+
+- Artifacts edited via `str_replace` on a path that was never `create_file`'d. This happens with the view-then-edit-then-bash-cp pattern (Claude views an existing project file, edits a copy in `/home/claude/`, then `bash` copies the result to outputs). The script reports these as needing manual extraction.
+- Artifacts written but never `present_files`'d. These are treated as temporary working files and skipped.
+
 ## How to execute the workflow
 
 ### Step 1 — Verify the URL
@@ -127,16 +145,37 @@ The download isn't directly visible from the Cowork sandbox. Either:
 - Tell the user to run `mv ~/Downloads/{filename}.md {destination}/` themselves; or
 - If `~/Downloads` is mounted as a connected folder in the current Cowork session, move the file using bash.
 
-Default destination is wherever the user's archive folder is for chat transcripts. If they haven't specified one and have a project repo open, suggest `<repo>/archive/chats/` and let them confirm.
+Default destination is wherever the user's archive folder is for chat transcripts. If they haven't specified one and have a project repo open, suggest `<repo>/chats/` (matching the secondary output destination of `<repo>/artifacts/`) and let them confirm.
 
-### Step 6 — Verify
+### Step 6 — Extract artifacts
 
-After placement, confirm the file exists and report what was captured:
+After the chat archive is placed, run `scripts/extract-artifacts.py` against it:
+
+```
+python3 scripts/extract-artifacts.py <path-to-chat-archive.md>
+```
+
+By default, artifacts are written to `../artifacts/` relative to the chat archive's parent (i.e., the sibling folder of `<repo>/chats/`). Pass `--out <dir>` to override.
+
+For each presented artifact, the script either:
+- writes a new file (reported as "wrote new: …"),
+- recognizes a byte-identical match (reported as "matches existing: …"),
+- or, if a file already exists at the target name with different content, writes the new version to a `.new` sidecar and reports "DIFFERS from existing." Pass `--force` to overwrite.
+
+If the chat had no `create_file` / `str_replace` / `present_files` activity, the script reports "no artifacts found" and exits cleanly. This is the expected outcome for chats that produced no deliverables.
+
+Surface any "edited without an initial create_file" report to the user — those represent artifacts the script cannot reconstruct (view-then-edit-then-bash-cp pattern) and need manual extraction.
+
+### Step 7 — Verify
+
+After placement, confirm the chat file exists and report what was captured:
 
 - Size (bytes / lines)
 - Message count (user / assistant breakdown)
 - Conversation span (start → end ISO 8601 local)
 - Notable counts: tool calls, attachments, edits, voice-input messages, user_canceled responses
+
+Also report what the artifact extractor produced in Step 6 (how many artifacts were new vs. matched existing, any that needed manual extraction).
 
 ## Important context for the extractor
 
