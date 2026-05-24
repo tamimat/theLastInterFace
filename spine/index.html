@@ -256,11 +256,22 @@
     }, 1600);
   }
 
+  // Filename suffix carries the git build number so each download lands as a
+  // distinct file (no auto-replace in the Downloads folder). Falls back to a
+  // plain name if SPINE_BUILD isn't loaded — happens only on a clone that
+  // hasn't run tools/gen-build-js.sh yet.
+  function downloadName(base) {
+    const b = window.SPINE_BUILD;
+    return (b && typeof b.count === 'number')
+      ? base + '-g' + b.count + '.md'
+      : base + '.md';
+  }
+
   document.getElementById('download-read').addEventListener('click', function() {
-    downloadMd('read.md', buildReadMarkdown(), this);
+    downloadMd(downloadName('read'), buildReadMarkdown(), this);
   });
   document.getElementById('download-llm').addEventListener('click', function() {
-    downloadMd('llm.md', buildLlmMarkdown(), this);
+    downloadMd(downloadName('llm'), buildLlmMarkdown(), this);
   });
 })();
 </script>
