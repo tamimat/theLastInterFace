@@ -25,6 +25,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so we can compute the commit count
+      - name: Write spine/build.js with commit count and sha
+        run: |
+          # count is 0-indexed to match the [N] prefix the commit-msg hook writes.
+          N=$(($(git rev-list --count HEAD) - 1))
+          SHA=$(git rev-parse HEAD)
+          cat > spine/build.js <<EOF
+          // Generated at deploy time by .github/workflows/pages.yml.
+          // Locally this file is absent and the page falls back to meta.lastUpdated.
+          window.SPINE_BUILD = { count: $N, sha: "$SHA" };
+          EOF
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

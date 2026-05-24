@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile1">
+<link rel="stylesheet" href="styles.css?v=mobile2">
 </head>
 <body>
 <div class="wrap">
@@ -40,7 +40,8 @@
 
 </div>
 
-<script src="content.js"></script>
+<script src="build.js?v=mobile2"></script>
+<script src="content.js?v=mobile2"></script>
 <script>
 (function() {
   const S = window.SPINE;
@@ -51,7 +52,7 @@
   document.getElementById('atlas-heading').textContent = 'Atlas';
 
   const metaEl = document.getElementById('meta');
-  metaEl.innerHTML = S.lastUpdatedLinkHtml();
+  metaEl.innerHTML = (S.buildLabelHtml || S.lastUpdatedLinkHtml)();
 
   // Vertebra
   document.getElementById('vertebra').textContent = A.vertebra;

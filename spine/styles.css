@@ -309,13 +309,10 @@ button.copy.copied {
     padding: 32px 18px 80px;
   }
 
+  /* Header stays on one line (title + short `git #N` label) — the label is
+     compact enough that stacking isn't needed. */
   header.spine-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-  .meta {
-    align-items: flex-start;
+    gap: 12px;
   }
 
   h1 {

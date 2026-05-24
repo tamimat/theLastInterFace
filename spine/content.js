@@ -69,6 +69,39 @@ The closing line — "the book is about the interface that finally remembers it"
 Cross-link: chapter 1 (The Sensor and the Universe) picks the grandmother back up as the carrying image and unpacks the chain into the central proposition. Chapter 17 (The Choice) is where the loop closes — the reader who finished the book returns to the grandmother knowing what stands between her and the interface that remembers her. The tailbone seeds; chapter 1 grows; chapter 17 completes.`
   },
 
+  // Membrane — the working layer between author and AI. Selectively permeable: lets
+  // some language through, refuses others; holds the terms that drift in drafting.
+  // These are the rules a fresh chat doesn't get from the spine and skeleton alone —
+  // language discipline, edit framing, terminology guardrails. Placed above the thesis
+  // so they prime everything that follows (in the file, on the rendered page, and in
+  // the spine.md export). Editable freely; the page and export both read from this array.
+  membrane: [
+    {
+      title: "No emojis",
+      body: `Don't put them in prose, headers, file output, or anything that might be kept.`
+    },
+    {
+      title: `"Organisms," not "machines"`,
+      body: `Humans in this book are organisms. The alive/not-alive distinction is structural to Chapter 12 (The Mirror); calling humans machines anywhere undercuts it.`
+    },
+    {
+      title: "Promote/demote framing for edits",
+      body: `When something should move between spine and skeleton, propose it as "this paragraph could demote to skeleton" or "this could promote to spine" — not as add/delete. The content already exists; it is being relocated.`
+    },
+    {
+      title: "Err toward spine when drafting",
+      body: `Demoting later is cheap. Burying load-bearing material in skeleton is expensive — a fresh chat will write the wrong unit.`
+    },
+    {
+      title: "Divergent versions are data, not waste",
+      body: `Different chats producing different drafts of the same material is a feature. Do not propose merging them into one canonical version.`
+    },
+    {
+      title: "Terminology discipline",
+      body: `dg is always lowercase. "Faithful trace, not continuing self" (Ch. 14 — the donated dg is not the person). "The heartbeat is for continuity, not authentication" (Ch. 5). These lines drift in drafting; hold them.`
+    }
+  ],
+
   thesis: `Humans are meaning-transmitting organisms who must reach toward each other to connect, and the technology of the coming era — biometric identity, sovereign accumulated selves, shared intelligence, trustless settlement — must be built to honor that, not to replace, simulate, or extract it.`,
 
   // The spine is the chain of chapters — each one a vertebra in the book's spine.
@@ -586,4 +619,17 @@ window.SPINE.lastUpdatedLinkHtml = function() {
   return '<a class="last-updated" href="' + window.SPINE.sourceUrl()
        + '" target="_blank" rel="noopener noreferrer">last updated '
        + window.SPINE.meta.lastUpdated + '</a>';
+};
+
+// On GitHub Pages, the deploy workflow writes spine/build.js with the commit
+// count and sha — the page shows `git #N` linking to that commit. Locally,
+// build.js is absent (gitignored) and we fall back to the last-updated date.
+window.SPINE.buildLabelHtml = function() {
+  const b = window.SPINE_BUILD;
+  if (b && typeof b.count === 'number' && b.sha) {
+    const url = window.SPINE.meta.repoUrl + '/commit/' + b.sha;
+    return '<a class="last-updated" href="' + url
+         + '" target="_blank" rel="noopener noreferrer">git #' + b.count + '</a>';
+  }
+  return window.SPINE.lastUpdatedLinkHtml();
 };
