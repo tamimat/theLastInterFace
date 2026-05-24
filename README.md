@@ -1,0 +1,30 @@
+# theLastInterface
+
+A book in progress, by Tamim.
+
+## What it argues
+
+The future interface is not an app. It is authenticated human intent — the cryptographic signature of who you are, what you mean, and whether you currently mean it freely. The book lays out four layers (a biometric key, a personal data ghost, a neural computer that translates fuzzy intent into signed action, and Bitcoin as the settlement layer), and argues that the load-bearing innovation is the one most people miss: physiological consent. Identity stops being *who are you* and becomes *are you currently sovereign over yourself*.
+
+Underneath the technical architecture is an older claim about what connection is — that humans sense, make meaning, and tell, because we need to be received. The chapters serve that loop.
+
+## How the repo is organized
+
+- **`/spine/`** — the book itself. Each chapter has a *vertebra* (one load-bearing sentence), a *spine* (the dense treatment), and a *skeleton* (supporting context). The boundary between spine and skeleton is governed by a removal test, with paragraphs free to promote or demote as the writing matures.
+- **`/chats/`** — verbatim transcripts of conversations with AI tools (claude.ai, Cowork, others) where the ideas were worked out. The paper trail behind the spine.
+- **`/artifacts/`** — standalone pieces Claude wrote inside those chats: manifestos, pitches, notes, openings. Historical snapshots, not iterations toward a single canonical version. Divergent versions are kept on purpose as a record of how thinking branched.
+- **`/visuals/`** — diagrams and images. Filenames preserve the original tool-stamped timestamps as provenance.
+- **`/archive/`** — superseded iterations and one-time audits. Out of the active flow, but not deleted.
+- **`/tools/`** — small local scripts and skill copies the project depends on.
+
+## How chats find their way here
+
+Conversations on claude.ai are archived manually via the share-link flow. Cowork sessions are swept weekly by a scheduled task that classifies each one as book content (kept), operational scaffolding (skipped, logged), or ambiguous (held for review). Only book-content conversations land in `/chats/`.
+
+## License
+
+CC BY 4.0. See [LICENSE](LICENSE). Use it, share it, build on it — just credit the source. The license choice is structurally consistent with the book's argument: protocols, not products; reusable substrates, not gatekept assets.
+
+## Status
+
+In progress. Currently private; will go public when the spine has settled enough that a reader could pick it up cold and follow it.

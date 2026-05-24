@@ -23,9 +23,9 @@ Every artifact carries a YAML front matter block at the top recording its source
 
 For the broader picture (which chat, which discussion), open the matching file in `/chats/`.
 
-## Promotion to /drafts/
+## Relationship to /spine/
 
-When an artifact graduates from snapshot to material you are actively editing, copy it into `/drafts/` under a clean kebab-case filename. The original stays here as the historical record; `/drafts/` holds the working manuscript. `/drafts/` does not currently exist — create it the first time you actually start editing something.
+The book itself lives in `/spine/` — that's the working manuscript, structured as spine (load-bearing prose) and skeleton (supporting context). When material from an artifact gets folded into the book, it enters via the spine and skeleton, not a separate drafts folder. The artifact files here remain as the historical record of how each piece first appeared.
 
 ## GitHub linking
 
