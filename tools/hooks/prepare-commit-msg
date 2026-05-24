@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# prepare-commit-msg — prefix the first line with [N] where N is the next commit number.
+#
+# Numbering starts at 0 (the very first commit on a fresh repo gets [0]). For an
+# existing repo, the number is `git rev-list --count HEAD` — i.e. the count of
+# commits reachable from HEAD before this one. With N prior commits, the next
+# one is [N], so the sequence is [0], [1], [2], ...
+#
+# Skips:
+#   - merge / squash / amend commits (would mis-number or double-prefix)
+#   - messages that already start with [<digits>] (idempotent on re-runs)
+#
+# To activate this hook in a fresh clone:
+#   git config core.hooksPath tools/hooks
+
+set -euo pipefail
+
+COMMIT_MSG_FILE="$1"
+COMMIT_SOURCE="${2-}"
+
+# Don't touch merges, squashes, or amends.
+case "$COMMIT_SOURCE" in
+  merge|squash|commit) exit 0 ;;
+esac
+
+# First non-comment, non-empty line — that's the title we'd prefix.
+first_line=$(grep -m1 -E '^[^#]' "$COMMIT_MSG_FILE" | head -1 || true)
+
+# Already prefixed (or nothing to prefix yet) → leave alone.
+if [[ -z "$first_line" ]]; then
+  exit 0
+fi
+if [[ "$first_line" =~ ^\[[0-9]+\][[:space:]] ]]; then
+  exit 0
+fi
+
+# Next number = number of commits currently reachable from HEAD.
+# `|| echo 0` covers the root-commit case where HEAD doesn't resolve yet.
+N=$(git rev-list --count HEAD 2>/dev/null || echo 0)
+
+# Prepend "[N] " to the first non-comment, non-empty line. Leave everything else
+# (blank lines, body, comments) intact.
+tmp=$(mktemp)
+awk -v n="$N" '
+  BEGIN { done = 0 }
+  !done && /^[^#]/ && NF > 0 { print "[" n "] " $0; done = 1; next }
+  { print }
+' "$COMMIT_MSG_FILE" > "$tmp"
+mv "$tmp" "$COMMIT_MSG_FILE"
