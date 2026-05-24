@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>Section — The Last Interface</title>
+<title>Tailbone — The Last Interface</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
   <a href="index.html" class="back-link">← back to spine</a>
 
   <header class="spine-header">
-    <h1 id="section-heading">Section</h1>
+    <h1 id="tailbone-heading">Tailbone</h1>
     <div class="meta" id="meta"></div>
   </header>
 
@@ -28,7 +28,7 @@
   <div class="section-skeleton" id="skeleton"></div>
 
   <div class="actions">
-    <button class="copy" id="copy-section">Copy this section (spine + skeleton)</button>
+    <button class="copy" id="copy-tailbone">Copy tailbone (vertebra + spine + skeleton)</button>
   </div>
 
   <div class="nav" id="nav"></div>
@@ -39,86 +39,68 @@
 <script>
 (function() {
   const S = window.SPINE;
-
-  // Parse ?n=N
-  const params = new URLSearchParams(window.location.search);
-  const n = parseInt(params.get('n'), 10);
-  const sec = S.spine.find(s => s.n === n);
-
-  if (!sec) {
-    document.querySelector('.wrap').innerHTML =
-      '<a href="index.html" class="back-link">← back to spine</a>'
-      + '<p>Section not found.</p>';
-    return;
-  }
+  const T = S.tailbone;
 
   // Header
-  document.title = 'Section ' + sec.n + ' — ' + S.meta.title;
-  document.getElementById('section-heading').textContent =
-    'Section ' + sec.n + '. ' + sec.title;
+  document.title = 'Tailbone — ' + S.meta.title;
+  document.getElementById('tailbone-heading').textContent = 'Tailbone';
 
   const metaEl = document.getElementById('meta');
   metaEl.innerHTML =
       S.versionLinkHtml()
     + '<span class="last-updated">last updated ' + S.meta.lastUpdated + '</span>';
 
-  // Vertebra — the single load-bearing line
-  document.getElementById('vertebra').textContent = sec.vertebra;
+  // Vertebra
+  document.getElementById('vertebra').textContent = T.vertebra;
 
-  // Body — render spine as paragraphs (split on blank lines)
+  // Spine — paragraphs split on blank lines
   const spineEl = document.getElementById('spine');
   spineEl.innerHTML = '';
-  sec.spine.split(/\n\n+/).forEach(para => {
+  T.spine.split(/\n\n+/).forEach(para => {
     const p = document.createElement('p');
     p.textContent = para;
     spineEl.appendChild(p);
   });
 
-  // Skeleton — also as paragraphs
+  // Skeleton — paragraphs split on blank lines
   const skelEl = document.getElementById('skeleton');
   skelEl.innerHTML = '';
-  sec.skeleton.split(/\n\n+/).forEach(para => {
+  T.skeleton.split(/\n\n+/).forEach(para => {
     const p = document.createElement('p');
     p.textContent = para;
     skelEl.appendChild(p);
   });
 
-  // Prev/next nav — chapter 1's prev is the tailbone; the last chapter's next is the atlas
+  // Forward nav into the chapters
   const navEl = document.getElementById('nav');
-  const prev = S.spine.find(s => s.n === sec.n - 1);
-  const next = S.spine.find(s => s.n === sec.n + 1);
-  const isLast = sec.n === S.spine[S.spine.length - 1].n;
-  const prevHtml = prev
-    ? '<a href="section.html?n=' + prev.n + '">← ' + prev.n + '. ' + prev.title + '</a>'
-    : (sec.n === 1 ? '<a href="tailbone.html">← Tailbone</a>' : '<span></span>');
-  const nextHtml = next
-    ? '<a href="section.html?n=' + next.n + '">' + next.n + '. ' + next.title + ' →</a>'
-    : (isLast ? '<a href="atlas.html">Atlas →</a>' : '<span></span>');
-  navEl.innerHTML = prevHtml + nextHtml;
+  const next = S.spine[0];
+  navEl.innerHTML =
+    '<span></span>'
+    + (next ? '<a href="section.html?n=' + next.n + '">' + next.n + '. ' + next.title + ' →</a>' : '<span></span>');
 
-  // Copy: thesis (for orientation) + this section's spine + skeleton
+  // Copy
   function header() {
     return 'SPINE — ' + S.meta.title
       + ' — v' + S.meta.version
       + ' — last updated ' + S.meta.lastUpdated
-      + ' — focus: chapter ' + sec.n;
+      + ' — focus: tailbone';
   }
 
-  function buildSectionContext() {
+  function buildTailboneContext() {
     const lines = [header(), ''];
     lines.push('THESIS');
     lines.push(S.thesis);
     lines.push('');
-    lines.push('SECTION ' + sec.n + ': ' + sec.title);
+    lines.push('TAILBONE');
     lines.push('');
     lines.push('VERTEBRA');
-    lines.push(sec.vertebra);
+    lines.push(T.vertebra);
     lines.push('');
     lines.push('SPINE');
-    lines.push(sec.spine);
+    lines.push(T.spine);
     lines.push('');
     lines.push('SKELETON');
-    lines.push(sec.skeleton);
+    lines.push(T.skeleton);
     return lines.join('\n');
   }
 
@@ -136,8 +118,8 @@
     });
   }
 
-  document.getElementById('copy-section').addEventListener('click', function() {
-    copyText(buildSectionContext(), this);
+  document.getElementById('copy-tailbone').addEventListener('click', function() {
+    copyText(buildTailboneContext(), this);
   });
 })();
 </script>

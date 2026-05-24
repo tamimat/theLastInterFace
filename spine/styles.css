@@ -51,13 +51,30 @@ h1 {
 
 .meta {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 13px;
   color: var(--muted);
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
 }
-
-.meta .status-working { color: var(--lock-working); font-weight: 600; }
-.meta .status-locked  { color: var(--lock-locked);  font-weight: 600; }
+.meta .version {
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+a.version:visited { color: var(--text); }
+a.version:hover {
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.meta .last-updated {
+  font-size: 12px;
+  margin-top: 2px;
+}
 
 a {
   color: var(--link);
@@ -77,9 +94,19 @@ a:hover { background: #eef0fa; }
   margin-bottom: 6px;
 }
 
-.opening, .thesis, .ending {
+.thesis, .ending {
   font-size: 19px;
   margin: 0 0 8px;
+}
+
+/* Tailbone line on the index — the book's opening vertebra, top-level (not under a section number) */
+.tailbone-line {
+  font-size: 19px;
+  font-style: italic;
+  color: #000;
+  margin: 0 0 8px;
+  margin-left: 0;
+  line-height: 1.45;
 }
 
 .sections-list {
@@ -100,13 +127,15 @@ a:hover { background: #eef0fa; }
   margin-right: 10px;
 }
 
-.section-spine-line {
+/* Vertebra line on the index — the section's bone, shown beneath its title */
+.section-vertebra-line {
   display: block;
-  color: var(--text);
-  font-size: 16px;
-  margin-top: 4px;
+  color: #000;
+  font-size: 18px;
+  font-style: italic;
+  margin-top: 6px;
   margin-left: 32px;
-  opacity: 0.85;
+  line-height: 1.45;
 }
 
 .actions {
@@ -135,7 +164,7 @@ button.copy.copied {
   color: #1f6f3a;
 }
 
-/* section page */
+/* section page — anatomical hierarchy: vertebra (large/black) > spine (medium/dark) > skeleton (small/gray) */
 .section-title {
   font-size: 24px;
   font-weight: 600;
@@ -143,26 +172,32 @@ button.copy.copied {
   letter-spacing: -0.01em;
 }
 
+.section-vertebra {
+  font-size: 22px;
+  font-style: italic;
+  color: #000;
+  line-height: 1.45;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
 .section-spine {
   margin: 0 0 16px;
 }
 .section-spine p {
-  font-size: 18px;
-  line-height: 1.65;
-  margin: 0 0 16px;
-}
-.section-spine p:first-child {
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 0 14px;
   color: #2a2a2a;
 }
 
 .section-skeleton {
-  font-size: 17px;
-  color: #2a2a2a;
+  font-size: 15px;
+  color: #7a7a7a;
 }
 .section-skeleton p {
-  margin: 0 0 14px;
-  line-height: 1.6;
+  margin: 0 0 12px;
+  line-height: 1.55;
 }
 
 .nav {

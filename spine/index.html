@@ -16,17 +16,11 @@
     <div class="meta" id="meta"></div>
   </header>
 
-  <div class="label">Opening</div>
-  <p class="opening" id="opening"></p>
-
   <div class="label">Thesis</div>
   <p class="thesis" id="thesis"></p>
 
-  <div class="label">Sections</div>
-  <ol class="sections-list" id="sections"></ol>
-
-  <div class="label">Ending</div>
-  <p class="ending" id="ending"></p>
+  <div class="label">Spine</div>
+  <ol class="sections-list" id="spine-list"></ol>
 
   <div class="actions">
     <button class="copy" id="copy-spine">Copy spine</button>
@@ -44,74 +38,120 @@
   // Header
   document.getElementById('title').textContent = S.meta.title + ' — Spine';
   const metaEl = document.getElementById('meta');
-  const statusClass = S.meta.status === 'locked' ? 'status-locked' : 'status-working';
-  const lockBit = S.meta.status === 'locked' && S.meta.lockedDate
-    ? ' — locked ' + S.meta.lockedDate
-    : '';
-  metaEl.innerHTML = 'v' + S.meta.version
-    + ' <span class="' + statusClass + '">' + S.meta.status + '</span>'
-    + lockBit;
+  metaEl.innerHTML =
+      S.versionLinkHtml()
+    + '<span class="last-updated">last updated ' + S.meta.lastUpdated + '</span>';
 
   // Body
-  document.getElementById('opening').textContent = S.opening;
   document.getElementById('thesis').textContent = S.thesis;
-  document.getElementById('ending').textContent = S.ending;
 
-  // Sections list — title is a blue link to section page, spine line below
-  const list = document.getElementById('sections');
-  S.sections.forEach(sec => {
+  // Spine — the full chain of bones: tailbone, the 17 chapters, atlas.
+  // All three kinds of unit belong to the same spine and live in the same list.
+  // The tailbone and atlas use a `summary` field for the index line; chapters use their vertebra.
+  const list = document.getElementById('spine-list');
+
+  // Tailbone is 0, chapters are 1..17, atlas is 18 — all on the same hierarchical level.
+  // The tailbone and atlas have their own pages (not section.html) but otherwise render
+  // identically to chapters in the list.
+  const items = [
+    {
+      n: 0,
+      href: 'tailbone.html',
+      title: 'Tailbone',
+      line: S.tailbone.summary || S.tailbone.vertebra
+    },
+    ...S.spine.map(sec => ({
+      n: sec.n,
+      href: 'section.html?n=' + sec.n,
+      title: sec.title,
+      line: sec.vertebra
+    })),
+    {
+      n: 18,
+      href: 'atlas.html',
+      title: 'Atlas',
+      line: S.atlas.summary || S.atlas.vertebra
+    }
+  ];
+
+  items.forEach(item => {
     const li = document.createElement('li');
+    const num = document.createElement('span');
+    num.className = 'section-num';
+    num.textContent = item.n + '.';
+    li.appendChild(num);
     const link = document.createElement('a');
-    link.href = 'section.html?n=' + sec.n;
-    link.textContent = sec.title;
-    li.innerHTML = '<span class="section-num">' + sec.n + '.</span>';
+    link.href = item.href;
+    link.textContent = item.title;
     li.appendChild(link);
-    const teaserLine = document.createElement('span');
-    teaserLine.className = 'section-spine-line';
-    teaserLine.textContent = sec.teaser;
-    li.appendChild(teaserLine);
+    const lineEl = document.createElement('span');
+    lineEl.className = 'section-vertebra-line';
+    lineEl.textContent = item.line;
+    li.appendChild(lineEl);
     list.appendChild(li);
   });
 
   // Copy helpers
   function header() {
-    const dateStr = S.meta.status === 'locked' && S.meta.lockedDate
-      ? S.meta.lockedDate
-      : new Date().toISOString().slice(0, 10);
     return 'SPINE — ' + S.meta.title
       + ' — v' + S.meta.version
-      + ' (' + S.meta.status + ')'
-      + ' — ' + dateStr;
+      + ' — last updated ' + S.meta.lastUpdated;
   }
 
   function buildSpineOnly() {
     const lines = [header(), ''];
-    lines.push('OPENING');
-    lines.push(S.opening);
-    lines.push('');
     lines.push('THESIS');
     lines.push(S.thesis);
     lines.push('');
-    S.sections.forEach(sec => {
-      lines.push('SECTION ' + sec.n + ': ' + sec.title);
+    lines.push('TAILBONE');
+    lines.push('');
+    lines.push('VERTEBRA');
+    lines.push(S.tailbone.vertebra);
+    lines.push('');
+    lines.push('SPINE');
+    lines.push(S.tailbone.spine);
+    lines.push('');
+    S.spine.forEach(sec => {
+      lines.push('CHAPTER ' + sec.n + ': ' + sec.title);
+      lines.push('');
+      lines.push('VERTEBRA');
+      lines.push(sec.vertebra);
+      lines.push('');
+      lines.push('SPINE');
       lines.push(sec.spine);
       lines.push('');
     });
-    lines.push('ENDING');
-    lines.push(S.ending);
+    lines.push('ATLAS');
+    lines.push('');
+    lines.push('VERTEBRA');
+    lines.push(S.atlas.vertebra);
+    lines.push('');
+    lines.push('SPINE');
+    lines.push(S.atlas.spine);
     return lines.join('\n');
   }
 
   function buildFull() {
     const lines = [header(), ''];
-    lines.push('OPENING');
-    lines.push(S.opening);
-    lines.push('');
     lines.push('THESIS');
     lines.push(S.thesis);
     lines.push('');
-    S.sections.forEach(sec => {
-      lines.push('SECTION ' + sec.n + ': ' + sec.title);
+    lines.push('TAILBONE');
+    lines.push('');
+    lines.push('VERTEBRA');
+    lines.push(S.tailbone.vertebra);
+    lines.push('');
+    lines.push('SPINE');
+    lines.push(S.tailbone.spine);
+    lines.push('');
+    lines.push('SKELETON');
+    lines.push(S.tailbone.skeleton);
+    lines.push('');
+    S.spine.forEach(sec => {
+      lines.push('CHAPTER ' + sec.n + ': ' + sec.title);
+      lines.push('');
+      lines.push('VERTEBRA');
+      lines.push(sec.vertebra);
       lines.push('');
       lines.push('SPINE');
       lines.push(sec.spine);
@@ -120,8 +160,16 @@
       lines.push(sec.skeleton);
       lines.push('');
     });
-    lines.push('ENDING');
-    lines.push(S.ending);
+    lines.push('ATLAS');
+    lines.push('');
+    lines.push('VERTEBRA');
+    lines.push(S.atlas.vertebra);
+    lines.push('');
+    lines.push('SPINE');
+    lines.push(S.atlas.spine);
+    lines.push('');
+    lines.push('SKELETON');
+    lines.push(S.atlas.skeleton);
     return lines.join('\n');
   }
 
@@ -148,30 +196,43 @@
 
   // Markdown export for claude.ai project knowledge
   function buildMarkdown() {
-    const dateStr = S.meta.status === 'locked' && S.meta.lockedDate
-      ? S.meta.lockedDate
-      : new Date().toISOString().slice(0, 10);
     const out = [];
-    out.push('# ' + S.meta.title + ' — Spine');
+    out.push('# ' + S.meta.title);
     out.push('');
-    out.push('**Version:** ' + S.meta.version + ' — ' + S.meta.status + ' — ' + dateStr);
+    out.push('**Version:** [v' + S.meta.version + '](' + S.versionUrl() + ') — last updated ' + S.meta.lastUpdated);
     out.push('');
-    out.push('This document is the curated, blessed context for the book. It is split into the *spine* (load-bearing argument — what a fresh chat must know to write or reason about a section correctly) and the *skeleton* (supporting material). The boundary rule: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right section.');
+    out.push('The book has a thesis, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
     out.push('');
     out.push('---');
-    out.push('');
-    out.push('## Opening');
-    out.push('');
-    out.push(S.opening);
     out.push('');
     out.push('## Thesis');
     out.push('');
     out.push(S.thesis);
     out.push('');
-    S.sections.forEach(sec => {
+    out.push('---');
+    out.push('');
+    out.push('## Tailbone');
+    out.push('');
+    out.push('### Vertebra');
+    out.push('');
+    out.push(S.tailbone.vertebra);
+    out.push('');
+    out.push('### Spine');
+    out.push('');
+    out.push(S.tailbone.spine);
+    out.push('');
+    out.push('### Skeleton');
+    out.push('');
+    out.push(S.tailbone.skeleton);
+    out.push('');
+    S.spine.forEach(sec => {
       out.push('---');
       out.push('');
-      out.push('## Section ' + sec.n + '. ' + sec.title);
+      out.push('## Chapter ' + sec.n + '. ' + sec.title);
+      out.push('');
+      out.push('### Vertebra');
+      out.push('');
+      out.push(sec.vertebra);
       out.push('');
       out.push('### Spine');
       out.push('');
@@ -184,9 +245,19 @@
     });
     out.push('---');
     out.push('');
-    out.push('## Ending');
+    out.push('## Atlas');
     out.push('');
-    out.push(S.ending);
+    out.push('### Vertebra');
+    out.push('');
+    out.push(S.atlas.vertebra);
+    out.push('');
+    out.push('### Spine');
+    out.push('');
+    out.push(S.atlas.spine);
+    out.push('');
+    out.push('### Skeleton');
+    out.push('');
+    out.push(S.atlas.skeleton);
     out.push('');
     return out.join('\n');
   }
