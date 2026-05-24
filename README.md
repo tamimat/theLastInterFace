@@ -27,4 +27,4 @@ CC BY 4.0. See [LICENSE](LICENSE). Use it, share it, build on it — just credit
 
 ## Status
 
-In progress. Currently private; will go public when the spine has settled enough that a reader could pick it up cold and follow it.
+In progress. The repo is public and the spine is published at [tamimat.github.io/theLastInterFace](https://tamimat.github.io/theLastInterFace/), but the live site is blocked from search engines and AI crawlers (robots.txt + noindex) — readers land here because the link was shared with them, not because Google surfaced it. That stays in place while the spine is still settling.
