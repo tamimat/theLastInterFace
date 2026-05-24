@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile3">
+<link rel="stylesheet" href="styles.css?v=mobile4">
 </head>
 <body>
 <div class="wrap">
@@ -33,8 +33,14 @@
   <ol class="sections-list" id="spine-list"></ol>
 
   <div class="actions">
-    <button class="copy" id="download-read">Download read.md (for a human reading)</button>
-    <button class="copy" id="download-llm">Download llm.md (for an AI chat)</button>
+    <div class="action-row">
+      <button class="copy" id="download-read">Download read.md (for a human reading)</button>
+      <button class="copy compact" id="copy-read">Copy</button>
+    </div>
+    <div class="action-row">
+      <button class="copy" id="download-llm">Download llm.md (for an AI chat)</button>
+      <button class="copy compact" id="copy-llm">Copy</button>
+    </div>
   </div>
 
 </div>
@@ -267,11 +273,31 @@
       : base + '.md';
   }
 
+  function copyText(content, btn) {
+    navigator.clipboard.writeText(content).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1600);
+    }).catch(err => {
+      alert('Copy failed: ' + err);
+    });
+  }
+
   document.getElementById('download-read').addEventListener('click', function() {
     downloadMd(downloadName('read'), buildReadMarkdown(), this);
   });
   document.getElementById('download-llm').addEventListener('click', function() {
     downloadMd(downloadName('llm'), buildLlmMarkdown(), this);
+  });
+  document.getElementById('copy-read').addEventListener('click', function() {
+    copyText(buildReadMarkdown(), this);
+  });
+  document.getElementById('copy-llm').addEventListener('click', function() {
+    copyText(buildLlmMarkdown(), this);
   });
 })();
 </script>
