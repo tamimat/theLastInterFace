@@ -63,18 +63,17 @@ h1 {
   color: var(--text);
   font-weight: 600;
   letter-spacing: -0.01em;
-  text-decoration: none;
-}
-a.version:visited { color: var(--text); }
-a.version:hover {
-  background: transparent;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 .meta .last-updated {
   font-size: 12px;
   margin-top: 2px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
+a.last-updated:visited { color: var(--link-visited); }
+a.last-updated:hover { background: #eef0fa; }
 
 a {
   color: var(--link);

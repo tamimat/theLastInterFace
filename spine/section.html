@@ -59,8 +59,8 @@
 
   const metaEl = document.getElementById('meta');
   metaEl.innerHTML =
-      S.versionLinkHtml()
-    + '<span class="last-updated">last updated ' + S.meta.lastUpdated + '</span>';
+      '<span class="version">v' + S.meta.version + '</span>'
+    + S.lastUpdatedLinkHtml();
 
   // Vertebra — the single load-bearing line
   document.getElementById('vertebra').textContent = sec.vertebra;

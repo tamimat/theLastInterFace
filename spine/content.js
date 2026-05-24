@@ -579,7 +579,7 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
   }
 };
 
-// Version-link helpers. The displayed "vN" in each page links to the matching
+// Version-link helpers. The "last updated" date in each page links to the matching
 // GitHub tag (`spine-v{N}`) so the URL points at the exact bytes for that version.
 // While version is 0 (pre-tag) the link falls back to main.
 window.SPINE.versionUrl = function() {
@@ -589,8 +589,8 @@ window.SPINE.versionUrl = function() {
     ? base + '/tree/spine-v' + v + '/spine/content.js'
     : base + '/tree/main/spine/content.js';
 };
-window.SPINE.versionLinkHtml = function() {
-  return '<a class="version" href="' + window.SPINE.versionUrl()
-       + '" target="_blank" rel="noopener noreferrer">v'
-       + window.SPINE.meta.version + '</a>';
+window.SPINE.lastUpdatedLinkHtml = function() {
+  return '<a class="last-updated" href="' + window.SPINE.versionUrl()
+       + '" target="_blank" rel="noopener noreferrer">last updated '
+       + window.SPINE.meta.lastUpdated + '</a>';
 };

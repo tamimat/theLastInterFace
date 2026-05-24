@@ -39,8 +39,8 @@
   document.getElementById('title').textContent = S.meta.title + ' — Spine';
   const metaEl = document.getElementById('meta');
   metaEl.innerHTML =
-      S.versionLinkHtml()
-    + '<span class="last-updated">last updated ' + S.meta.lastUpdated + '</span>';
+      '<span class="version">v' + S.meta.version + '</span>'
+    + S.lastUpdatedLinkHtml();
 
   // Body
   document.getElementById('thesis').textContent = S.thesis;
@@ -199,7 +199,7 @@
     const out = [];
     out.push('# ' + S.meta.title);
     out.push('');
-    out.push('**Version:** [v' + S.meta.version + '](' + S.versionUrl() + ') — last updated ' + S.meta.lastUpdated);
+    out.push('**Version:** v' + S.meta.version + ' — last updated [' + S.meta.lastUpdated + '](' + S.versionUrl() + ')');
     out.push('');
     out.push('The book has a thesis, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
     out.push('');
