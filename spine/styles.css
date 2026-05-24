@@ -43,10 +43,11 @@ header.spine-header {
 }
 
 h1 {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 28px;
   font-weight: 600;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .meta {
@@ -60,7 +61,7 @@ h1 {
 }
 .meta .last-updated {
   font-size: 12px;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color: var(--link);
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -158,10 +159,11 @@ button.copy.copied {
 
 /* section page — anatomical hierarchy: vertebra (large/black) > spine (medium/dark) > skeleton (small/gray) */
 .section-title {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 24px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .section-vertebra {

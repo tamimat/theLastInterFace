@@ -41,7 +41,7 @@ window.SPINE = {
   meta: {
     version: 0,
     lastUpdated: "2026-05-23",
-    title: "The Last Interface",
+    title: "theLastInterface",
     repoUrl: "https://github.com/tamimat/theLastInterFace"
   },
 
