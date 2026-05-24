@@ -247,7 +247,7 @@ button.copy {
   cursor: pointer;
   border-radius: 6px;
   width: 100%;
-  text-align: left;
+  text-align: center;
 }
 
 .action-row button.copy {
