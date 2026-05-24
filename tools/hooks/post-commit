@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# post-commit — regenerate spine/build.js so the local server reflects the new
+# commit count immediately. build.js is gitignored, so this never affects
+# the working tree's commit state.
+
+set -euo pipefail
+
+"$(git rev-parse --show-toplevel)/tools/gen-build-js.sh" >/dev/null
