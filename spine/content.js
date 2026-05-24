@@ -29,17 +29,15 @@
 // chat wrote the wrong section because something load-bearing was buried in skeleton.
 //
 // Versioning:
-//   - meta.version is an integer that counts up. Bump it when you want to mark a new
-//     version (no strict rule — your call). Update meta.lastUpdated to the same day.
-//   - Each bump should be paired with a matching git tag `spine-v{N}` on the bump commit,
-//     so the displayed "vN" in the UI links to the exact tagged tree on GitHub
-//     (immutable, shows the exact bytes for that version). The bump-version.sh script
-//     in /tools/ does the commit-and-tag dance in one step.
-//   - meta.repoUrl is the GitHub base used to build those links.
+//   - The git commit + tag history IS the version record. No integer to bump.
+//   - meta.lastUpdated is the human-friendly date shown next to the title; bump it
+//     whenever you make a change worth noting. The blue "last updated" link points
+//     at the current spine/content.js on main. To anchor a particular state, tag
+//     the commit: `git tag spine-<name>; git push --follow-tags`.
+//   - meta.repoUrl is the GitHub base used to build that link.
 
 window.SPINE = {
   meta: {
-    version: 0,
     lastUpdated: "2026-05-23",
     title: "theLastInterface",
     repoUrl: "https://github.com/tamimat/theLastInterFace"
@@ -579,18 +577,13 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
   }
 };
 
-// Version-link helpers. The "last updated" date in each page links to the matching
-// GitHub tag (`spine-v{N}`) so the URL points at the exact bytes for that version.
-// While version is 0 (pre-tag) the link falls back to main.
-window.SPINE.versionUrl = function() {
-  const v = window.SPINE.meta.version;
-  const base = window.SPINE.meta.repoUrl;
-  return v > 0
-    ? base + '/tree/spine-v' + v + '/spine/content.js'
-    : base + '/tree/main/spine/content.js';
+// Source-link helpers. The "last updated" date in each page links to the current
+// spine/content.js on main. The commit/tag history on GitHub is the version record.
+window.SPINE.sourceUrl = function() {
+  return window.SPINE.meta.repoUrl + '/tree/main/spine/content.js';
 };
 window.SPINE.lastUpdatedLinkHtml = function() {
-  return '<a class="last-updated" href="' + window.SPINE.versionUrl()
+  return '<a class="last-updated" href="' + window.SPINE.sourceUrl()
        + '" target="_blank" rel="noopener noreferrer">last updated '
        + window.SPINE.meta.lastUpdated + '</a>';
 };
