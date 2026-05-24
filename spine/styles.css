@@ -92,6 +92,96 @@ a:hover { background: #eef0fa; }
   margin: 0 0 8px;
 }
 
+/* Membrane — the working layer between author and AI. Collapsed by default so the
+   page stays focused on thesis + spine. The closed state is a dark bar; clicking it
+   unfolds the panel below, and bar + panel become one continuous rounded rectangle.
+   Set entirely in Geist Mono so the visual register reads as code/terminal, not prose.
+   One color accent — muted phosphor green — used on the disclosure chevron and the
+   "$" prefix in each rule. That green is the connective thread between the toggle
+   and the content. Inverted palette throughout: the page's text color becomes the
+   panel background; the page's background becomes the panel's foreground. */
+.membrane-wrap {
+  margin-top: 28px;
+  margin-bottom: 6px;
+}
+.membrane-toggle {
+  list-style: none;
+  cursor: pointer;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f5f3ec;
+  background: var(--text);
+  padding: 12px 22px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.membrane-toggle:hover {
+  background: #232323;
+}
+/* Explicit focus ring — when a custom background is set on <summary>, browsers
+   sometimes lose the default focus indicator. Keyboard-only users need this. */
+.membrane-toggle:focus-visible {
+  outline: 2px solid #8fb78f;
+  outline-offset: 2px;
+}
+.membrane-toggle::-webkit-details-marker { display: none; }
+/* The "/" empty alt text marks the chevron as decorative for screen readers.
+   The <details> element already announces expanded/collapsed state natively. */
+.membrane-toggle::after {
+  content: "⌄" / "";
+  color: #8fb78f;
+  font-size: 16px;
+  line-height: 1;
+  margin-left: 12px;
+}
+.membrane-wrap[open] > .membrane-toggle {
+  border-radius: 6px 6px 0 0;
+}
+.membrane-wrap[open] > .membrane-toggle::after {
+  content: "⌃" / "";
+}
+/* Panel — abuts the bar (no top margin, top corners squared) so the two shapes merge
+   into one rounded rectangle when open. */
+.membrane {
+  margin: 0;
+  padding: 18px 22px 20px;
+  background: var(--text);
+  border-radius: 0 0 6px 6px;
+  color: #e8e6df;
+}
+.membrane dt {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5f3ec;
+  margin-top: 18px;
+  margin-bottom: 4px;
+}
+.membrane dt:first-child {
+  margin-top: 0;
+}
+/* The "$" prefix is the shell-prompt nod. Muted phosphor green — heritage accent,
+   not costume. Decorative pseudo-element so it doesn't end up in copied text;
+   the "/" empty alt text tells screen readers to skip it (the rule's actual title
+   carries the meaning, not the prompt symbol). */
+.membrane dt::before {
+  content: "$ " / "";
+  color: #8fb78f;
+  font-weight: 400;
+}
+.membrane dd {
+  margin: 0;
+  padding-left: 2ch;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 14px;
+  color: #c2bfb6;
+  line-height: 1.65;
+}
+
 /* Tailbone line on the index — the book's opening vertebra, top-level (not under a section number) */
 .tailbone-line {
   font-size: 19px;
@@ -209,4 +299,73 @@ button.copy.copied {
   margin-bottom: 24px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
+}
+
+/* Mobile — phones and narrow tablets. Stack the header (h1 and meta side-by-side
+   collides because the monospace h1 is wide); tighten gutters and scale type
+   down a touch so the long-form prose still has comfortable line length. */
+@media (max-width: 640px) {
+  .wrap {
+    padding: 32px 18px 80px;
+  }
+
+  header.spine-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .meta {
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+  .section-title {
+    font-size: 20px;
+  }
+
+  html, body {
+    font-size: 17px;
+  }
+
+  .thesis, .ending, .tailbone-line {
+    font-size: 17px;
+  }
+
+  .section-vertebra {
+    font-size: 19px;
+  }
+  .section-spine p {
+    font-size: 16px;
+  }
+  .section-skeleton {
+    font-size: 14px;
+  }
+
+  /* Chapter list — pull the vertebra line in tighter so it still reads as
+     "belonging to" the chapter title without eating half the screen width. */
+  .section-vertebra-line {
+    margin-left: 16px;
+    font-size: 17px;
+  }
+
+  /* Membrane panel — tighten so it doesn't dominate on small screens. */
+  .membrane-toggle {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  .membrane {
+    padding: 14px 16px 16px;
+  }
+  .membrane dt,
+  .membrane dd {
+    font-size: 13px;
+  }
+
+  /* Prev/next nav — let it wrap and breathe when long titles collide. */
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

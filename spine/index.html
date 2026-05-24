@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
@@ -18,6 +20,11 @@
     <h1 id="title">Spine</h1>
     <div class="meta" id="meta"></div>
   </header>
+
+  <details class="membrane-wrap" id="membrane-wrap">
+    <summary class="membrane-toggle">Membrane</summary>
+    <dl class="membrane" id="membrane"></dl>
+  </details>
 
   <div class="label">Thesis</div>
   <p class="thesis" id="thesis"></p>
@@ -42,6 +49,22 @@
   document.getElementById('title').textContent = S.meta.title;
   const metaEl = document.getElementById('meta');
   metaEl.innerHTML = S.lastUpdatedLinkHtml();
+
+  // Membrane — collapsed by default; populate the <dl> inside the <details>.
+  // Hide the whole block if no membrane rules are defined so the page stays clean.
+  const memEl = document.getElementById('membrane');
+  if (S.membrane && S.membrane.length) {
+    S.membrane.forEach(c => {
+      const dt = document.createElement('dt');
+      dt.textContent = c.title;
+      const dd = document.createElement('dd');
+      dd.textContent = c.body;
+      memEl.appendChild(dt);
+      memEl.appendChild(dd);
+    });
+  } else {
+    document.getElementById('membrane-wrap').style.display = 'none';
+  }
 
   // Body
   document.getElementById('thesis').textContent = S.thesis;
@@ -203,6 +226,20 @@
     out.push('');
     out.push('The book has a thesis, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
     out.push('');
+    if (S.membrane && S.membrane.length) {
+      out.push('---');
+      out.push('');
+      out.push('## Membrane');
+      out.push('');
+      out.push('The working layer between author and AI. Selectively permeable — lets some language through, refuses others, holds the terms that drift in drafting. Read these before the content; they prime everything that follows.');
+      out.push('');
+      S.membrane.forEach(c => {
+        out.push('### ' + c.title);
+        out.push('');
+        out.push(c.body);
+        out.push('');
+      });
+    }
     out.push('---');
     out.push('');
     out.push('## Thesis');
