@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile4">
+<link rel="stylesheet" href="styles.css?v=mobile5">
 </head>
 <body>
 <div class="wrap">
@@ -34,11 +34,17 @@
 
   <div class="actions">
     <div class="action-row">
-      <button class="copy" id="download-read">Download read.md (for a human reading)</button>
+      <button class="copy" id="download-read">
+        <span class="main">Download read.md</span>
+        <span class="hint">for a human reading</span>
+      </button>
       <button class="copy compact" id="copy-read">Copy</button>
     </div>
     <div class="action-row">
-      <button class="copy" id="download-llm">Download llm.md (for an AI chat)</button>
+      <button class="copy" id="download-llm">
+        <span class="main">Download llm.md</span>
+        <span class="hint">for an AI chat</span>
+      </button>
       <button class="copy compact" id="copy-llm">Copy</button>
     </div>
   </div>
@@ -253,11 +259,13 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    const original = btn.textContent;
+    // Save innerHTML (not textContent) so multi-line button structure survives
+    // the flash + restore.
+    const original = btn.innerHTML;
     btn.textContent = 'Downloaded ' + filename;
     btn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = original;
+      btn.innerHTML = original;
       btn.classList.remove('copied');
     }, 1600);
   }
@@ -275,11 +283,11 @@
 
   function copyText(content, btn) {
     navigator.clipboard.writeText(content).then(() => {
-      const original = btn.textContent;
+      const original = btn.innerHTML;
       btn.textContent = 'Copied';
       btn.classList.add('copied');
       setTimeout(() => {
-        btn.textContent = original;
+        btn.innerHTML = original;
         btn.classList.remove('copied');
       }, 1600);
     }).catch(err => {
