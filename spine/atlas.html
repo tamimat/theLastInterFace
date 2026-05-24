@@ -49,9 +49,7 @@
   document.getElementById('atlas-heading').textContent = 'Atlas';
 
   const metaEl = document.getElementById('meta');
-  metaEl.innerHTML =
-      '<span class="version">v' + S.meta.version + '</span>'
-    + S.lastUpdatedLinkHtml();
+  metaEl.innerHTML = S.lastUpdatedLinkHtml();
 
   // Vertebra
   document.getElementById('vertebra').textContent = A.vertebra;

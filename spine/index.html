@@ -41,9 +41,7 @@
   // Header
   document.getElementById('title').textContent = S.meta.title + ' — Spine';
   const metaEl = document.getElementById('meta');
-  metaEl.innerHTML =
-      '<span class="version">v' + S.meta.version + '</span>'
-    + S.lastUpdatedLinkHtml();
+  metaEl.innerHTML = S.lastUpdatedLinkHtml();
 
   // Body
   document.getElementById('thesis').textContent = S.thesis;
