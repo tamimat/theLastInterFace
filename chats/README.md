@@ -24,10 +24,10 @@ YYYY-MM-DD--source__short-slug.md
 A scheduled task (`archive-thelastinterface-cowork-sessions`) runs Saturday mornings. For each theLastInterface-tagged Cowork session, it decides one of three things:
 
 - **book-content** → writes the transcript to `/chats/` (here)
-- **operational** → skips the transcript entirely, logs one line to `/archive/chats/skip-log.md`
-- **ambiguous** → writes to `/archive/chats/` for manual triage
+- **operational** → skips the transcript entirely, logs one line to `/_review/skip-log.md`
+- **ambiguous** → writes to `/_review/` for manual triage
 
-The classifier defaults to inclusion when in doubt — false positives in `/archive/chats/` cost 30 seconds to delete; false negatives in the skip log could lose a book conversation. The original session always remains in Cowork's session store regardless of routing, so misclassifications are recoverable.
+The classifier defaults to inclusion when in doubt — false positives in `/_review/` cost 30 seconds to delete; false negatives in the skip log could lose a book conversation. The original session always remains in Cowork's session store regardless of routing, so misclassifications are recoverable.
 
 Note: Cowork's `session_info` API exposes a thinner transcript than the claude.ai archiver — verbatim message text and tool-use summaries, but no per-message timestamps, UUIDs, threading metadata, or full tool-call inputs/outputs. The transcripts are good narrative records of what was discussed; they are not forensic-grade dumps.
 

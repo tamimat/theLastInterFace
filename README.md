@@ -14,12 +14,13 @@ Underneath the technical architecture is an older claim about what connection is
 - **`/chats/`** — verbatim transcripts of conversations with AI tools (claude.ai, Cowork, others) where the ideas were worked out. The paper trail behind the spine.
 - **`/artifacts/`** — standalone pieces Claude wrote inside those chats: manifestos, pitches, notes, openings. Historical snapshots, not iterations toward a single canonical version. Divergent versions are kept on purpose as a record of how thinking branched.
 - **`/visuals/`** — diagrams and images. Filenames preserve the original tool-stamped timestamps as provenance.
+- **`/_review/`** — the triage inbox for the weekly Cowork archiver. The classifier writes here only when it can't decide whether a session is book-content or operational; review and either promote to `/chats/` or delete. Empty is the steady state. The skip-log of operational sessions lives at `/_review/skip-log.md`.
 - **`/archive/`** — superseded iterations and one-time audits. Out of the active flow, but not deleted.
 - **`/tools/`** — small local scripts and skill copies the project depends on.
 
 ## How chats find their way here
 
-Conversations on claude.ai are archived manually via the share-link flow. Cowork sessions are swept weekly by a scheduled task that classifies each one as book content (kept), operational scaffolding (skipped, logged), or ambiguous (held for review). Only book-content conversations land in `/chats/`.
+Conversations on claude.ai are archived manually via the share-link flow. Cowork sessions are swept weekly by a scheduled task that classifies each one as book content (kept), operational scaffolding (skipped, logged in `/_review/skip-log.md`), or ambiguous (held in `/_review/` for your judgment). Only book-content conversations land in `/chats/`.
 
 ## License
 
