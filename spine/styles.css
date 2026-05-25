@@ -101,29 +101,50 @@ h1 {
   font-size: 24px;
 }
 
-/* Chapter pages: the "Chapter N" tag sits in the breadcrumb row (top right,
-   baseline-aligned with "← back to spine") so the h1 below carries only the
-   chapter title and gets the full width to breathe. */
-.page-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: var(--space-m);
-}
-.page-nav .back-link {
-  margin-bottom: 0;
-}
+/* Chapter pages prefix the title with its #N tag, e.g. "#4 The dg".
+   The tag inherits the h1's font (Geist Mono 24px) and just gets muted —
+   so it reads as a quiet location label sitting next to the chapter title. */
 .unit-tag {
-  font-family: var(--font-mono);
-  font-size: 14px;
   color: var(--muted);
+  margin-right: 0.35em;
 }
 
-.back-link {
-  display: inline-block;
+/* Chapter pages: centered close-X + "theLastInterface" mini-title at the
+   top, and a matching close-X at the bottom. Both Xs link back to the
+   index; the hover circle is the only affordance that they're clickable. */
+.page-top {
+  text-align: center;
   margin-bottom: var(--space-m);
-  font-family: var(--font-sans);
-  font-size: 14px;
+}
+.page-mini-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+.page-bottom {
+  text-align: center;
+  margin-top: var(--space-l);
+}
+.page-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text);
+  background: none;
+  text-decoration: none;
+}
+.page-close:visited { color: var(--text); }
+.page-close:hover {
+  background: var(--button-hover);
+  color: var(--text);
+}
+.page-close svg {
+  width: 24px;
+  height: 24px;
 }
 
 /* Prev/next nav at the bottom of per-unit pages. */
