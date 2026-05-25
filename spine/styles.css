@@ -480,9 +480,18 @@ button.copy.copied {
   margin-top: var(--space-l);
   opacity: 0.4;
 }
+/* Eye swap: same hover-preview pattern as the theme toggle and chapter
+   page-close. Open eye and closed eye sit absolute-stacked in an 18×18
+   frame; hover collapses one and expands the other through opacity + scale.
+   The :focus-visible ring replaces the browser-default rectangle that
+   was appearing on click. */
 .footer-iris a {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
   background: none;
 }
 .footer-iris a:hover {
@@ -490,9 +499,23 @@ button.copy.copied {
   background: none;
   color: inherit;
 }
-.footer-iris .icon-eye-closed { display: none; }
-.footer-iris a:hover .icon-eye { display: none; }
-.footer-iris a:hover .icon-eye-closed { display: inline; }
+.footer-iris a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.footer-iris a svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Resting: open eye visible, closed eye collapsed. */
+.footer-iris .icon-eye        { opacity: 1; transform: scale(1); }
+.footer-iris .icon-eye-closed { opacity: 0; transform: scale(0); }
+/* Hover: blink — open collapses, closed expands. */
+.footer-iris a:hover .icon-eye        { opacity: 0; transform: scale(0); }
+.footer-iris a:hover .icon-eye-closed { opacity: 1; transform: scale(1); }
 
 /* =============================================================================
    MOBILE — phones and narrow tablets. Stack the header (h1 and meta side-by-side
