@@ -304,12 +304,12 @@ button.copy.primary:focus-visible {
   outline-offset: 2px;
 }
 button.copy.primary .hint {
-  color: #6f9670;
+  color: #007700;
   margin-top: 4px;
 }
 /* Flash state — same green family, brighter so the state change is felt. */
 button.copy.primary.copied {
-  color: #b8d8b8;
+  color: #44CC44;
 }
 
 /* Draft-state badge under the primary action — small yellow pill with
