@@ -81,9 +81,9 @@ function dq(s) {
 
 const meta = JSON.parse(fs.readFileSync(path.join(SPINE, 'meta.json'), 'utf8'));
 
-// --- read thesis -----------------------------------------------------------
+// --- read notochord --------------------------------------------------------
 
-const thesis = stripLeadingH1(fs.readFileSync(path.join(SPINE, 'thesis.md'), 'utf8')).trim();
+const notochord = stripLeadingH1(fs.readFileSync(path.join(SPINE, 'notochord.md'), 'utf8')).trim();
 
 // --- read membrane ---------------------------------------------------------
 
@@ -153,7 +153,9 @@ const HEAD = `// content.js — the canonical content of the book's spine.
 //
 // Top-level shape:
 //   meta     — version, status, title.
-//   thesis   — one sentence stating what the book argues.
+//   notochord — one sentence stating what the book argues. (Anatomically the
+//               notochord is the embryonic proto-spine — the axial string the
+//               vertebrae form around.)
 //   tailbone — the book's opening unit. {vertebra, spine, skeleton}.
 //   spine    — array of chapters. Each chapter is itself a {vertebra, spine, skeleton}
 //              unit (the recursion is intentional: each chapter is a vertebra in the
@@ -242,7 +244,7 @@ membrane.forEach((m, i) => {
 });
 out.push('  ],');
 out.push('');
-out.push('  thesis: ' + tlit(thesis) + ',');
+out.push('  notochord: ' + tlit(notochord) + ',');
 out.push('');
 out.push('  spine: [');
 chapters.forEach((c, i) => {

@@ -114,13 +114,13 @@ a:hover { background: #eef0fa; }
   margin-bottom: 6px;
 }
 
-.thesis, .ending {
+.notochord, .ending {
   font-size: 19px;
   margin: 0 0 8px;
 }
 
 /* Membrane — the working layer between author and AI. Collapsed by default so the
-   page stays focused on thesis + spine. The closed state is a dark bar; clicking it
+   page stays focused on notochord + spine. The closed state is a dark bar; clicking it
    unfolds the panel below, and bar + panel become one continuous rounded rectangle.
    Set entirely in Geist Mono so the visual register reads as code/terminal, not prose.
    One color accent — muted phosphor green — used on the disclosure chevron and the
@@ -438,7 +438,7 @@ button.copy.copied {
     font-size: 17px;
   }
 
-  .thesis, .ending, .tailbone-line {
+  .notochord, .ending, .tailbone-line {
     font-size: 17px;
   }
 

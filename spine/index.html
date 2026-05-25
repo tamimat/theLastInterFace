@@ -26,8 +26,8 @@
     <dl class="membrane" id="membrane"></dl>
   </details>
 
-  <div class="label">Thesis</div>
-  <p class="thesis" id="thesis"></p>
+  <div class="label">Notochord</div>
+  <p class="notochord" id="notochord"></p>
 
   <div class="label">Spine</div>
   <ol class="sections-list" id="spine-list"></ol>
@@ -74,7 +74,7 @@
   }
 
   // Body
-  document.getElementById('thesis').textContent = S.thesis;
+  document.getElementById('notochord').textContent = S.notochord;
 
   // Spine — the full chain of bones: tailbone, the 17 chapters, atlas.
   // All three kinds of unit belong to the same spine and live in the same list.
@@ -111,7 +111,7 @@
   // Markdown builders — two audiences, two formats.
   //
   // read.md is what a human reading the draft gets: no skeleton, no membrane,
-  // no thesis section, no orientation paragraph. Chapter vertebras render as
+  // no notochord section, no orientation paragraph. Chapter vertebras render as
   // bare italic epigraphs under each title (position implies the role — no
   // "Vertebra:" label). Tailbone and Atlas open straight with their spine
   // prose; their vertebras would be redundant with the spine's opening line.
@@ -144,7 +144,7 @@
   }
 
   // llm.md is what an AI chat gets loaded with as context: orientation
-  // paragraph, membrane, thesis, and every unit's vertebra/spine/skeleton —
+  // paragraph, membrane, notochord, and every unit's vertebra/spine/skeleton —
   // the complete working material for reasoning about or writing the book.
   function buildLlmMarkdown() {
     const out = [];
@@ -152,7 +152,7 @@
     out.push('');
     out.push('**Last updated:** [' + S.meta.lastUpdated + '](' + S.sourceUrl() + ')');
     out.push('');
-    out.push('The book has a thesis, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
+    out.push('The book has a notochord, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
     out.push('');
     if (S.membrane && S.membrane.length) {
       out.push('---');
@@ -170,9 +170,9 @@
     }
     out.push('---');
     out.push('');
-    out.push('## Thesis');
+    out.push('## Notochord');
     out.push('');
-    out.push(S.thesis);
+    out.push(S.notochord);
     out.push('');
     S.allUnits().forEach(u => {
       out.push('---');

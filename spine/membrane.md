@@ -1,6 +1,6 @@
 # Membrane
 
-The working layer between author and AI. Selectively permeable: lets some language through, refuses others; holds the terms that drift in drafting. These are the rules a fresh chat doesn't get from the spine and skeleton alone — language discipline, edit framing, terminology guardrails. Placed above the thesis so they prime everything that follows (in the file, on the rendered page, and in the spine.md export). Editable freely; the page and export both read from this array.
+The working layer between author and AI. Selectively permeable: lets some language through, refuses others; holds the terms that drift in drafting. These are the rules a fresh chat doesn't get from the spine and skeleton alone — language discipline, edit framing, terminology guardrails. Placed above the notochord so they prime everything that follows (in the file, on the rendered page, and in the per-unit markdown files). Editable freely; the page and export both read from this array.
 
 ## No emojis
 

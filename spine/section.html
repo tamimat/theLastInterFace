@@ -114,15 +114,15 @@
     + (next ? '<a href="section.html?n=' + next.n + '">' + unitHeading(next) + ' →</a>' : '<span></span>');
 
   // Focus-only payload: ALL-CAPS labels (legacy format the previous
-  // per-unit copy buttons emitted). Includes thesis + this unit only.
+  // per-unit copy buttons emitted). Includes notochord + this unit only.
   function buildFocus() {
     const lines = [];
     lines.push('SPINE — ' + S.meta.title
       + ' — last updated ' + S.meta.lastUpdated
       + ' — focus: ' + unitHeading(unit));
     lines.push('');
-    lines.push('THESIS');
-    lines.push(S.thesis);
+    lines.push('NOTOCHORD');
+    lines.push(S.notochord);
     lines.push('');
     lines.push(unitHeading(unit));
     lines.push('');

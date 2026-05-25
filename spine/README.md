@@ -19,7 +19,7 @@ Don't edit `content.js` by hand. It will be overwritten on the next build.
 | File | What it holds |
 | --- | --- |
 | `meta.json` | `lastUpdated`, `title`, `repoUrl`. The only non-prose state. |
-| `thesis.md` | The one-sentence thesis. |
+| `notochord.md` | The book's one-sentence axial statement. |
 | `membrane.md` | The author-AI working layer. Each H2 is one rule. |
 | `01-tailbone.md` | The opening unit. |
 | `02-…` through `18-…` | The 17 chapters in order. |
@@ -48,6 +48,19 @@ That means for every chapter file, the filename prefix is `n + 1`:
 | 19-atlas.md | (none) | Atlas |
 
 This is a transitional compromise. The renderer (`index.html`, `section.html`) still consumes the old shape — `window.SPINE.tailbone`, `window.SPINE.spine[]` indexed by `n`, `window.SPINE.atlas`. Folding everything into one numbered array is a follow-up, not this migration's job.
+
+## Notochord, not thesis
+
+The book's one-sentence axial statement is now called the **notochord** — anatomically consistent with vertebra / spine / skeleton / membrane / tailbone / atlas. The notochord is the embryonic proto-spine, the string the vertebrae form around.
+
+This was a rename of an existing field. If you come across old chats or archived material referring to "the thesis," that's the same string — same content, new name. In the current vocabulary:
+
+- File: `notochord.md` (was `thesis.md`)
+- Data field: `window.SPINE.notochord` (was `window.SPINE.thesis`)
+- CSS class: `.notochord` (was `.thesis`)
+- User-visible label on the index page: `Notochord` (was `Thesis`)
+
+Historical material in `/chats/`, `/artifacts/`, `/archive/`, etc. retains the old vocabulary by design.
 
 ## A separate `build.js` exists — it's unrelated
 

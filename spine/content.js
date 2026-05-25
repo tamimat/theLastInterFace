@@ -7,7 +7,9 @@
 //
 // Top-level shape:
 //   meta     — version, status, title.
-//   thesis   — one sentence stating what the book argues.
+//   notochord — one sentence stating what the book argues. (Anatomically the
+//               notochord is the embryonic proto-spine — the axial string the
+//               vertebrae form around.)
 //   tailbone — the book's opening unit. {vertebra, spine, skeleton}.
 //   spine    — array of chapters. Each chapter is itself a {vertebra, spine, skeleton}
 //              unit (the recursion is intentional: each chapter is a vertebra in the
@@ -90,7 +92,7 @@ Cross-link: chapter 1 (The Sensor and the Universe) picks the grandmother back u
     }
   ],
 
-  thesis: `Humans are meaning-transmitting organisms who must reach toward each other to connect, and the technology of the coming era — biometric identity, sovereign accumulated selves, shared intelligence, trustless settlement — must be built to honor that, not to replace, simulate, or extract it.`,
+  notochord: `Humans are meaning-transmitting organisms who must reach toward each other to connect, and the technology of the coming era — biometric identity, sovereign accumulated selves, shared intelligence, trustless settlement — must be built to honor that, not to replace, simulate, or extract it.`,
 
   spine: [
     {
