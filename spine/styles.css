@@ -284,14 +284,17 @@ button.copy {
 
 /* Primary action button — inverted palette, matching the Membrane toggle
    at the top of the index page so the two dark elements bookend the
-   content. Slightly larger than the default .copy so it reads as the
-   page's main action without changing layout. */
+   content. Text uses the same muted phosphor green that marks the "$"
+   prefix on the membrane rules, so the button reads as part of the same
+   terminal-prompt vocabulary already established on the page. Slightly
+   larger than the default .copy so it reads as the page's main action. */
 button.copy.primary {
   background: var(--text);
-  color: #f5f3ec;
+  color: #8fb78f;
   border-color: var(--text);
   padding: 20px 24px;
   font-size: 15px;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 button.copy.primary:hover {
   background: #232323;
@@ -301,14 +304,12 @@ button.copy.primary:focus-visible {
   outline-offset: 2px;
 }
 button.copy.primary .hint {
-  color: #c2bfb6;
+  color: #6f9670;
   margin-top: 4px;
 }
-/* Flash state inverted too — confirmation green readable on dark bg. */
+/* Flash state — same green family, brighter so the state change is felt. */
 button.copy.primary.copied {
-  background: #1f5a36;
-  border-color: #1f5a36;
-  color: #e8f3ec;
+  color: #b8d8b8;
 }
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
