@@ -152,7 +152,7 @@ a:hover { background: #eef0fa; }
 /* Explicit focus ring — when a custom background is set on <summary>, browsers
    sometimes lose the default focus indicator. Keyboard-only users need this. */
 .membrane-toggle:focus-visible {
-  outline: 2px solid #8fb78f;
+  outline: 2px solid #00AA00;
   outline-offset: 2px;
 }
 .membrane-toggle::-webkit-details-marker { display: none; }
@@ -160,7 +160,7 @@ a:hover { background: #eef0fa; }
    The <details> element already announces expanded/collapsed state natively. */
 .membrane-toggle::after {
   content: "⌄" / "";
-  color: #8fb78f;
+  color: #00AA00;
   font-size: 16px;
   line-height: 1;
   margin-left: 12px;
@@ -197,7 +197,7 @@ a:hover { background: #eef0fa; }
    carries the meaning, not the prompt symbol). */
 .membrane dt::before {
   content: "$ " / "";
-  color: #8fb78f;
+  color: #00AA00;
   font-weight: 400;
 }
 .membrane dd {
@@ -290,7 +290,7 @@ button.copy {
    larger than the default .copy so it reads as the page's main action. */
 button.copy.primary {
   background: var(--text);
-  color: #8fb78f;
+  color: #00AA00;
   border-color: var(--text);
   padding: 20px 24px;
   font-size: 15px;
@@ -300,7 +300,7 @@ button.copy.primary:hover {
   background: #232323;
 }
 button.copy.primary:focus-visible {
-  outline: 2px solid #8fb78f;
+  outline: 2px solid #00AA00;
   outline-offset: 2px;
 }
 button.copy.primary .hint {
