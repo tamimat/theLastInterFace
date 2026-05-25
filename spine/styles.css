@@ -14,6 +14,11 @@
   --button-border: #c8c8c2;
   --button-hover: #f0f0ea;
 
+  /* The dark plate used by the membrane. In light mode it equals --text;
+     in dark mode it stays dark (and goes a touch deeper than --bg) so the
+     membrane never inverts to a light surface. */
+  --surface-inverse: #1a1a1a;
+
   /* Font families — three stacks used across the site. Tokenized so the
      stack lives in one place and components reach for a role, not a stack. */
   --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
@@ -31,6 +36,7 @@
   --cream-muted:  #c2bfb6;  /* secondary foreground on dark (membrane body) */
   --link-hover:   #eef0fa;  /* link hover wash */
   --caution-bg:   #FEFF9C;  /* work-in-progress badge fill */
+  --success-bg:   #e8f3ec;  /* .copy.copied flash fill */
   --success-text: #1f6f3a;  /* .copy.copied flash text + border */
 
   /* Spacing scale — 6 steps, 8px base.
@@ -198,7 +204,7 @@ a:hover { background: var(--link-hover); }
 .tailbone-line {
   font-size: 19px;
   font-style: italic;
-  color: #000;
+  color: var(--text);
   margin: 0 0 8px;
   margin-left: 0;
   line-height: 1.45;
@@ -227,7 +233,7 @@ a:hover { background: var(--link-hover); }
   font-size: 14px;
   font-weight: 500;
   color: var(--cream);
-  background: var(--text);
+  background: var(--surface-inverse);
   padding: 12px 22px;
   border-radius: 6px;
   display: flex;
@@ -267,7 +273,7 @@ a:hover { background: var(--link-hover); }
 .membrane {
   margin: 0;
   padding: 18px 22px 20px;
-  background: var(--text);
+  background: var(--surface-inverse);
   border-radius: 0 0 6px 6px;
   color: var(--cream-muted);
 }
@@ -325,7 +331,7 @@ a:hover { background: var(--link-hover); }
 /* Vertebra line on the index — the section's bone, shown beneath its title */
 .section-vertebra-line {
   display: block;
-  color: #000;
+  color: var(--text);
   font-size: 18px;
   font-style: italic;
   margin-top: 6px;
@@ -372,7 +378,7 @@ button.copy {
 }
 button.copy:hover { background: var(--button-hover); }
 button.copy.copied {
-  background: #e8f3ec;
+  background: var(--success-bg);
   border-color: var(--success-text);
   color: var(--success-text);
 }
@@ -424,7 +430,7 @@ button.copy.copied {
 .section-vertebra {
   font-size: 22px;
   font-style: italic;
-  color: #000;
+  color: var(--text);
   line-height: 1.45;
   margin: 0 0 8px;
   font-weight: 500;
@@ -437,12 +443,12 @@ button.copy.copied {
   font-size: 17px;
   line-height: 1.6;
   margin: 0 0 14px;
-  color: #2a2a2a;
+  color: var(--text);
 }
 
 .section-skeleton {
   font-size: 15px;
-  color: #7a7a7a;
+  color: var(--muted);
 }
 .section-skeleton p {
   margin: 0 0 12px;
@@ -555,4 +561,56 @@ button.copy.copied {
     flex-direction: column;
     gap: 12px;
   }
+}
+
+/* =============================================================================
+   THEME TOGGLE — tiny "on"/"off" label in the header. No border, no fill,
+   just a clickable word that flips html.theme-dark.
+   ========================================================================== */
+
+.theme-toggle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  padding: 4px 6px;
+  cursor: pointer;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.theme-toggle:hover {
+  color: var(--text);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* =============================================================================
+   DARK MODE — overrides the :root tokens. Membrane uses --surface-inverse,
+   which stays dark here, so the membrane is preserved as the deepest plate.
+   --cream and --cream-muted are unchanged in both modes (they were always
+   designed for use on a dark surface).
+   ========================================================================== */
+
+html.theme-dark {
+  --bg:            #15140f;
+  --text:          #e8e5dc;
+  --muted:         #8a8780;
+  --rule:          #2e2c26;
+  --link:          #8aa9ff;
+  --link-visited:  #c4a3ff;
+  --link-hover:    #1d2638;
+  --button-bg:     #1f1e18;
+  --button-border: #3a3832;
+  --button-hover:  #2a2922;
+  --green:         #4ade65;
+  --dark-hover:    #1a1916;
+  --caution-bg:    #6b5e1a;
+  --success-bg:    #1a3a26;
+  --success-text:  #5fdc6b;
+  --surface-inverse: #0a0907;
 }

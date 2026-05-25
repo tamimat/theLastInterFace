@@ -29,6 +29,7 @@
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
 <title>{{page_title}}</title>
+<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
@@ -46,6 +47,7 @@
 
   <header class="spine-header">
     <h1><span class="unit-tag">{{tag}}</span> {{title}}</h1>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark theme" aria-pressed="false">off</button>
   </header>
 
   <div class="label">Vertebra</div>
@@ -82,6 +84,7 @@
 <script src="build.js?v=BUILT"></script>
 <script src="content.js?v=BUILT"></script>
 <script src="render.js?v=BUILT"></script>
+<script src="theme-toggle.js?v=BUILT"></script>
 <script>
 (function() {
   const S = window.SPINE;
