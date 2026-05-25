@@ -34,6 +34,32 @@
   top: -1px;
 }
 
+.ds-character {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.ds-character-block {
+  border-left: 2px solid var(--rule);
+  padding-left: 16px;
+}
+.ds-character-heading {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  text-transform: lowercase;
+  letter-spacing: 0;
+  color: var(--text);
+}
+.ds-character-block p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
 .ds-intro {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--muted);
@@ -154,6 +180,48 @@ code {
   <div class="ds-intro-wrap">
     <p class="ds-intro"><svg class="iris-inline-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg> — The visual identity the book wears — every color, type style, and component the pages put on. A biometric in the same sense the book argues for: pattern inscribed in flesh, recognizable on sight. All the page styles below come from the same <code>styles.css</code>; this catalog is just the look at what's in it.</p>
   </div>
+
+  <!-- ===================================================================
+       CHARACTER
+       =================================================================== -->
+  <section class="ds-section" id="character">
+    <h2>character</h2>
+    <p class="ds-desc">What this design is and isn't. The rules that hold the look together.</p>
+
+    <div class="ds-character">
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">the page is a reader, not a product</h3>
+        <p>Every choice goes toward readability and disappearance. The design holds the text — it doesn't compete with it. No hero sections. No cards. No shadows. No conversion logic.</p>
+      </div>
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">hierarchy through type, not decoration</h3>
+        <p>Size, weight, family, and color do all the structural work. The hairline rule (<code>1px solid var(--rule)</code>) is the only divider treatment. There are no icons in the prose, no illustrations, no background textures.</p>
+      </div>
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">monochrome with one earned accent</h3>
+        <p>Black, off-white, grey, and the browser's default link blue. The phosphor green (<code>#8fb78f</code>) exists in one place: the primary copy button. It earns its place — it's the color of a terminal cursor, the thing that blinks and waits for input. Nothing else gets a color.</p>
+      </div>
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">honest about its state</h3>
+        <p>The work-in-progress badge isn't a disclaimer. It's a design decision. The site knows what it is and says so plainly. Finished-looking polish would be a lie.</p>
+      </div>
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">static</h3>
+        <p>No animations. No transitions. No motion. The only interaction that changes visible state is the copy button — and even that just swaps a word for 1.6 seconds. The eye icon in the footer is the sole exception: a swap, not an animation.</p>
+      </div>
+
+      <div class="ds-character-block">
+        <h3 class="ds-character-heading">found by link, not by search</h3>
+        <p>Robots are blocked. There is no SEO. The site reaches people because someone sent them the URL. That's intentional — consistent with the book's argument that authenticated, directed intent is more meaningful than ambient discovery.</p>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ===================================================================
        COLORS
