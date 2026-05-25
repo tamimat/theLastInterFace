@@ -353,9 +353,11 @@ button.copy.primary.copied {
 .footer-iris a {
   display: inline-flex;
   align-items: center;
+  background: none;
 }
 .footer-iris a:hover {
   opacity: 0.8;
+  background: none;
 }
 .footer-iris .icon-eye-closed { display: none; }
 .footer-iris a:hover .icon-eye { display: none; }
