@@ -41,7 +41,9 @@ if git diff --cached --name-only --diff-filter=ACMR \
      > /dev/null; then
   echo "pre-commit: spine asset/HTML staged — stamping cache-bust hash"
   node spine/stamp-assets.js
-  for h in spine/index.html spine/section.html spine/iris.html; do
+  # Stage every spine HTML the stamp (or build-content.js earlier) modified
+  # in the working tree. Glob picks up section-N.html files automatically.
+  for h in spine/*.html; do
     if [ -f "$h" ] && ! git diff --quiet -- "$h"; then
       git add "$h"
     fi
