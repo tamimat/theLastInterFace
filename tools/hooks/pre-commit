@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# pre-commit — rebuild spine/content.js when any spine source is staged.
+#
+# The deploy workflow uploads /spine/ as-is, so a stale content.js means
+# a stale rendered site. This hook closes that gap: edit a .md, commit,
+# and the regenerated content.js lands in the same commit.
+#
+# Triggers when any of these are staged:
+#   spine/*.md, spine/meta.json, spine/build-content.js
+#
+# To activate in a fresh clone:
+#   git config core.hooksPath tools/hooks
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# Anything spine-source staged?
+if ! git diff --cached --name-only --diff-filter=ACMR \
+     | grep -E '^spine/([^/]+\.md|meta\.json|build-content\.js)$' \
+     > /dev/null; then
+  exit 0
+fi
+
+echo "pre-commit: spine source staged — rebuilding content.js"
+node spine/build-content.js
+
+# If the rebuild changed content.js relative to the index, stage it.
+if ! git diff --cached --quiet -- spine/content.js \
+   || ! git diff --quiet -- spine/content.js; then
+  git add spine/content.js
+  echo "pre-commit: staged regenerated spine/content.js"
+fi
