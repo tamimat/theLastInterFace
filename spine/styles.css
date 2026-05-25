@@ -569,16 +569,15 @@ button.copy.copied {
    ========================================================================== */
 
 .theme-toggle {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
   color: var(--muted);
   background: transparent;
   border: 0;
-  padding: 4px 6px;
+  padding: 4px;
   cursor: pointer;
-  line-height: 1;
-  letter-spacing: 0.02em;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .theme-toggle:hover {
   color: var(--text);
@@ -588,6 +587,10 @@ button.copy.copied {
   outline-offset: 2px;
   border-radius: 2px;
 }
+/* Show the icon that matches the current state — sun in light, moon in dark. */
+.theme-toggle .icon-moon { display: none; }
+html.theme-dark .theme-toggle .icon-sun { display: none; }
+html.theme-dark .theme-toggle .icon-moon { display: inline; }
 
 /* =============================================================================
    DARK MODE — overrides the :root tokens. Membrane uses --surface-inverse,
