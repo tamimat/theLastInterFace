@@ -281,11 +281,6 @@ button.copy {
   flex: 1;
   width: auto;
 }
-.action-row button.copy.compact {
-  flex: 0 0 auto;
-  width: 110px;
-  text-align: center;
-}
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
 .copy .main {

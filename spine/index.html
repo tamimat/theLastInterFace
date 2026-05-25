@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile10">
+<link rel="stylesheet" href="styles.css?v=mobile11">
 </head>
 <body>
 <div class="wrap">
@@ -33,26 +33,16 @@
   <ol class="sections-list" id="spine-list"></ol>
 
   <div class="actions">
-    <div class="action-row">
-      <button class="copy" id="download-read">
-        <span class="main">Download read.md</span>
-        <span class="hint">for a human reading</span>
-      </button>
-      <button class="copy compact" id="copy-read">Copy</button>
-    </div>
-    <div class="action-row">
-      <button class="copy" id="download-llm">
-        <span class="main">Download llm.md</span>
-        <span class="hint">for an AI chat</span>
-      </button>
-      <button class="copy compact" id="copy-llm">Copy</button>
-    </div>
+    <button class="copy" id="copy-book">
+      <span class="main">Copy book</span>
+      <span class="hint">ready to paste into any AI chat</span>
+    </button>
   </div>
 
 </div>
 
 <script src="build.js?v=mobile2"></script>
-<script src="content.js?v=mobile10"></script>
+<script src="content.js?v=mobile11"></script>
 <script>
 (function() {
   const S = window.SPINE;
@@ -191,40 +181,9 @@
     return out.join('\n');
   }
 
-  function downloadMd(filename, content, btn) {
-    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    // Save innerHTML (not textContent) so multi-line button structure survives
-    // the flash + restore.
-    const original = btn.innerHTML;
-    btn.textContent = 'Downloaded ' + filename;
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.classList.remove('copied');
-    }, 1600);
-  }
-
-  // Filename suffix carries the git build number so each download lands as a
-  // distinct file (no auto-replace in the Downloads folder). Falls back to a
-  // plain name if SPINE_BUILD isn't loaded — happens only on a clone that
-  // hasn't run tools/gen-build-js.sh yet.
-  function downloadName(base) {
-    const b = window.SPINE_BUILD;
-    return (b && typeof b.count === 'number')
-      ? base + '-g' + b.count + '.md'
-      : base + '.md';
-  }
-
   function copyText(content, btn) {
     navigator.clipboard.writeText(content).then(() => {
+      // innerHTML save/restore so the multi-line button label survives the flash.
       const original = btn.innerHTML;
       btn.textContent = 'Copied';
       btn.classList.add('copied');
@@ -237,16 +196,12 @@
     });
   }
 
-  document.getElementById('download-read').addEventListener('click', function() {
-    downloadMd(downloadName('read'), buildReadMarkdown(), this);
-  });
-  document.getElementById('download-llm').addEventListener('click', function() {
-    downloadMd(downloadName('llm'), buildLlmMarkdown(), this);
-  });
-  document.getElementById('copy-read').addEventListener('click', function() {
-    copyText(buildReadMarkdown(), this);
-  });
-  document.getElementById('copy-llm').addEventListener('click', function() {
+  // Single primary action on the index page: copy the llm.md format to the
+  // clipboard, ready to paste straight into a chat. buildReadMarkdown is
+  // intentionally kept above (still defined, currently unreferenced from the
+  // UI) so it remains available for any future static-file or direct-URL
+  // generation step.
+  document.getElementById('copy-book').addEventListener('click', function() {
     copyText(buildLlmMarkdown(), this);
   });
 })();
