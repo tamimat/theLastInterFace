@@ -33,7 +33,16 @@
   <div class="section-skeleton" id="skeleton"></div>
 
   <div class="actions">
-    <button class="copy" id="copy-section">Copy this section (spine + skeleton)</button>
+    <div class="action-row">
+      <button class="copy" id="copy-section">
+        <span class="main">Copy this chapter</span>
+        <span class="hint">vertebra + spine + skeleton</span>
+      </button>
+      <button class="copy" id="copy-with-spines">
+        <span class="main">Copy chapter + all spines</span>
+        <span class="hint">+ every other chapter's spine</span>
+      </button>
+    </div>
   </div>
 
   <div class="nav" id="nav"></div>
@@ -125,13 +134,49 @@
     return lines.join('\n');
   }
 
+  // Cross-chapter context payload: the focus chapter in full + every other
+  // chapter's spine (the structural cross-reference layer, without skeletons
+  // or full prose). Read at click time from window.SPINE so it's always
+  // current. The focus chapter's own spine stays inside the full block —
+  // never duplicated in the spines section.
+  function buildChapterWithAllSpines() {
+    const out = [];
+    out.push('# Chapter ' + sec.n + '. ' + sec.title + ' — full chapter');
+    out.push('');
+    out.push('## Vertebra');
+    out.push('');
+    out.push(sec.vertebra);
+    out.push('');
+    out.push('## Spine');
+    out.push('');
+    out.push(sec.spine);
+    out.push('');
+    out.push('## Skeleton');
+    out.push('');
+    out.push(sec.skeleton);
+    out.push('');
+    out.push('---');
+    out.push('');
+    out.push('# Spines of other chapters (for cross-reference context)');
+    out.push('');
+    S.spine.forEach(other => {
+      if (other.n === sec.n) return;  // focus chapter's spine is already above
+      out.push('## Chapter ' + other.n + '. ' + other.title + ' — spine');
+      out.push('');
+      out.push(other.spine);
+      out.push('');
+    });
+    return out.join('\n');
+  }
+
   function copyText(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-      const original = btn.textContent;
+      // Save innerHTML so multi-line button structure survives the flash.
+      const original = btn.innerHTML;
       btn.textContent = 'Copied';
       btn.classList.add('copied');
       setTimeout(() => {
-        btn.textContent = original;
+        btn.innerHTML = original;
         btn.classList.remove('copied');
       }, 1400);
     }).catch(err => {
@@ -141,6 +186,9 @@
 
   document.getElementById('copy-section').addEventListener('click', function() {
     copyText(buildSectionContext(), this);
+  });
+  document.getElementById('copy-with-spines').addEventListener('click', function() {
+    copyText(buildChapterWithAllSpines(), this);
   });
 })();
 </script>
