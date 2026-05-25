@@ -229,7 +229,8 @@ out.push('window.SPINE = {');
 out.push('  meta: {');
 out.push('    lastUpdated: ' + dq(meta.lastUpdated) + ',');
 out.push('    title: ' + dq(meta.title) + ',');
-out.push('    repoUrl: ' + dq(meta.repoUrl));
+out.push('    repoUrl: ' + dq(meta.repoUrl) + ',');
+out.push('    baseUrl: ' + dq(meta.baseUrl));
 out.push('  },');
 out.push('');
 out.push('  tailbone: {');
@@ -324,6 +325,7 @@ for (let i = 0; i < allUnits.length; i++) {
 
   const filled = template
     .replace(/\{\{page_title\}\}/g,    htmlEscape(u.tag + ' — ' + meta.title))
+    .replace(/\{\{canonical_url\}\}/g, htmlEscape(meta.baseUrl + '/section-' + u.n + '.html'))
     .replace(/\{\{tag\}\}/g,           htmlEscape(u.tag))
     .replace(/\{\{title\}\}/g,         htmlEscape(u.title))
     .replace(/\{\{vertebra\}\}/g,      htmlEscape(u.vertebra))
