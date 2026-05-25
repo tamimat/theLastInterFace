@@ -52,17 +52,29 @@ h1 {
 
 /* Per-unit page headings (chapter, tailbone, atlas) are smaller than the
    index page's 'theLastInterface' h1 — they're identifying a piece of the
-   spine, not the whole project. The chapter prefix ('Chapter N.') is
-   smaller still and muted, so the chapter title is what reads as the title. */
+   spine, not the whole project. */
 #section-heading,
 #tailbone-heading,
 #atlas-heading {
-  font-size: 22px;
+  font-size: 24px;
 }
-.unit-prefix {
+
+/* Chapter pages: the "Chapter N" tag sits in the breadcrumb row (top right,
+   baseline-aligned with "← back to spine") so the h1 below carries only the
+   chapter title and gets the full width to breathe. */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+}
+.page-nav .back-link {
+  margin-bottom: 0;
+}
+.unit-tag {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 14px;
   color: var(--muted);
-  font-weight: 400;
 }
 
 .meta {

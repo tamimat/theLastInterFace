@@ -11,16 +11,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile7">
+<link rel="stylesheet" href="styles.css?v=mobile8">
 </head>
 <body>
 <div class="wrap">
 
-  <a href="index.html" class="back-link">← back to spine</a>
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag" id="unit-tag"></span>
+  </div>
 
   <header class="spine-header">
-    <h1 id="section-heading">Section</h1>
-    <div class="meta" id="meta"></div>
+    <h1 id="section-heading">Chapter</h1>
   </header>
 
   <div class="label">Vertebra</div>
@@ -67,13 +69,12 @@
     return;
   }
 
-  // Header
+  // Header — chapter tag sits in the breadcrumb row (top right), the h1 below
+  // carries just the chapter title. No git counter on chapter pages — the
+  // version label belongs on the spine index, not the per-chapter view.
   document.title = 'Chapter ' + sec.n + ' — ' + S.meta.title;
-  document.getElementById('section-heading').innerHTML =
-    '<span class="unit-prefix">Chapter ' + sec.n + '.</span> ' + sec.title;
-
-  const metaEl = document.getElementById('meta');
-  metaEl.innerHTML = (S.buildLabelHtml || S.lastUpdatedLinkHtml)();
+  document.getElementById('unit-tag').textContent = 'Chapter ' + sec.n;
+  document.getElementById('section-heading').textContent = sec.title;
 
   // Vertebra — the single load-bearing line
   document.getElementById('vertebra').textContent = sec.vertebra;
