@@ -535,5 +535,29 @@ code {
   </footer>
 
 </div>
+
+<script>
+(function () {
+  var wrap = document.querySelector('.iris-icon');
+  var pupil = wrap && wrap.querySelector('.icon-eye path:last-child');
+  if (!pupil) return;
+
+  pupil.style.transition = 'transform 0.18s ease-out';
+
+  document.addEventListener('mousemove', function (e) {
+    var r = wrap.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+    var cy = r.top + r.height / 2;
+    var dx = e.clientX - cx;
+    var dy = e.clientY - cy;
+    var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    var max = 3; /* px — keep it subtle */
+    var ease = Math.min(dist / 160, 1);
+    var tx = (dx / dist) * max * ease;
+    var ty = (dy / dist) * max * ease;
+    pupil.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+  });
+}());
+</script>
 </body>
 </html>
