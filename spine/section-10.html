@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#10 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#10</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Seed</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">What you can start tomorrow. The minimum viable dg. The reader's door into the vision.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>Everything else in the architecture requires civilizational infrastructure that does not yet exist — sovereign network storage, impersonal authenticated surfaces, the shared neural computer, Bitcoin-settled commerce. Decades of build-out.</p>
+      <p>The heartbeat does not require any of it. A person can begin tomorrow.</p>
+      <p>Continuous cardiac recording via existing hardware — wrist sensor, ear-worn device, chest strap, smart garment. Research-grade fidelity is already commercially available. Cryptographic signing of timestamped streams is solved engineering. Storage is trivial at lifetime scale. Within a year, the reader has something real. Within ten, something unprecedented. Within a lifetime, the thing the manifesto describes.</p>
+      <p>Then attach the rest, granularly. Photos. Videos. Voice recordings. Transactions. Locations. Documents. Anything the reader chooses, signed against the spine, held on sovereign hardware. A minimum viable dg. The seed of everything else.</p>
+      <p>This chapter is the reader's door. Most visionary writing leaves the reader admiring but passive. The seed makes the reader the first inhabitant of the world the book describes. They become the early dg-holders. Their lifetimes become the first donations the future mirror can draw on.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — the personal-data ownership movement: Tim Berners-Lee's Solid project, Inrupt, the personal-data-pod movement; the long lineage from quantified-self through lifelogging.</p>
+      <p>Wearable hardware survey (categories, not brand-specific, to avoid dating the prose): wrist sensors with continuous ECG; chest straps; ear-worn ECG and PPG; ring sensors; smart-garment ECG. The seed chapter should give the reader enough specificity to act without locking the book to specific products.</p>
+      <p>Local cryptographic signing toolchains: well-developed; pointers in the chapter or an appendix, not the main text.</p>
+      <p>The first attached layers are easy. Phone photos with hash anchored to spine. Voice memos with the same. Both provide immediate value (longitudinal context, search, recall) even without the rest of the architecture. The chapter should walk through one such addition concretely so the reader sees the texture.</p>
+      <p>Tone discipline: specific and actionable, not hand-wavy. The book has one chapter that has to look like an instruction manual — this is it.</p>
+      <p>Risk: dating the prose. Mitigation: list categories of hardware rather than brand names where possible; if specific products are named, acknowledge they will change.</p>
+      <p>Cross-link: chapter 5 (The Heartbeat) is the technical foundation. Chapter 14 (What Remains) is the eventual donation arc that gives the seed its civilizational meaning. Chapter 11 (Bridge) is what the seed depends on civilization eventually building.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-9.html">← #9 The Settlement</a><a href="section-11.html">#11 The Bridge →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 10);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

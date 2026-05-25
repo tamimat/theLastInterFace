@@ -11,200 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile19">
-<style>
-/* Page-specific styles for this reference doc only. Anything reused
-   across the book lives in styles.css; the styles below are scaffolding
-   for the catalog itself (swatch grid, code labels, etc.). */
-.iris-icon {
-  text-align: center;
-  margin-bottom: 16px;
-  color: var(--text);
-  position: sticky;
-  top: 24px;
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-.iris-icon.is-faded {
-  opacity: 0;
-  pointer-events: none;
-}
-.iris-icon svg {
-  transition: width 0.3s ease, height 0.3s ease;
-}
-.iris-icon.is-sticky svg {
-  width: var(--space-m);
-  height: var(--space-m);
-}
-.iris-icon a { display: inline-flex; color: var(--text); background: none; }
-.iris-icon a:hover { background: none; }
-.iris-icon .icon-eye-closed { display: none; }
-.iris-icon a:hover .icon-eye { display: none; }
-.iris-icon a:hover .icon-eye-closed { display: inline; }
-
-.iris-inline-icon {
-  display: inline;
-  vertical-align: middle;
-  position: relative;
-  top: -1px;
-}
-
-.ds-character {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.ds-character-block {
-  border-left: 2px solid var(--rule);
-  padding-left: 16px;
-}
-.ds-character-heading {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0 0 6px;
-  text-transform: lowercase;
-  letter-spacing: 0;
-  color: var(--text);
-}
-.ds-character-block p {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted);
-  margin: 0;
-}
-
-.ds-spacing-scale {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-}
-.ds-space-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.ds-space-bar {
-  height: 4px;
-  background: #00AA00;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-.ds-space-label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.ds-intro {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.55;
-  margin: 0 0 24px;
-}
-
-.ds-section {
-  margin-top: 56px;
-  border-top: 1px solid var(--rule);
-  padding-top: 24px;
-}
-.ds-section > h2 {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 16px;
-  margin: 0 0 6px;
-  letter-spacing: 0;
-  font-weight: 600;
-  text-transform: lowercase;
-}
-.ds-section > .ds-desc {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--muted);
-  font-size: 13px;
-  margin: 0 0 20px;
-}
-
-/* Swatch grid for color tokens. */
-.ds-swatches {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 12px;
-}
-.ds-swatch {
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  overflow: hidden;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
-}
-.ds-swatch-chip {
-  height: 72px;
-  border-bottom: 1px solid var(--rule);
-}
-.ds-swatch-meta {
-  padding: 8px 10px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-.ds-swatch-meta strong {
-  display: block;
-  color: var(--text);
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-.ds-swatch-meta .ds-note {
-  display: block;
-  margin-top: 2px;
-  font-style: italic;
-}
-
-/* Type specimen — sample text + small caption noting family/size. */
-.ds-typespec {
-  margin: 14px 0;
-}
-.ds-typespec-label {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 4px;
-}
-
-/* Wrapper that frames a live component sample (a button, a list, etc.). */
-.ds-sample {
-  padding: 20px;
-  border: 1px dashed var(--rule);
-  border-radius: 4px;
-  margin: 8px 0 12px;
-  background: var(--bg);
-}
-.ds-sample.dark {
-  background: #f0efe9;
-}
-.ds-caption {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
-  color: var(--muted);
-  margin: 4px 0 18px;
-}
-
-/* For samples that need to demo flex behaviour at smaller widths. */
-.ds-actions-wrap {
-  max-width: 520px;
-}
-
-/* Tiny code-like inline marker for class names. */
-code {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 12px;
-  color: var(--text);
-  background: #ecebe4;
-  padding: 1px 5px;
-  border-radius: 3px;
-}
-</style>
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+<link rel="stylesheet" href="iris.css?v=b97245c4">
 </head>
 <body>
 <div class="wrap">
@@ -240,8 +48,8 @@ code {
       </div>
 
       <div class="ds-character-block">
-        <h3 class="ds-character-heading">monochrome with one earned accent</h3>
-        <p>Black, off-white, grey, and the browser's default link blue. The phosphor green (<code>#00AA00</code>) exists in one place: the primary copy button. It earns its place — it's the color of a terminal cursor, the thing that blinks and waits for input. Nothing else gets a color.</p>
+        <h3 class="ds-character-heading">monochrome with one earned register</h3>
+        <p>Black, off-white, grey, and the browser's default link blue. The phosphor green (<code>--green</code> / <code>#00AA00</code>) earns its place as the color of a terminal cursor — the thing that blinks and waits for input. It appears in exactly one register: the terminal-prompt vocabulary that runs from the membrane disclosure (the <code>$</code> prefix and chevron) to the primary <em>Copy</em> button. One value, used wherever the register reaches. Outside it, nothing else gets a color.</p>
       </div>
 
       <div class="ds-character-block">
@@ -250,8 +58,8 @@ code {
       </div>
 
       <div class="ds-character-block">
-        <h3 class="ds-character-heading">static</h3>
-        <p>No animations. No transitions. No motion. The only interaction that changes visible state is the copy button — and even that just swaps a word for 1.6 seconds. The eye icon in the footer is the sole exception: a swap, not an animation.</p>
+        <h3 class="ds-character-heading">static — except for the eye</h3>
+        <p>The book pages are static. No animations, no transitions, no motion — the reading surface should disappear. Iris is the one place that breaks the rule: the eye watches the cursor, shrinks when you scroll past it, and fades when its footer twin appears. The page that catalogs the biometric wears one.</p>
       </div>
 
       <div class="ds-character-block">
@@ -267,9 +75,9 @@ code {
        =================================================================== -->
   <section class="ds-section" id="colors">
     <h2>colors</h2>
-    <p class="ds-desc">CSS tokens defined in <code>:root</code> plus the inline hex values used by the membrane and primary-action button.</p>
+    <p class="ds-desc">Every color lives in <code>:root</code> as a CSS custom property. Three groups: the monochrome page palette, the terminal-prompt vocabulary that runs through the membrane and primary button, and the small set of state colors (link hover, caution, success).</p>
 
-    <h3 style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:var(--muted);margin:16px 0 8px;text-transform:lowercase;">page palette (CSS variables)</h3>
+    <h3 class="ds-subheading">page palette</h3>
     <div class="ds-swatches">
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#fafaf7;"></div>
@@ -296,14 +104,6 @@ code {
         <div class="ds-swatch-meta"><strong>--rule</strong>#d8d8d2<span class="ds-note">hairlines, dividers, borders</span></div>
       </div>
       <div class="ds-swatch">
-        <div class="ds-swatch-chip" style="background:#8a6d00;"></div>
-        <div class="ds-swatch-meta"><strong>--lock-working</strong>#8a6d00<span class="ds-note">in-flux / draft state</span></div>
-      </div>
-      <div class="ds-swatch">
-        <div class="ds-swatch-chip" style="background:#1f6f3a;"></div>
-        <div class="ds-swatch-meta"><strong>--lock-locked</strong>#1f6f3a<span class="ds-note">settled / done state</span></div>
-      </div>
-      <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#ffffff;"></div>
         <div class="ds-swatch-meta"><strong>--button-bg</strong>#ffffff<span class="ds-note">default button fill</span></div>
       </div>
@@ -317,31 +117,39 @@ code {
       </div>
     </div>
 
-    <h3 style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:var(--muted);margin:32px 0 8px;text-transform:lowercase;">accent colors (inline)</h3>
+    <h3 class="ds-subheading">terminal vocabulary</h3>
     <div class="ds-swatches">
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#00AA00;"></div>
-        <div class="ds-swatch-meta"><strong>phosphor green</strong>#00AA00<span class="ds-note">membrane chevron, $ prefix, primary button text</span></div>
+        <div class="ds-swatch-meta"><strong>--green</strong>#00AA00<span class="ds-note">phosphor — the one earned accent. Membrane chevron + $ prefix, primary button label + hint, focus rings.</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#232323;"></div>
-        <div class="ds-swatch-meta"><strong>dark hover</strong>#232323<span class="ds-note">primary button + membrane hover state</span></div>
+        <div class="ds-swatch-meta"><strong>--dark-hover</strong>#232323<span class="ds-note">hover on dark surfaces (membrane toggle, primary button)</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#f5f3ec;"></div>
-        <div class="ds-swatch-meta"><strong>cream</strong>#f5f3ec<span class="ds-note">membrane toggle/heading text on dark</span></div>
+        <div class="ds-swatch-meta"><strong>--cream</strong>#f5f3ec<span class="ds-note">foreground on dark (membrane heading, primary button label)</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#c2bfb6;"></div>
-        <div class="ds-swatch-meta"><strong>cream-muted</strong>#c2bfb6<span class="ds-note">membrane body text on dark</span></div>
+        <div class="ds-swatch-meta"><strong>--cream-muted</strong>#c2bfb6<span class="ds-note">secondary foreground on dark (membrane body)</span></div>
       </div>
-      <div class="ds-swatch">
-        <div class="ds-swatch-chip" style="background:#fdf6d2;"></div>
-        <div class="ds-swatch-meta"><strong>caution yellow</strong>#fdf6d2<span class="ds-note">work-in-progress badge</span></div>
-      </div>
+    </div>
+
+    <h3 class="ds-subheading">states</h3>
+    <div class="ds-swatches">
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#eef0fa;"></div>
-        <div class="ds-swatch-meta"><strong>link hover</strong>#eef0fa<span class="ds-note">hover bg on links</span></div>
+        <div class="ds-swatch-meta"><strong>--link-hover</strong>#eef0fa<span class="ds-note">hover wash on inline links</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#FEFF9C;"></div>
+        <div class="ds-swatch-meta"><strong>--caution-bg</strong>#FEFF9C<span class="ds-note">work-in-progress badge fill</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#1f6f3a;"></div>
+        <div class="ds-swatch-meta"><strong>--success-text</strong>#1f6f3a<span class="ds-note">.copy.copied flash text + border (paired with inline #e8f3ec fill)</span></div>
       </div>
     </div>
   </section>
@@ -427,23 +235,17 @@ code {
     <div class="ds-sample">
       <button class="copy" style="width:auto;display:inline-block;">A default button</button>
     </div>
-    <div class="ds-caption">button.copy — system sans 14px, white fill, --button-border, padding 16px/20px</div>
+    <div class="ds-caption">button.copy — system sans 14px, white fill, --button-border, padding 16px/20px. Full-width when used as a page action; the .main/.hint span pair gives a two-line label.</div>
 
     <div class="ds-sample ds-actions-wrap">
       <div class="actions">
-        <div class="action-row">
-          <button class="copy">
-            <span class="main">Just this</span>
-            <span class="hint">self-contained</span>
-          </button>
-          <button class="copy">
-            <span class="main">This + others as spines</span>
-            <span class="hint">for cross-unit work</span>
-          </button>
-        </div>
+        <button class="copy">
+          <span class="main">Copy this spine</span>
+          <span class="hint">focus work</span>
+        </button>
       </div>
     </div>
-    <div class="ds-caption">.action-row — two buttons paired in a flex row; both flex:1 to share the width. Each button uses .copy with .main + .hint spans for the two-line label.</div>
+    <div class="ds-caption">.copy with .main + .hint — the two-line variant used as the single page action on each unit page.</div>
 
     <div class="ds-sample">
       <div class="actions">
@@ -466,7 +268,20 @@ code {
     <div class="ds-sample">
       <span class="work-in-progress">WORK IN PROGRESS</span>
     </div>
-    <div class="ds-caption">.work-in-progress — yellow pill (#ffd866), black Geist Mono 11px, padding 5px/10px</div>
+    <div class="ds-caption">.work-in-progress — pill, --caution-bg fill (#FEFF9C), --text Geist Mono 11px, padding 5px/10px</div>
+  </section>
+
+  <!-- ===================================================================
+       STATES
+       =================================================================== -->
+  <section class="ds-section" id="states">
+    <h2>states</h2>
+    <p class="ds-desc">One state is felt by the reader: <code>.copy.copied</code> — the soft green wash that confirms a clipboard write on the default button. The primary button doesn't get a color flash; its label simply swaps "Copy" → "Copied" for ~1.5s, and the word change carries the feedback.</p>
+
+    <div class="ds-sample">
+      <button class="copy copied" style="width:auto;display:inline-block;">Copied</button>
+    </div>
+    <div class="ds-caption">.copy.copied — #e8f3ec fill (inline), --success-text (#1f6f3a) border + text. Default-button flash.</div>
   </section>
 
   <!-- ===================================================================
@@ -478,7 +293,7 @@ code {
 
     <div class="ds-sample">
       <details class="membrane-wrap">
-        <summary class="membrane-toggle">Membrane</summary>
+        <summary class="membrane-toggle"><span>Membrane</span><svg class="membrane-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15L12 9L18 15"/></svg></summary>
         <dl class="membrane">
           <dt>No emojis</dt>
           <dd>Don't put them in prose, headers, file output, or anything that might be kept.</dd>
@@ -592,53 +407,6 @@ code {
 
 </div>
 
-<script>
-(function () {
-  var wrap = document.querySelector('.iris-icon');
-  var pupil = wrap && wrap.querySelector('.icon-eye path:last-child');
-  if (!pupil) return;
-
-  pupil.style.transition = 'transform 0.18s ease-out';
-
-  /* Sticky shrink — add class once page has scrolled past the icon's natural position */
-  var stickyThreshold = wrap.offsetTop;
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > stickyThreshold) {
-      wrap.classList.add('is-sticky');
-    } else {
-      wrap.classList.remove('is-sticky');
-    }
-  }, { passive: true });
-
-  /* Fade out sticky eye when the footer eye comes into view */
-  var footerEye = document.querySelector('.footer-iris');
-  if (footerEye && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      wrap.classList.toggle('is-faded', entries[0].isIntersecting);
-    }, { threshold: 0.1 }).observe(footerEye);
-  }
-
-  /* Cursor tracking — shared handler for both eyes */
-  var footerPupil = document.querySelector('.footer-iris .icon-eye path:last-child');
-  if (footerPupil) footerPupil.style.transition = 'transform 0.18s ease-out';
-
-  function trackEye(eyeEl, pupilEl, e) {
-    var r = eyeEl.getBoundingClientRect();
-    var cx = r.left + r.width / 2;
-    var cy = r.top + r.height / 2;
-    var dx = e.clientX - cx;
-    var dy = e.clientY - cy;
-    var dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    var max = 3;
-    var ease = Math.min(dist / 160, 1);
-    pupilEl.style.transform = 'translate(' + (dx / dist) * max * ease + 'px,' + (dy / dist) * max * ease + 'px)';
-  }
-
-  document.addEventListener('mousemove', function (e) {
-    trackEye(wrap, pupil, e);
-    if (footerPupil) trackEye(document.querySelector('.footer-iris'), footerPupil, e);
-  });
-}());
-</script>
+<script src="iris.js?v=b97245c4"></script>
 </body>
 </html>

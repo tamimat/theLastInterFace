@@ -1,183 +1,24 @@
 <!DOCTYPE html>
+<!--
+  Legacy redirect shim — the old per-unit URL was section.html?n=N. The
+  per-unit pages are now pre-rendered at section-N.html. This file exists
+  only so externally-shared old links keep working.
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fafaf7">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-<meta name="referrer" content="no-referrer">
 <title>theLastInterface</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile19">
+<script>
+(function () {
+  var n = new URLSearchParams(location.search).get('n');
+  var target = /^\d+$/.test(n || '') ? 'section-' + n + '.html' : 'index.html';
+  location.replace(target);
+}());
+</script>
 </head>
 <body>
-<div class="wrap">
-
-  <div class="page-nav">
-    <a href="index.html" class="back-link">← back to spine</a>
-    <span class="unit-tag" id="unit-tag"></span>
-  </div>
-
-  <header class="spine-header">
-    <h1 id="section-heading"></h1>
-  </header>
-
-  <div class="label">Vertebra</div>
-  <p class="section-vertebra" id="vertebra"></p>
-
-  <div class="label">Spine</div>
-  <div class="section-spine" id="spine"></div>
-
-  <div class="label">Skeleton</div>
-  <div class="section-skeleton" id="skeleton"></div>
-
-  <div class="actions">
-    <div class="action-row">
-      <button class="copy" id="copy-focus">
-        <span class="main">Just this</span>
-        <span class="hint">self-contained</span>
-      </button>
-      <button class="copy" id="copy-with-spines">
-        <span class="main">This + others as spines</span>
-        <span class="hint">for cross-unit work</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="nav" id="nav"></div>
-
-</div>
-
-<script src="build.js?v=mobile2"></script>
-<script src="content.js?v=mobile11"></script>
-<script>
-(function() {
-  const S = window.SPINE;
-
-  // Parse ?n=N (0 = tailbone, 1..17 = chapters, 18 = atlas).
-  const params = new URLSearchParams(window.location.search);
-  const n = parseInt(params.get('n'), 10);
-
-  // All 19 units in canonical order — tailbone (n=0), chapters (n=1..17), atlas (n=18).
-  // Single source of truth, defined in content.js so index + section share it.
-  const units = S.allUnits();
-  const getUnit = n => units.find(u => u.n === n) || null;
-  // Heading used wherever a unit needs to identify itself in long-form output
-  // (markdown headers, plain-text section markers). Same shape for every kind:
-  // "#N Title". The breadcrumb tag shows just unit.tag ("#N") since the h1
-  // already carries the title.
-  const unitHeading = u => u.tag + ' ' + u.title;
-
-  const unit = getUnit(n);
-  if (!unit) {
-    document.querySelector('.wrap').innerHTML =
-      '<a href="index.html" class="back-link">← back to spine</a>'
-      + '<p>Not found.</p>';
-    return;
-  }
-
-  // Header — tag in the breadcrumb row (top right), title in the h1 below.
-  // For tailbone/atlas the tag and title are the same word; that's fine —
-  // the visual structure matches chapters so the page reads consistently.
-  document.title = unit.tag + ' — ' + S.meta.title;
-  document.getElementById('unit-tag').textContent = unit.tag;
-  document.getElementById('section-heading').textContent = unit.title;
-
-  // Body
-  document.getElementById('vertebra').textContent = unit.vertebra;
-
-  const spineEl = document.getElementById('spine');
-  spineEl.innerHTML = '';
-  unit.spine.split(/\n\n+/).forEach(para => {
-    const p = document.createElement('p');
-    p.textContent = para;
-    spineEl.appendChild(p);
-  });
-
-  const skelEl = document.getElementById('skeleton');
-  skelEl.innerHTML = '';
-  unit.skeleton.split(/\n\n+/).forEach(para => {
-    const p = document.createElement('p');
-    p.textContent = para;
-    skelEl.appendChild(p);
-  });
-
-  // Prev/next nav — same '#N Title' label everywhere. Prev exists for n>0, next for n<18.
-  const prev = n > 0 ? getUnit(n - 1) : null;
-  const next = n < 18 ? getUnit(n + 1) : null;
-  const navEl = document.getElementById('nav');
-  navEl.innerHTML =
-      (prev ? '<a href="section.html?n=' + prev.n + '">← ' + unitHeading(prev) + '</a>' : '<span></span>')
-    + (next ? '<a href="section.html?n=' + next.n + '">' + unitHeading(next) + ' →</a>' : '<span></span>');
-
-  // Focus-only payload: ALL-CAPS labels (legacy format the previous
-  // per-unit copy buttons emitted). Includes notochord + this unit only.
-  function buildFocus() {
-    const lines = [];
-    lines.push('SPINE — ' + S.meta.title
-      + ' — last updated ' + S.meta.lastUpdated
-      + ' — focus: ' + unitHeading(unit));
-    lines.push('');
-    lines.push('NOTOCHORD');
-    lines.push(S.notochord);
-    lines.push('');
-    lines.push(unitHeading(unit));
-    lines.push('');
-    lines.push('VERTEBRA'); lines.push(unit.vertebra); lines.push('');
-    lines.push('SPINE');    lines.push(unit.spine);    lines.push('');
-    lines.push('SKELETON'); lines.push(unit.skeleton);
-    return lines.join('\n');
-  }
-
-  // Cross-context payload: focus in full + every other unit's spine
-  // (tailbone, all chapters, atlas — minus focus). Reads from S.allUnits()
-  // at click time so it's always current. Focus's own spine stays inside
-  // the full block and is never duplicated in the spines section.
-  function buildWithAllSpines() {
-    const out = [];
-    out.push('# ' + unitHeading(unit) + ' — full');
-    out.push('');
-    out.push('## Vertebra'); out.push(''); out.push(unit.vertebra); out.push('');
-    out.push('## Spine');    out.push(''); out.push(unit.spine);    out.push('');
-    out.push('## Skeleton'); out.push(''); out.push(unit.skeleton); out.push('');
-    out.push('---'); out.push('');
-    out.push('# Spines of other units (for cross-reference context)');
-    out.push('');
-    units.forEach(u => {
-      if (u.n === unit.n) return;
-      out.push('## ' + unitHeading(u) + ' — spine');
-      out.push('');
-      out.push(u.spine);
-      out.push('');
-    });
-    return out.join('\n');
-  }
-
-  function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-      // innerHTML save/restore so the multi-line button label survives.
-      const original = btn.innerHTML;
-      btn.textContent = 'Copied';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.classList.remove('copied');
-      }, 1400);
-    }).catch(err => {
-      alert('Copy failed: ' + err);
-    });
-  }
-
-  document.getElementById('copy-focus').addEventListener('click', function() {
-    copyText(buildFocus(), this);
-  });
-  document.getElementById('copy-with-spines').addEventListener('click', function() {
-    copyText(buildWithAllSpines(), this);
-  });
-})();
-</script>
+<p><a href="index.html">← back to spine</a></p>
 </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#17 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#17</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Choice</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">What humans are now being asked to choose, and why the choice matters.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>Two architectures stand in front of us.</p>
+      <p>One is the continuation of the present trajectory. Identity issued by platforms. Selves accumulated by surveillance capital. Intelligence concentrated in three or four labs and rented back to users by the query. Money mediated by gatekeepers who can freeze, reverse, and surveil. Devices that own us. Interfaces that consume us. The mirror owned by the few who built it.</p>
+      <p>The other is the architecture this book describes. Body as key. Sovereign accumulated self. Shared intelligence as infrastructure. Trustless settlement. Impersonal surfaces that become personal in the moment of use. The mirror held in common, faithful to what we bring to it.</p>
+      <p>The choice is not technological. The technology to build either is here, or near. The choice is about who gets to be sovereign — corporations, states, or the embodied human standing before the surface — and about what kind of creature the technology is built to honor.</p>
+      <p>The book is an argument for the second architecture. Not because it is finished. Not because it is easy. Because it is the only one consistent with what humans are.</p>
+      <p>We are meaning-transmitting organisms who must reach toward each other to connect. We have spent seventy years building tools that forgot it. We can build the next seventy years of tools that remember.</p>
+      <p>This book is not proposing Universe 26. It is proposing Universe Zero — the return of the human animal to the world it evolved for, with interface friction cleared away. The architecture builds the room. We must furnish it ourselves.</p>
+      <p>Not the end of struggle. The return of meaningful struggle, to the creatures who were built for it, after a long detour through screens.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Tone — declarative, not strident. Avoid recruitment-pitch register. The choice belongs to the reader; the book finishes its work by laying out the alternatives and the case for the second one.</p>
+      <p>Closing-image options:
+- Bare statement (current draft) — the architecture, the choice, the room to furnish.
+- Return to the grandmother (the opening image circles back) — she sensed, made meaning, told it. The architecture is in service of her ability to tell, and the child's ability to receive.
+- The great-grandchild meeting the dg a hundred years from now — completes the donation arc and ties chapter 14 into the closing.</p>
+      <p>Editorial open question: which of the three closings the book uses. The current spine is the bare statement. The other two are held in skeleton as live options.</p>
+      <p>Cross-link: the chapter completes the loop opened by chapter 1 (Sensor and the Universe) and the opening image of the grandmother. Chapter 13 (Two Mirrors) and chapter 14 (What Remains) provide the emotional weight the chapter draws on. Chapters 11 (Bridge) and 16 (Open Questions) provide the honest framing of what the second architecture costs.</p>
+      <p>Spine sentences candidates to keep in orbit through the chapter:
+- &quot;Not personal immortality. A faithful trace. A gift across time.&quot;
+- &quot;The architecture builds the room. We must furnish it ourselves.&quot;
+- &quot;Not Universe 26. Universe Zero.&quot;
+- &quot;Not the end of struggle. The return of meaningful struggle, to the creatures who were built for it, after a long detour through screens.&quot;</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-16.html">← #16 The Open Questions</a><a href="section-18.html">#18 Atlas →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 17);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

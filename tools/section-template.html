@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+  This file is a TEMPLATE — never opened in a browser directly.
+  spine/build-content.js reads it, fills in the {{...}} placeholders for
+  each of the 19 units (tailbone, 17 chapters, atlas), and emits
+  spine/section-0.html ... spine/section-18.html.
+
+  Edit this file to change the layout / chrome of every unit page at once.
+  Edit the markdown manuscript in spine/*.md to change the content.
+
+  Placeholders:
+    {{page_title}}    — document title, e.g. "#4 — theLastInterface"
+    {{tag}}           — short identifier in the breadcrumb, e.g. "#4"
+    {{title}}         — unit title (h1)
+    {{vertebra}}      — the italic load-bearing sentence
+    {{spine_html}}    — the spine prose, already wrapped in <p>...</p>
+    {{skeleton_html}} — same for the skeleton
+    {{prev_html}}     — prev-link anchor, or empty span if first unit
+    {{next_html}}     — next-link anchor, or empty span if last unit
+    {{n}}             — the unit's integer index (0..18), used by the
+                        inline script to look up the unit at click time
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>{{page_title}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=BUILT">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">{{tag}}</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>{{title}}</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">{{vertebra}}</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      {{spine_html}}
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      {{skeleton_html}}
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav">{{prev_html}}{{next_html}}</div>
+
+</div>
+
+<script src="build.js?v=BUILT"></script>
+<script src="content.js?v=BUILT"></script>
+<script src="render.js?v=BUILT"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === {{n}});
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

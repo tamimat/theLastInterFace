@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#2 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#2</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Inverted Relationship</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">Seventy years of humans serving machines. The reversal is overdue.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>For seventy years humans have served machines. We adapt to their menus, memorize their passwords, fill their forms, surrender our attention to their algorithms.</p>
+      <p>The machines were built to serve us. The relationship is inverted and must be reversed.</p>
+      <p>The last interface is the moment when this reversal completes — when the relationship between human and machine becomes simply understanding.</p>
+      <p>This is not a critique of any single product or company. The entire interface paradigm, since the dawn of personal computing, has organized itself around a fundamental compromise: humans must learn the machine, because the machine cannot yet understand the human. The compromise was reasonable when machines could barely parse a typed command. It is no longer reasonable. The machines have caught up. They can hear us, read us, infer what we mean. The interface has been waiting for the intelligence to catch up to the body. It has.</p>
+      <p>The word last is deliberately ambiguous: final in a series, ultimate or most refined, and ending or closure. All three readings serve the argument. The chapters that follow describe what the last interface is made of, what a person can begin building tomorrow, and what civilization must build between now and the finished world.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — Engelbart on augmenting human intellect; Weiser on calm/ubiquitous computing (1991); Norman on user-centered design; Bret Victor on the future of media and programming. McLuhan on tools shaping us back — the long arc of co-evolution sets up why this reversal matters now.</p>
+      <p>Push against — the AI-agents-replace-apps movement (close, but treats app dissolution as the goal; this work treats meaning-honoring as the goal, with app dissolution as a consequence). Sentient Design (Josh Clark &amp; Veronika Kindred) and the post-interface design literature are the most adjacent contemporary work.</p>
+      <p>Critical move: the chapter cannot land if the reader hears it as nostalgia or as anti-tech. It must land as a structural observation — the inversion is real, recent, contingent on what was technically possible, and now removable. The tone is engineering, not lament.</p>
+      <p>Open question: how many of the seven Parts to tease here. Current choice: tease the chapter spine (&quot;what follows: the architecture, what to start tomorrow, what civilization must build, the deeper meaning, the strongest objection, the choice&quot;). Alternative: stay abstract and let the reader discover the structure.</p>
+      <p>Cross-link: chapter 8 (Neural Computer) is the technical answer to why reversal is possible now; chapter 17 (The Choice) is the political stake of completing it.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-1.html">← #1 The Sensor and the Universe</a><a href="section-3.html">#3 The Body as Key →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 2);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

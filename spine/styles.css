@@ -1,17 +1,37 @@
-/* spine viewer — plain, focused, readable */
+/* =============================================================================
+   TOKENS — the entire palette, type, and spacing system the book wears.
+   ========================================================================== */
 
 :root {
+  /* Page palette — the monochrome surface and the link blue. */
   --bg: #fafaf7;
   --text: #1a1a1a;
   --muted: #6b6b6b;
   --link: #0033cc;
   --link-visited: #551a8b;
   --rule: #d8d8d2;
-  --lock-working: #8a6d00;
-  --lock-locked: #1f6f3a;
   --button-bg: #ffffff;
   --button-border: #c8c8c2;
   --button-hover: #f0f0ea;
+
+  /* Font families — three stacks used across the site. Tokenized so the
+     stack lives in one place and components reach for a role, not a stack. */
+  --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Accent palette — the terminal-prompt vocabulary (green + dark + cream)
+     plus the few state colors the rest of the system needs. The book's
+     character is "monochrome with one earned register" — the phosphor ramp
+     and the dark-on-dark surfaces are that register; everything else here
+     is a state color (link hover, copied flash, caution badge). */
+  --green:        #00AA00;  /* phosphor — the one earned accent. Primary copy button, membrane chevron + $ prefix, focus rings, hint text. */
+  --dark-hover:   #232323;  /* hover on dark surfaces (membrane toggle, primary button) */
+  --cream:        #f5f3ec;  /* foreground on dark (membrane heading, primary button label) */
+  --cream-muted:  #c2bfb6;  /* secondary foreground on dark (membrane body) */
+  --link-hover:   #eef0fa;  /* link hover wash */
+  --caution-bg:   #FEFF9C;  /* work-in-progress badge fill */
+  --success-text: #1f6f3a;  /* .copy.copied flash text + border */
 
   /* Spacing scale — 6 steps, 8px base.
      Use these for all structural margin/padding.
@@ -24,6 +44,10 @@
   --space-2xl: 96px;
 }
 
+/* =============================================================================
+   BASE
+   ========================================================================== */
+
 * { box-sizing: border-box; }
 
 html, body {
@@ -31,16 +55,24 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: 18px;
   line-height: 1.6;
 }
+
+/* =============================================================================
+   LAYOUT
+   ========================================================================== */
 
 .wrap {
   max-width: 720px;
   margin: 0 auto;
   padding: var(--space-xl) 32px var(--space-2xl);
 }
+
+/* =============================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
 
 header.spine-header {
   border-bottom: 1px solid var(--rule);
@@ -53,7 +85,7 @@ header.spine-header {
 }
 
 h1 {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 28px;
   font-weight: 600;
   margin: 0;
@@ -82,13 +114,13 @@ h1 {
   margin-bottom: 0;
 }
 .unit-tag {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   color: var(--muted);
 }
 
 .meta {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   color: var(--muted);
   white-space: nowrap;
   display: flex;
@@ -98,13 +130,35 @@ h1 {
 }
 .meta .last-updated {
   font-size: 12px;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   color: var(--link);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 a.last-updated:visited { color: var(--link-visited); }
-a.last-updated:hover { background: #eef0fa; }
+a.last-updated:hover { background: var(--link-hover); }
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-m);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+/* Prev/next nav at the bottom of per-unit pages. */
+.nav {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+/* =============================================================================
+   LINKS
+   ========================================================================== */
 
 a {
   color: var(--link);
@@ -112,10 +166,14 @@ a {
   text-underline-offset: 2px;
 }
 a:visited { color: var(--link-visited); }
-a:hover { background: #eef0fa; }
+a:hover { background: var(--link-hover); }
+
+/* =============================================================================
+   TYPOGRAPHY
+   ========================================================================== */
 
 .label {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -129,96 +187,6 @@ a:hover { background: #eef0fa; }
   margin: 0 0 8px;
 }
 
-/* Membrane — the working layer between author and AI. Collapsed by default so the
-   page stays focused on notochord + spine. The closed state is a dark bar; clicking it
-   unfolds the panel below, and bar + panel become one continuous rounded rectangle.
-   Set entirely in Geist Mono so the visual register reads as code/terminal, not prose.
-   One color accent — muted phosphor green — used on the disclosure chevron and the
-   "$" prefix in each rule. That green is the connective thread between the toggle
-   and the content. Inverted palette throughout: the page's text color becomes the
-   panel background; the page's background becomes the panel's foreground. */
-.membrane-wrap {
-  margin-top: 28px;
-  margin-bottom: 6px;
-}
-.membrane-toggle {
-  list-style: none;
-  cursor: pointer;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 14px;
-  font-weight: 500;
-  color: #f5f3ec;
-  background: var(--text);
-  padding: 12px 22px;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-}
-.membrane-toggle:hover {
-  background: #232323;
-}
-/* Explicit focus ring — when a custom background is set on <summary>, browsers
-   sometimes lose the default focus indicator. Keyboard-only users need this. */
-.membrane-toggle:focus-visible {
-  outline: 2px solid #00AA00;
-  outline-offset: 2px;
-}
-.membrane-toggle::-webkit-details-marker { display: none; }
-/* The "/" empty alt text marks the chevron as decorative for screen readers.
-   The <details> element already announces expanded/collapsed state natively. */
-.membrane-toggle::after {
-  content: "⌄" / "";
-  color: #00AA00;
-  font-size: 16px;
-  line-height: 1;
-  margin-left: 12px;
-}
-.membrane-wrap[open] > .membrane-toggle {
-  border-radius: 6px 6px 0 0;
-}
-.membrane-wrap[open] > .membrane-toggle::after {
-  content: "⌃" / "";
-}
-/* Panel — abuts the bar (no top margin, top corners squared) so the two shapes merge
-   into one rounded rectangle when open. */
-.membrane {
-  margin: 0;
-  padding: 18px 22px 20px;
-  background: var(--text);
-  border-radius: 0 0 6px 6px;
-  color: #e8e6df;
-}
-.membrane dt {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 14px;
-  font-weight: 600;
-  color: #f5f3ec;
-  margin-top: 18px;
-  margin-bottom: 4px;
-}
-.membrane dt:first-child {
-  margin-top: 0;
-}
-/* The "$" prefix is the shell-prompt nod. Muted phosphor green — heritage accent,
-   not costume. Decorative pseudo-element so it doesn't end up in copied text;
-   the "/" empty alt text tells screen readers to skip it (the rule's actual title
-   carries the meaning, not the prompt symbol). */
-.membrane dt::before {
-  content: "$ " / "";
-  color: #00AA00;
-  font-weight: 400;
-}
-.membrane dd {
-  margin: 0;
-  padding-left: 2ch;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 14px;
-  color: #c2bfb6;
-  line-height: 1.65;
-}
-
 /* Tailbone line on the index — the book's opening vertebra, top-level (not under a section number) */
 .tailbone-line {
   font-size: 19px;
@@ -228,6 +196,106 @@ a:hover { background: #eef0fa; }
   margin-left: 0;
   line-height: 1.45;
 }
+
+/* =============================================================================
+   MEMBRANE — the working layer between author and AI. Collapsed by default so
+   the page stays focused on notochord + spine. The closed state is a dark bar;
+   clicking it unfolds the panel below, and bar + panel become one continuous
+   rounded rectangle. Set entirely in Geist Mono so the visual register reads
+   as code/terminal, not prose. One color accent — phosphor green — used on
+   the disclosure chevron and the "$" prefix in each rule. That green is the
+   connective thread between the toggle and the content. Inverted palette
+   throughout: the page's text color becomes the panel background; the page's
+   background becomes the panel's foreground.
+   ========================================================================== */
+
+.membrane-wrap {
+  margin-top: 28px;
+  margin-bottom: 6px;
+}
+.membrane-toggle {
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cream);
+  background: var(--text);
+  padding: 12px 22px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.membrane-toggle:hover {
+  background: var(--dark-hover);
+}
+/* Explicit focus ring — when a custom background is set on <summary>, browsers
+   sometimes lose the default focus indicator. Keyboard-only users need this. */
+.membrane-toggle:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+.membrane-toggle::-webkit-details-marker { display: none; }
+/* Chevron — closed points down (expand), open points up (collapse). The SVG
+   is set aria-hidden in markup since <details> announces state natively.
+   The flip is an orientation swap, not an animation — no transition. */
+.membrane-chevron {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  color: var(--green);
+  transform: rotate(180deg);
+}
+.membrane-wrap[open] > .membrane-toggle {
+  border-radius: 6px 6px 0 0;
+}
+.membrane-wrap[open] > .membrane-toggle .membrane-chevron {
+  transform: rotate(0deg);
+}
+/* Panel — abuts the bar (no top margin, top corners squared) so the two shapes merge
+   into one rounded rectangle when open. */
+.membrane {
+  margin: 0;
+  padding: 18px 22px 20px;
+  background: var(--text);
+  border-radius: 0 0 6px 6px;
+  color: var(--cream-muted);
+}
+.membrane dt {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-top: 18px;
+  margin-bottom: 4px;
+}
+.membrane dt:first-child {
+  margin-top: 0;
+}
+/* The "$" prefix is the shell-prompt nod. Phosphor green — heritage accent,
+   not costume. Decorative pseudo-element so it doesn't end up in copied text;
+   the "/" empty alt text tells screen readers to skip it (the rule's actual
+   title carries the meaning, not the prompt symbol). */
+.membrane dt::before {
+  content: "$ " / "";
+  color: var(--green);
+  font-weight: 400;
+}
+.membrane dd {
+  margin: 0;
+  padding-left: 2ch;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--cream-muted);
+  line-height: 1.65;
+}
+
+/* =============================================================================
+   SPINE LIST — index page's chain of units (tailbone + chapters + atlas).
+   ========================================================================== */
 
 .sections-list {
   list-style: none;
@@ -241,7 +309,7 @@ a:hover { background: #eef0fa; }
 }
 
 .section-num {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   color: var(--muted);
   margin-right: 10px;
@@ -258,6 +326,10 @@ a:hover { background: #eef0fa; }
   line-height: 1.45;
 }
 
+/* =============================================================================
+   BUTTONS — default .copy on per-unit pages, .copy.primary on the index.
+   ========================================================================== */
+
 .actions {
   margin-top: var(--space-xl);
   padding-top: var(--space-m);
@@ -267,15 +339,8 @@ a:hover { background: #eef0fa; }
   gap: 10px;
 }
 
-/* Pair a primary download with a secondary copy button on the same row.
-   Primary fills the remaining space; secondary is fixed width on the right. */
-.action-row {
-  display: flex;
-  gap: 8px;
-}
-
 button.copy {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 14px;
   background: var(--button-bg);
   border: 1px solid var(--button-border);
@@ -286,93 +351,6 @@ button.copy {
   width: 100%;
   text-align: center;
 }
-
-.action-row button.copy {
-  flex: 1;
-  width: auto;
-}
-
-/* Primary action button — inverted palette, matching the Membrane toggle
-   at the top of the index page so the two dark elements bookend the
-   content. Text uses the same muted phosphor green that marks the "$"
-   prefix on the membrane rules, so the button reads as part of the same
-   terminal-prompt vocabulary already established on the page. Slightly
-   larger than the default .copy so it reads as the page's main action. */
-button.copy.primary {
-  background: var(--text);
-  color: #00AA00;
-  border-color: var(--text);
-  padding: 20px 24px;
-  font-size: 15px;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-}
-button.copy.primary:hover {
-  background: #232323;
-}
-button.copy.primary:focus-visible {
-  outline: 2px solid #00AA00;
-  outline-offset: 2px;
-}
-button.copy.primary .hint {
-  color: #007700;
-  margin-top: 4px;
-}
-/* Flash state — same green family, brighter so the state change is felt. */
-button.copy.primary.copied {
-  color: #44CC44;
-}
-
-/* Draft-state badge under the primary action — small yellow pill with
-   black Geist Mono inside, like a caution / TODO marker. */
-.work-in-progress {
-  align-self: center;
-  display: inline-block;
-  background: #fdf6d2;
-  color: #5a5a5a;
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  padding: 5px 10px;
-  border-radius: 3px;
-  margin-top: 14px;
-}
-
-/* Page footer — small unobtrusive links (e.g. design-system) at the very
-   bottom of the index page, well below the content. */
-.page-footer {
-  margin-top: var(--space-s);
-  padding-top: var(--space-m);
-  text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 10px;
-  line-height: 1.8;
-  color: var(--muted);
-}
-.page-footer a {
-  color: var(--muted);
-  text-decoration: none;
-}
-.page-footer a:hover {
-  color: var(--link);
-}
-.footer-iris {
-  margin-top: var(--space-l);
-  opacity: 0.4;
-}
-.footer-iris a {
-  display: inline-flex;
-  align-items: center;
-  background: none;
-}
-.footer-iris a:hover {
-  opacity: 0.8;
-  background: none;
-  color: inherit;
-}
-.footer-iris .icon-eye-closed { display: none; }
-.footer-iris a:hover .icon-eye { display: none; }
-.footer-iris a:hover .icon-eye-closed { display: inline; }
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
 .copy .main {
@@ -388,13 +366,63 @@ button.copy.primary.copied {
 button.copy:hover { background: var(--button-hover); }
 button.copy.copied {
   background: #e8f3ec;
-  border-color: #1f6f3a;
-  color: #1f6f3a;
+  border-color: var(--success-text);
+  color: var(--success-text);
 }
 
-/* section page — anatomical hierarchy: vertebra (large/black) > spine (medium/dark) > skeleton (small/gray) */
+/* Primary action button — inverted palette, matching the Membrane toggle
+   at the top of the index page so the two dark elements bookend the
+   content. Text uses the same phosphor green that marks the "$"
+   prefix on the membrane rules, so the button reads as part of the same
+   terminal-prompt vocabulary already established on the page. Slightly
+   larger than the default .copy so it reads as the page's main action. */
+button.copy.primary {
+  background: var(--text);
+  color: var(--green);
+  border-color: var(--text);
+  padding: 20px 24px;
+  font-size: 15px;
+  font-family: var(--font-mono);
+}
+button.copy.primary:hover {
+  background: var(--dark-hover);
+}
+button.copy.primary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+button.copy.primary .hint {
+  color: var(--green);
+  margin-top: 4px;
+}
+
+/* =============================================================================
+   BADGES
+   ========================================================================== */
+
+/* Draft-state badge under the primary action — small yellow pill with
+   muted Geist Mono inside, like a caution / TODO marker. */
+.work-in-progress {
+  align-self: center;
+  display: inline-block;
+  background: var(--caution-bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-top: 14px;
+}
+
+/* =============================================================================
+   PER-UNIT PAGE — anatomical hierarchy: vertebra (large/black) >
+   spine (medium/dark) > skeleton (small/gray).
+   ========================================================================== */
+
 .section-title {
-  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 var(--space-m);
@@ -429,26 +457,51 @@ button.copy.copied {
   line-height: 1.55;
 }
 
-.nav {
-  margin-top: var(--space-xl);
+/* =============================================================================
+   FOOTER — small unobtrusive links (license, design-system) at the very
+   bottom of the index page, well below the content.
+   ========================================================================== */
+
+.page-footer {
+  margin-top: var(--space-s);
   padding-top: var(--space-m);
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 14px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
 }
-
-.back-link {
-  display: inline-block;
-  margin-bottom: var(--space-m);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 14px;
+.page-footer a {
+  color: var(--muted);
+  text-decoration: none;
 }
+.page-footer a:hover {
+  color: var(--link);
+}
+.footer-iris {
+  margin-top: var(--space-l);
+  opacity: 0.4;
+}
+.footer-iris a {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+}
+.footer-iris a:hover {
+  opacity: 0.8;
+  background: none;
+  color: inherit;
+}
+.footer-iris .icon-eye-closed { display: none; }
+.footer-iris a:hover .icon-eye { display: none; }
+.footer-iris a:hover .icon-eye-closed { display: inline; }
 
-/* Mobile — phones and narrow tablets. Stack the header (h1 and meta side-by-side
+/* =============================================================================
+   MOBILE — phones and narrow tablets. Stack the header (h1 and meta side-by-side
    collides because the monospace h1 is wide); tighten gutters and scale type
-   down a touch so the long-form prose still has comfortable line length. */
+   down a touch so the long-form prose still has comfortable line length.
+   ========================================================================== */
+
 @media (max-width: 640px) {
   .wrap {
     padding: 32px 18px 80px;

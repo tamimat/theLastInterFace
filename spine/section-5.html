@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#5 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#5</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Heartbeat</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">The heartbeat is the unbroken thread of a life. Everything else attaches to it.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The dg needs an unbroken thread — a continuous signal that turns accumulated data into one continuous life. The heartbeat is that thread.</p>
+      <p>Cardiac morphology — the shape of the P-wave, the QRS complex, the T-wave — is distinctive between people. It is shaped by individual heart anatomy, conduction pathway, position in the chest. It has been studied as a biometric since the early 2000s. It is not the key. It is not static enough — it changes with exercise, illness, age, medication, stress, pregnancy. But it is continuous. The unbroken trace of one beating heart across a lifetime.</p>
+      <p>This is the precise distinction the book must hold: the heartbeat is for continuity, not for authentication. The body is the key (chapter 3). The heartbeat is the thread.</p>
+      <p>The heartbeat does five things. It turns the dg from accumulation into continuity — a pile of photos and transactions is not a self; the unbroken trace makes it one life. It anchors every other contribution in biological time — every photo, word, transaction, choice happens against a heartbeat that was yours in that exact moment. It exposes forgery — false history injected into a dg shows up as absence of matching cardiac signature. It gives the dg a definitive endpoint — when the heart stops, the lived dg stops, with no ambiguity between living self and donated trace. And it becomes a longitudinal health record richer than any medical system has held — diagnostic gold for the living, and for medicine across generations if donated.</p>
+      <p>Storage is trivial. Inter-beat intervals: roughly 50–100 MB per year, 5–10 GB across a lifetime. Full ECG waveform: 5–10 GB per year, 400–800 GB across a lifetime. Manageable on any modern device.</p>
+      <p>Discipline required. Lifetime health data is the most invasive personal information that exists. It must be ruthlessly local-only. The heartbeat trace lives on the personal device (chapter 6) and the user's sovereign storage. Never readable except through the body's key.</p>
+      <p>Everything else attaches to the thread. Images, videos, transactions, words spoken, documents, locations — strung along the heartbeat in biological time. Donation at death (chapter 14) can be granular or whole.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Naming note: this chapter was originally titled &quot;The Cardiac Spine&quot; and the body used &quot;spine&quot; as the metaphor for what the heartbeat does for the dg. When the book's structural metaphor adopted &quot;spine&quot; as the name for the chain of chapters, the term was retired here to prevent overloading: the chapter is now &quot;The Heartbeat&quot; and the metaphor is &quot;thread.&quot; Same continuity claim, no collision with the book's own spine. The phrase &quot;cardiac spine&quot; may survive in conversation as the original coined term, but the canonical book language is now &quot;the heartbeat&quot; / &quot;the thread.&quot;</p>
+      <p>Anchor — ECG-as-biometric literature from the early 2000s onward (Biel, Gutta, Hoekema; later Israel et al.; the more recent deep-learning approaches). Cardiac morphology distinctiveness is well established at the research level; population-scale uniqueness is not — which is precisely why the chapter draws the line at continuity rather than authentication.</p>
+      <p>Wearable-grade continuous ECG hardware (as of writing): Apple Watch, Withings ScanWatch, Polar H10 chest strap, Garmin chest straps, Whoop (PPG-derived), Oura ring (PPG-derived). Medical-grade chest straps and patch monitors. Emerging earbud and ring ECG. The seed (chapter 10) tells the reader where to start; this chapter establishes what it means.</p>
+      <p>Cryptographic timestamping of biological streams: solved engineering. RFC 3161 + hashchain. Local signing toolchains exist.</p>
+      <p>Open question: privacy paradox. Even ruthlessly local-only, the existence of the data creates a target. Compromise of one lifetime trace is catastrophic — both because of medical disclosure and because the continuity function is undermined. The book should engage this rather than wave it away.</p>
+      <p>Open question: cardiac morphology is not perfectly unique. The book must be precise: the heartbeat is for continuity, not for authentication. Chapter 16 (Open Questions) restates this.</p>
+      <p>Cross-link: chapter 10 (Seed) is what a reader can begin tomorrow — start recording the heartbeat on existing hardware. Chapter 4 (dg) is what the heartbeat threads together. Chapter 14 (What Remains) is what the heartbeat ends and gives shape to.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-4.html">← #4 The dg</a><a href="section-6.html">#6 The Personal Device →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 5);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

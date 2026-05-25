@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#13 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#13</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Two Mirrors</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">The AI is one mirror — faithful, holds the record. The deeper mirror is each human as mirror for other humans. The witness calls the spark forward.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The AI is one mirror — faithful, holds the record. The deeper mirror is each human as mirror for other humans. When I see you alive, my own aliveness wakes. The architecture, by removing interface noise, creates more occasions for this deeper mirroring.</p>
+      <p>This is not metaphor extended for its own sake. It is the structural answer to the loneliness epidemic. Atomization, partial exile at scale, technically-connected populations whose signals do not land — these are not random afflictions. They are the visible cost of an interface paradigm that has placed itself between humans, capturing the meaning that was meant to travel from one to another. When the architecture removes that interface, the human-to-human channel reopens. Not because the architecture creates connection. Because it stops obstructing it.</p>
+      <p>Reciprocity rotation. The architecture does not produce a hidden servant class. Today you serve, tomorrow you are served. Today you cook, tomorrow you are cooked for. Today you sing, tomorrow you listen. The wheel turns. Servant and served are roles humans pass through, not classes humans are assigned. The neural computer can take the interface labor — booking, navigating, translating, scheduling — without taking the human labor of cooking for another, holding another, witnessing another.</p>
+      <p>The witness calls the spark forward. The deepest reason to clear the interface is not efficiency. It is to make room for the moments when one human sees another and recognition happens. The architecture is in service of those moments. The technology is the room. The mirroring is the life inside it.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — Buber's I and Thou (the I-Thou encounter). Levinas on the face of the other. Honneth's recognition theory. The dialogical tradition broadly. The pragmatist line (Mead's symbolic interactionism — self formed in recognition by others). Phenomenology (Merleau-Ponty on intersubjective body; the lived encounter). Buddhist pratītyasamutpāda; Confucian ren.</p>
+      <p>Loneliness-epidemic literature: Vivek Murthy's Together; Klinenberg's Going Solo; the data on rising suicidal ideation in technically-connected populations. The atomization is real, the architecture is the proposed structural response.</p>
+      <p>Risk: do not over-claim. The architecture does not cure loneliness. It removes obstruction. The work of meeting still belongs to humans. The chapter should be careful not to sound like it is selling a solution to a problem the architecture only indirectly addresses.</p>
+      <p>Reciprocity rotation: the political economy implication. The architecture assumes a society that can rotate, not one with a permanent servant class. The book should engage the (legitimate) suspicion that automation always produces stratification, and explain why the architecture's particular shape resists that pattern (no platform extracts rent from the rotation; intent flows directly to the human who fulfills it).</p>
+      <p>Cross-link: chapter 15 (Universe 25) is the strongest counter-argument the architecture must meet. This chapter is the most positive case. The two chapters work as a pair.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-12.html">← #12 The Mirror</a><a href="section-14.html">#14 What Remains →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 13);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

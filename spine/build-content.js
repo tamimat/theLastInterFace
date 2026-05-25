@@ -8,8 +8,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const SPINE = __dirname;
+const REPO_ROOT = path.dirname(SPINE);
+const TEMPLATE_PATH = path.join(REPO_ROOT, 'tools', 'section-template.html');
 
 // --- helpers ---------------------------------------------------------------
 
@@ -272,3 +275,70 @@ out.push('};');
 const final = HEAD + '\n' + out.join('\n') + '\n' + TAIL;
 fs.writeFileSync(path.join(SPINE, 'content.js'), final);
 console.log('wrote spine/content.js (' + final.length + ' bytes; ' + unitFiles.length + ' unit files, ' + membrane.length + ' membrane rules)');
+
+// --- emit pre-rendered section-N.html for every unit ----------------------
+// Each page is a self-contained artifact — vertebra/spine/skeleton baked into
+// the HTML so the chapter reads with JS off. JS only runs to wire the Copy
+// buttons (which still need content.js for the cross-unit "with-spines" build).
+
+function htmlEscape(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function paragraphsHtml(text) {
+  return text.split(/\n\n+/).map(p => '<p>' + htmlEscape(p) + '</p>').join('\n      ');
+}
+
+// All units in canonical order, with the same shape allUnits() exposes at runtime.
+// Built locally so the build script doesn't have to load content.js.
+const allUnits = [
+  { kind: 'tailbone', n: tailbone.front.n, title: 'Tailbone',
+    vertebra: tailbone.vertebra, spine: tailbone.spine, skeleton: tailbone.skeleton },
+  ...chapters.map(c => ({ kind: 'chapter', n: c.front.n, title: c.front.title,
+    vertebra: c.vertebra, spine: c.spine, skeleton: c.skeleton })),
+  { kind: 'atlas', n: atlas.front.n, title: 'Atlas',
+    vertebra: atlas.vertebra, spine: atlas.spine, skeleton: atlas.skeleton }
+];
+allUnits.forEach(u => { u.tag = '#' + u.n; });
+
+// Strip the template's leading HTML comment — it's docs for the editor of
+// the template file, not content the browser should ship. The deployed
+// section-N.html files should be lean.
+const template = fs.readFileSync(TEMPLATE_PATH, 'utf8')
+  .replace(/^(<!DOCTYPE html>\n)<!--[\s\S]*?-->\n/, '$1');
+const lastN = allUnits[allUnits.length - 1].n;
+
+function navLink(u, prefix, suffix) {
+  if (!u) return '<span></span>';
+  return '<a href="section-' + u.n + '.html">' + prefix + htmlEscape(u.tag + ' ' + u.title) + suffix + '</a>';
+}
+
+for (let i = 0; i < allUnits.length; i++) {
+  const u = allUnits[i];
+  const prev = i > 0 ? allUnits[i - 1] : null;
+  const next = i < allUnits.length - 1 ? allUnits[i + 1] : null;
+
+  const filled = template
+    .replace(/\{\{page_title\}\}/g,    htmlEscape(u.tag + ' — ' + meta.title))
+    .replace(/\{\{tag\}\}/g,           htmlEscape(u.tag))
+    .replace(/\{\{title\}\}/g,         htmlEscape(u.title))
+    .replace(/\{\{vertebra\}\}/g,      htmlEscape(u.vertebra))
+    .replace(/\{\{spine_html\}\}/g,    paragraphsHtml(u.spine))
+    .replace(/\{\{skeleton_html\}\}/g, paragraphsHtml(u.skeleton))
+    .replace(/\{\{prev_html\}\}/g,     navLink(prev, '← ', ''))
+    .replace(/\{\{next_html\}\}/g,     navLink(next, '', ' →'))
+    .replace(/\{\{n\}\}/g,             String(u.n));
+
+  fs.writeFileSync(path.join(SPINE, 'section-' + u.n + '.html'), filled);
+}
+console.log('wrote ' + allUnits.length + ' pre-rendered section-N.html files');
+
+// --- restamp cache-bust hash ----------------------------------------------
+// content.js just changed and new section-N.html files exist; the hash needs
+// to reflect both. Running stamp-assets here keeps a manual `node spine/build-
+// content.js` call fully self-contained — no second command required.
+execSync('node ' + path.join(SPINE, 'stamp-assets.js'), { stdio: 'inherit' });

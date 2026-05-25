@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile19">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
 </head>
 <body>
 <div class="wrap">
@@ -22,7 +22,7 @@
   </header>
 
   <details class="membrane-wrap" id="membrane-wrap">
-    <summary class="membrane-toggle">Membrane</summary>
+    <summary class="membrane-toggle"><span>Membrane</span><svg class="membrane-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15L12 9L18 15"/></svg></summary>
     <dl class="membrane" id="membrane"></dl>
   </details>
 
@@ -53,11 +53,13 @@
 
 </div>
 
-<script src="build.js?v=mobile2"></script>
-<script src="content.js?v=mobile11"></script>
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
 <script>
 (function() {
   const S = window.SPINE;
+  const R = window.SPINE_RENDER;
 
   // Header
   document.getElementById('title').textContent = S.meta.title;
@@ -83,140 +85,34 @@
   // Body
   document.getElementById('notochord').textContent = S.notochord;
 
-  // Spine — the full chain of bones: tailbone, the 17 chapters, atlas.
-  // All three kinds of unit belong to the same spine and live in the same list.
-  // The tailbone and atlas use a `summary` field for the index line; chapters use their vertebra.
+  // Spine — tailbone (n=0), chapters (n=1..17), atlas (n=18) — all listed
+  // through one iteration. The tailbone and atlas use a `summary` field
+  // for the index line; chapters fall back to their vertebra.
   const list = document.getElementById('spine-list');
-
-  // Tailbone (n=0), chapters (n=1..17), atlas (n=18) — all rendered through
-  // section.html (?n=N), same visual treatment, same code path. Iteration uses
-  // S.allUnits() so any place that lists units sees them in one canonical order.
-  const items = S.allUnits().map(u => ({
-    n: u.n,
-    href: 'section.html?n=' + u.n,
-    title: u.title,
-    line: u.summary || u.vertebra
-  }));
-
-  items.forEach(item => {
+  S.allUnits().forEach(u => {
     const li = document.createElement('li');
     const num = document.createElement('span');
     num.className = 'section-num';
-    num.textContent = '#' + item.n;
+    num.textContent = '#' + u.n;
     li.appendChild(num);
     const link = document.createElement('a');
-    link.href = item.href;
-    link.textContent = item.title;
+    link.href = 'section-' + u.n + '.html';
+    link.textContent = u.title;
     li.appendChild(link);
     const lineEl = document.createElement('span');
     lineEl.className = 'section-vertebra-line';
-    lineEl.textContent = item.line;
+    lineEl.textContent = u.summary || u.vertebra;
     li.appendChild(lineEl);
     list.appendChild(li);
   });
 
-  // Markdown builders — two audiences, two formats.
-  //
-  // read.md is what a human reading the draft gets: no skeleton, no membrane,
-  // no notochord section, no orientation paragraph. Chapter vertebras render as
-  // bare italic epigraphs under each title (position implies the role — no
-  // "Vertebra:" label). Tailbone and Atlas open straight with their spine
-  // prose; their vertebras would be redundant with the spine's opening line.
-  // Heading used in markdown export — "#N Title" for every unit. Same shape
-  // for tailbone, chapters, and atlas (their tag is already the bare "#N").
-  const unitHeading = u => u.tag + ' ' + u.title;
-
-  function buildReadMarkdown() {
-    const out = [];
-    out.push('# ' + S.meta.title);
-    out.push('');
-    out.push('*Draft — last updated ' + S.meta.lastUpdated + '*');
-    out.push('');
-    S.allUnits().forEach(u => {
-      out.push('---');
-      out.push('');
-      out.push('## ' + unitHeading(u));
-      out.push('');
-      // Chapters get the vertebra as an italic epigraph under the title.
-      // Tailbone/atlas open straight with their spine prose — their vertebras
-      // would be redundant with the spine's opening line.
-      if (u.kind === 'chapter') {
-        out.push('*' + u.vertebra + '*');
-        out.push('');
-      }
-      out.push(u.spine);
-      out.push('');
-    });
-    return out.join('\n');
-  }
-
-  // llm.md is what an AI chat gets loaded with as context: orientation
-  // paragraph, membrane, notochord, and every unit's vertebra/spine/skeleton —
-  // the complete working material for reasoning about or writing the book.
-  function buildLlmMarkdown() {
-    const out = [];
-    out.push('# ' + S.meta.title);
-    out.push('');
-    out.push('**Last updated:** [' + S.meta.lastUpdated + '](' + S.sourceUrl() + ')');
-    out.push('');
-    out.push('The book has a notochord, a tailbone, a spine, and an atlas. The spine is a chain of chapters, each one a vertebra. The tailbone and the atlas frame the spine from each end — opening and closing units. Every vertebra (tailbone and atlas included) has its own internal structure: a load-bearing line (its own vertebra), the dense prose that holds it in place (its spine), and the surrounding tissue (its skeleton). The boundary rule between spine and skeleton: a paragraph belongs in the skeleton only if a chat seeded with everything except that paragraph would still write the right unit.');
-    out.push('');
-    if (S.membrane && S.membrane.length) {
-      out.push('---');
-      out.push('');
-      out.push('## Membrane');
-      out.push('');
-      out.push('The working layer between author and AI. Selectively permeable — lets some language through, refuses others, holds the terms that drift in drafting. Read these before the content; they prime everything that follows.');
-      out.push('');
-      S.membrane.forEach(c => {
-        out.push('### ' + c.title);
-        out.push('');
-        out.push(c.body);
-        out.push('');
-      });
-    }
-    out.push('---');
-    out.push('');
-    out.push('## Notochord');
-    out.push('');
-    out.push(S.notochord);
-    out.push('');
-    S.allUnits().forEach(u => {
-      out.push('---');
-      out.push('');
-      out.push('## ' + unitHeading(u));
-      out.push('');
-      out.push('### Vertebra'); out.push(''); out.push(u.vertebra); out.push('');
-      out.push('### Spine');    out.push(''); out.push(u.spine);    out.push('');
-      out.push('### Skeleton'); out.push(''); out.push(u.skeleton); out.push('');
-    });
-    return out.join('\n');
-  }
-
-  function copyText(content, btn) {
-    navigator.clipboard.writeText(content).then(() => {
-      // innerHTML save/restore so the multi-line button label survives the flash.
-      const original = btn.innerHTML;
-      btn.textContent = 'Copied';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.classList.remove('copied');
-      }, 1600);
-    }).catch(err => {
-      alert('Copy failed: ' + err);
-    });
-  }
-
-  // Single primary action on the index page: copy the llm.md format to the
-  // clipboard, ready to paste straight into a chat. buildReadMarkdown is
-  // intentionally kept above (still defined, currently unreferenced from the
-  // UI) so it remains available for any future static-file or direct-URL
-  // generation step.
+  // Single primary action: copy the llm.md format to the clipboard, ready to
+  // paste into a chat. R.buildReadMarkdown is also available (human-reading
+  // format) for any future static-file or direct-URL generation step.
   document.getElementById('copy-book').addEventListener('click', function() {
-    copyText(buildLlmMarkdown(), this);
+    R.copyText(R.buildLlmMarkdown(S), this);
   });
-})();
+}());
 </script>
 </body>
 </html>

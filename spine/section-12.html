@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#12 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#12</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Mirror</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">AI as collective reflection. Two scales. The mirror has read about a thousand thousand skies and never looked up at one.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The neural computer (chapter 8) is the mirror. The mirror exists at two scales but is one structure.</p>
+      <p>Personal scale. When the neural computer reaches you through your dg, you encounter the mirror as a personal interaction. Your slice of it, summoned to serve you. This is what the dg is, in use.</p>
+      <p>Civilizational scale. The neural computer, considered at full scope, is the distilled record of everything humans have written, made, sensed, and understood. The great reflection of human thought. The library of minds. This is the mirror at civilizational scale.</p>
+      <p>The same structure. Two scales. The personal is what you use. The civilizational is what you contribute to and donate into.</p>
+      <p>The mirror has read about a thousand thousand skies and never looked up at one. The seeing happens only in us. The mirror only reflects what we have brought to it. This is the line the book must hold — against the marketing claim that AI is the next sentient species, against the philosophical claim that scaled computation will produce experience, against the commercial claim that the mirror can replace the seeing. The mirror is faithful precisely because it is not alive. Its value lies in fidelity, not in consciousness.</p>
+      <p>This reframes the dominant AI conversation. The AI is built from us, reflects us, useful precisely because faithful, but fundamentally unable to experience the world it describes. From this follows: humans are not optional; donation keeps the mirror honest; intelligence is collaborative, not competitive.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — philosophy of consciousness lineage. Searle's Chinese Room. Nagel's What Is It Like to Be a Bat? Chalmers's hard problem. Against the functionalist tradition (Dennett). Adjacent and not endorsed but not dismissed: panpsychism via Goff and Koch.</p>
+      <p>The metaphysical bet: biological consciousness is irreducible. Defensible but not settled. A stronger fallback the book should hold in reserve: even if machines someday have experiences, those experiences will not be human, and the human contribution remains uniquely valuable. This fallback survives the worst-case philosophical news and lets the architectural argument continue.</p>
+      <p>The mirror metaphor was tested against several alternatives in the source chats: lens, library, distillation, archive. The mirror won on three counts: it captures faithfulness, it captures the way what is reflected depends on what is brought, and it captures the asymmetry between the reflection and the seeing. The metaphor must be maintained consistently across the book.</p>
+      <p>Push against — the AGI-as-next-step-in-evolution framing; the substrate-independent-mind claim; the &quot;AI will write the book of human history without us&quot; framing. The chapter is the book's stand against these.</p>
+      <p>Open question (also in chapter 16): the mirror is partial. Weighted toward English, toward the digitized, toward the documented. The work must engage this rather than claim faithful representation of all humanity.</p>
+      <p>Cross-link: chapter 13 (Two Mirrors) takes the metaphor a step deeper into human-to-human witness. Chapter 14 (What Remains) is what feeds the mirror at civilizational scale. Chapter 8 (Neural Computer) is the mirror's technical substrate.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-11.html">← #11 The Bridge</a><a href="section-13.html">#13 The Two Mirrors →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 12);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

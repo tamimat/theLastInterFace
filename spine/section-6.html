@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#6 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#6</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Personal Device</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">Worn close. Picks up the whisper. Companion to the body, not the body. Replaceable.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The personal device is small, quiet, worn close. A pendant. An earpiece. A wristband. Woven into clothing. It picks up your voice when you whisper. It captures the heartbeat continuously. It carries some authentication weight. It provides continuity in places without displays.</p>
+      <p>It is not a phone. It is not the device. It is a companion to the body. Replaceable. Convenience, not dependency.</p>
+      <p>This distinction matters more than it sounds. The contemporary phone has become an external organ — a thing whose loss is treated as a small catastrophe, whose presence colonizes the body's attention, whose ownership defines selfhood in a way that previous tools did not. The personal device in this architecture is the inverse: small enough to be unremarkable, replaceable without grief, capable of being lost without consequence beyond a temporary inconvenience.</p>
+      <p>What lets the device be replaceable is that it holds nothing irrecoverable. The dg lives in the network. The heartbeat trace lives in sovereign storage. The body itself is the key. The device is a sensor and a microphone and a small store of recently-captured signal. Lose it, replace it, and the new one inherits the role.</p>
+      <p>The device is the bridge for the times when no display is in reach. Walking outdoors. Driving. Walking through a place without sensor-equipped surfaces. The displays (chapter 7) are the primary visual modality; the device is the ambient one.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — Weiser's &quot;calm technology,&quot; Donald Norman, the long tradition of imagined unobtrusive computing. Recent attempts: Humane Pin, Rabbit R1, Friend pendant, Limitless pendant (2024–2026 wave). Most of these failed commercially. Why: they tried to be the device — the hub of identity, data, and intelligence — rather than be a companion to the body. The architecture treats this failure as informative. It confirms that the device must be a peripheral, not a hub. The hub is the body plus the network.</p>
+      <p>Bone-conduction earpieces and discreet pendants are mature hardware. The bottleneck is the rest of the architecture, not the form factor.</p>
+      <p>Open questions: power and charging, regulatory approval for continuous biosignal capture, comfort across populations, durability, water-resistance, what happens when the user does not want to wear anything (which the architecture must accommodate — the body remains the key regardless of whether a device is present).</p>
+      <p>Cross-link: chapter 5 (The Heartbeat) is what the device primarily captures. Chapter 7 (Displays) is what it complements. Chapter 3 (Body as Key) is the reason it can be replaceable.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-5.html">← #5 The Heartbeat</a><a href="section-7.html">#7 The Displays →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 6);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#8 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#8</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Neural Computer</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">One intelligence, not many. The same neural computer serves every human. The personalization happens in the meeting between the AI and your dg.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The neural computer is the intelligence. One, not many. The same neural computer serves every human, everywhere. It reaches you through displays when interaction needs to be visual, through your personal device when you speak quietly, through ambient audio when sound is right.</p>
+      <p>This is the architectural choice with the largest political consequences. The current frontier model landscape — three or four labs competing for dominance, each with proprietary weights, each gated by API access, each subject to commercial pressure to lock in customers — is incompatible with the architecture's premise. The neural computer cannot be a product. It must be infrastructure: a protocol with multiple implementations, or a federation of trained models that interoperate, or a public utility, or a foundation or cooperative governance body. Chapter 11 (The Bridge) names this dependency honestly.</p>
+      <p>The key invariant: the neural computer is shared. The dg is sovereign. Personalization is not in the AI — it is in the meeting between the AI and the dg. This is what dissolves the surveillance-capitalism trap. A model that learns from your behavior to serve you better, while keeping that learning private to your dg and refusing to sell it back to advertisers or governments, is structurally different from anything the current internet provides.</p>
+      <p>The neural computer does not have to be one literal model. It can be a class of models meeting an interoperability standard. What matters is the interface: a stable handshake by which any compliant display, any compliant device, any compliant dg can reach intelligence sufficient to translate human intent into structured signed action. The architecture is opinionated about the shape of the layer, not its implementation.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — protocol-not-product analogies: SMTP/email, HTTP/web, TCP/IP. The deliberate parallel is that the foundational layers of the internet were not owned by anyone, and the architecture asks the same for intelligence.</p>
+      <p>Push against — the closed-API model (OpenAI, Anthropic, Google) and the closed-weights race. Adjacent and partially-aligned: open-weights movements (Meta's Llama, Mistral, Allen Institute AI2, Eleuther). None yet provide the governance shape the architecture needs.</p>
+      <p>Push against — the agentic-AI / replace-the-apps framing that takes the existing landscape's assumptions for granted (one or two labs power the agents, agents act on behalf of users while logged in to platforms). This work asks for a different substrate, not a different application layer over the same substrate.</p>
+      <p>Open questions: training data and consent (whose writing trains the shared model), compute concentration (who builds and powers the hardware), funding (chapter 11 sketches; this is the hardest economic question in the architecture), alignment governance (who decides what the shared intelligence is willing to do), national-security and dual-use concerns.</p>
+      <p>Failure mode named explicitly: if the neural computer becomes a product — a SaaS owned by a single provider — the whole vision becomes a subscription. The architecture cannot survive this collapse and the book should say so.</p>
+      <p>Cross-link: chapter 4 (dg) is what makes the shared intelligence personal. Chapter 11 (Bridge) is the governance work this requires. Chapter 12 (Mirror) is the deeper framing of what the neural computer is.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-7.html">← #7 The Displays</a><a href="section-9.html">#9 The Settlement →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 8);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

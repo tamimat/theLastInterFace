@@ -1,0 +1,212 @@
+/* iris — page-local styles for the design-system reference catalog.
+   Anything reused across the book lives in styles.css; the styles below are
+   scaffolding for the catalog itself (sticky eye, swatch grid, code labels). */
+
+/* Sticky eye at the top of the page. Shrinks once scrolled past, fades when
+   the footer eye comes into view. */
+.iris-icon {
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--text);
+  position: sticky;
+  top: 24px;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.iris-icon.is-faded {
+  opacity: 0;
+  pointer-events: none;
+}
+.iris-icon svg {
+  transition: width 0.3s ease, height 0.3s ease;
+}
+.iris-icon.is-sticky svg {
+  width: var(--space-m);
+  height: var(--space-m);
+}
+.iris-icon a { display: inline-flex; color: var(--text); background: none; }
+.iris-icon a:hover { background: none; }
+.iris-icon .icon-eye-closed { display: none; }
+.iris-icon a:hover .icon-eye { display: none; }
+.iris-icon a:hover .icon-eye-closed { display: inline; }
+
+.iris-inline-icon {
+  display: inline;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* Character section — the manifesto blocks under the eye. */
+.ds-character {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.ds-character-block {
+  border-left: 2px solid var(--rule);
+  padding-left: 16px;
+}
+.ds-character-heading {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  text-transform: lowercase;
+  letter-spacing: 0;
+  color: var(--text);
+}
+.ds-character-block p {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Spacing scale — visual representation of the --space-* tokens. */
+.ds-spacing-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.ds-space-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ds-space-bar {
+  height: 4px;
+  background: var(--green);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.ds-space-label {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Intro paragraph at the top of the page. */
+.ds-intro {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 24px;
+}
+
+/* Section primitive — every catalog block opens with a hairline and h2. */
+.ds-section {
+  margin-top: 56px;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+}
+.ds-section > h2 {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  margin: 0 0 6px;
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.ds-section > .ds-desc {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+/* Swatch grid for color tokens. */
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+.ds-swatch {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.ds-swatch-chip {
+  height: 72px;
+  border-bottom: 1px solid var(--rule);
+}
+.ds-swatch-meta {
+  padding: 8px 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.ds-swatch-meta strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.ds-swatch-meta .ds-note {
+  display: block;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* Type specimen — sample text + small caption noting family/size. */
+.ds-typespec {
+  margin: 14px 0;
+}
+.ds-typespec-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Wrapper that frames a live component sample (a button, a list, etc.). */
+.ds-sample {
+  padding: 20px;
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+  margin: 8px 0 12px;
+  background: var(--bg);
+}
+.ds-sample.dark {
+  background: #f0efe9;
+}
+.ds-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin: 4px 0 18px;
+}
+
+/* For samples that need to demo flex behaviour at smaller widths. */
+.ds-actions-wrap {
+  max-width: 520px;
+}
+
+/* Subheading inside a section — used inside the colors block to label
+   the swatch sub-grids ("page palette", "terminal vocabulary", "states"). */
+.ds-subheading {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 32px 0 8px;
+  text-transform: lowercase;
+}
+.ds-subheading:first-of-type {
+  margin-top: 16px;
+}
+
+/* Tiny code-like inline marker for class names + token names. */
+code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  background: #ecebe4;
+  padding: 1px 5px;
+  border-radius: 3px;
+}

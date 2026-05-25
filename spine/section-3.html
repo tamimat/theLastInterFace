@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#3 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#3</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Body as Key</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">The key is you — face, fingerprint, voice, gait, and the involuntary signals that prove you are free in this moment.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>Your body is the key. Face geometry. Fingerprint. Voice. Gait. Iris. The constellation of involuntary signals that, taken together, are unforgeable. The body is the only thing you cannot lose, cannot forget, and cannot have stolen and reissued.</p>
+      <p>This is solved engineering, mostly. Depth-sensed face and ultrasonic fingerprint are robust. Voice and gait are improving. The cryptographic primitives that bind biometric reading to signed action are well understood. What is novel is not the biometrics. It is the second thing the body broadcasts: state.</p>
+      <p>The body also broadcasts whether you are free in this moment, or coerced. Pulse, skin conductance, micro-expressions, vocal tremor, the autonomic signature of fear. Stress signals enable silent duress detection. Authentication that includes physiological consent is not just who, but whether the who is currently sovereign over itself. A signed transaction made under a knife at your throat carries a different signal than one made freely. The architecture treats that difference as a first-class fact, not an edge case for fraud teams to clean up later.</p>
+      <p>Consent becomes biological. This is the foundational principle the work puts forward. Behavioral biometrics exist. Continuous authentication exists. Duress codes exist. The synthesis — the body broadcasts whether it is free, and authentication must include a check for biological consent in this moment — is what is new.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — cypherpunk lineage (cryptography as liberation: Tim May, David Chaum, Hal Finney, Eric Hughes, Satoshi). Self-sovereign identity (Christopher Allen's 2016 essay; Preukschat &amp; Reed; W3C SSI standards; Sovrin Foundation; ION; KILT). Affective computing (Rosalind Picard, 1997). Duress-code lineage in security: silent alarms, panic PINs, the SS-code traditions in physical security.</p>
+      <p>The synthesis claim: each of these exists in isolation; none has been combined into a continuous biological-consent layer fused with cryptographic-intent settlement. The book should make this combination explicit and claim it as one of the four moves this work uniquely adds.</p>
+      <p>Open questions (also surfaced in chapter 16): permanent biometric leakage — you cannot reissue a face. Bodies change with age, injury, disease. Coercion while unconscious. Recovery from biometric loss — social-recovery protocols still unsolved. Population-level inclusion: do all the modalities work across all bodies, skin tones, voices, accents, gait patterns. This must be engaged honestly; the architecture must not silently exclude the people current biometrics already fail.</p>
+      <p>Push against: the device-bound biometric model (FaceID stored in Secure Enclave, tied to a single device account) — useful but not what the architecture proposes. The architecture asks: what if the body itself, not a device storing a model of the body, is the key.</p>
+      <p>Cross-link: chapter 8 (Neural Computer) reads the signal. Chapter 9 (Settlement) is why this matters — Bitcoin transactions cannot be reversed, so the consent check has to happen before the signature, not after. Chapter 16 (Open Questions) names what remains unsolved.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-2.html">← #2 The Inverted Relationship</a><a href="section-4.html">#4 The dg →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 3);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

@@ -4,8 +4,9 @@
     {
       "name": "theLastInterface",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8008"],
-      "port": 8008
+      "runtimeArgs": ["-m", "http.server", "8008", "--directory", "/Users/tamimat/cc-projects/theLastInterface/spine"],
+      "port": 8008,
+      "autoPort": false
     }
   ]
 }

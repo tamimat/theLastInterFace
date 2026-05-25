@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#7 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#7</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Displays</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">Public surfaces. No account, no profile, no memory. Yours when you stand before them; forget you when you walk away.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>The displays are hardware with sensors and screens — wall panels, smart glass, paintings that are screens, slim tablets, the surfaces of vehicles and rooms. Owned by whoever bought them. No account. No profile. No memory. They become yours the moment you stand before them. They forget you when you walk away.</p>
+      <p>This is the inversion of device ownership. Today: your phone, your laptop, your account, your install, your subscription, your data on someone else's server tied to a username that is functionally a leash. Proposed: devices as impersonal infrastructure, personal only in the moment of authenticated use. Personalization in the human, not the object.</p>
+      <p>A display in a coffee shop is the coffee shop's. When you walk up, the body authenticates, the dg meets the neural computer through that surface, and for the duration of the interaction the surface is yours — your conversation, your context, your continuity. You leave. The surface returns to its idle state. The next person finds it empty.</p>
+      <p>This is what allows the architecture to scale. There is no per-user device proliferation, no account creation flow, no onboarding friction, no abandoned profiles, no orphaned data. Displays are public infrastructure, like windows and chairs and the tables of public space. They become personal only in the moment of authenticated use, and impersonal again the instant the body steps away.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Anchor — Weiser's ubiquitous computing (1991), the calm-computing tradition, Bret Victor on dynamic media. The Diamond Age (Stephenson) imagined a related model. The architecture's surface model is what those imagined futures were trying to become.</p>
+      <p>Push against — the Apple/Google/Microsoft model of identity-bound devices that follow users. The SaaS-account paradigm. The login-as-leash pattern.</p>
+      <p>Pre-existing analogues that point in this direction but are crippled by per-vendor login flows: ATMs, hotel TVs, airport kiosks, library workstations. Each of these wants to be the displays of the architecture; each is blocked by the absence of a universal body-as-key authentication primitive.</p>
+      <p>Open questions: device-level adversarial behavior (a display that lies about what it showed you), supply-chain trust, regulation of sensors in public space, accessibility for people who cannot easily approach a surface (the architecture must not silently exclude the disabled). Surveillance concerns from public-deployed cameras and microphones must be engaged.</p>
+      <p>Cross-link: chapter 6 (Personal Device) is what carries you between display surfaces. Chapter 8 (Neural Computer) is what the surface delivers. Chapter 3 (Body as Key) is the authentication primitive that makes the impersonal-by-default model work.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-6.html">← #6 The Personal Device</a><a href="section-8.html">#8 The Neural Computer →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 7);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

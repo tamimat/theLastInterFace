@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>#16 — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=b97245c4">
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">#16</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>The Open Questions</h1>
+  </header>
+
+  <div class="label">Vertebra</div>
+  <p class="section-vertebra">What this work does not yet resolve. Honest acknowledgment of uncertainty.</p>
+
+  <div class="label">Spine</div>
+  <div class="section-spine">
+      <p>Each of these requires its own treatment in the book. None defeats the architecture; each deserves serious work.</p>
+      <p>The metaphysical bet on consciousness. The work assumes biological consciousness is irreducible. Defensible but not settled. A stronger fallback: even if machines someday have experiences, those experiences will not be human, and the human contribution remains uniquely valuable.</p>
+      <p>Who counts as a sensor. Mice, dogs, octopuses, perhaps trees and bacteria also sense. The human distinction is meaning-transmission, not sensing alone. Anthropocentrism softened to: humans are the meaning-transmitters among the sensors.</p>
+      <p>Biometric vulnerability. Permanent leakage. Bodies change. Coercion while unconscious. Recovery from biometric loss. Social-recovery protocols. Unsolved.</p>
+      <p>Where the dg physically lives. &quot;In the network&quot; hides enormous questions. Whose hardware? What protocol? How is post-quantum encryption handled? Who pays for storage across centuries? Who custodies the dg after death?</p>
+      <p>The political reality of trustless settlement. States will resist. The path is conflict-laden, not technological roll-out.</p>
+      <p>The mirror is partial. Weighted toward English, toward the digitized, toward the documented. The work must engage this rather than claim faithful representation of all humanity.</p>
+      <p>The dg-after-death is a representation, not the person. Language must honor this. Faithful trace, not continuing self. The book must not commit poetic dishonesty here.</p>
+      <p>Consent across time. What you consent to today, you cannot consent to for all future uses. Ethical and legal frameworks for posthumous dg deployment do not yet exist.</p>
+      <p>The heartbeat is not perfectly unique. Cardiac morphology is distinctive enough to anchor continuity, but not unique enough to serve as the sole key. The book must be precise: the heartbeat is for continuity, not for authentication. The body remains the key; the heartbeat is the thread.</p>
+      <p>The Universe 25 question cannot be fully closed. The architecture creates conditions for flourishing. It cannot guarantee it. Some will use the cleared space well; some will not. This is a feature of human freedom, not a flaw to engineer around.</p>
+      <p>The purpose of this chapter is honesty. The book is stronger for naming what it does not solve.</p>
+  </div>
+
+  <div class="label">Skeleton</div>
+  <div class="section-skeleton">
+      <p>Each open question is a candidate for a longer treatment in a later edition. Some are technical (biometric recovery, post-quantum encryption, sovereign storage at scale). Some are political (states will resist trustless settlement; standards capture by incumbents). Some are philosophical (the consciousness bet, the question of who counts as a sensor). Some are ethical (consent across time, the partiality of the mirror, the language discipline around the dead).</p>
+      <p>The chapter's function: antibody against utopianism. It inoculates the reader against the suspicion that the author has not thought about the hard parts. The chapter is not weakness; it is the architecture's structural admission that it is a long project undertaken honestly.</p>
+      <p>Tone discipline: list the questions plainly without rhetorical hedging. Do not apologize. Do not over-engineer the answers. The reader is being told: these are real, the author knows they are real, the book proceeds anyway because the alternative is worse.</p>
+      <p>Cross-link: this is the chapter the bridge (chapter 11) hands the unresolved items to. It is also where chapter 12 (Mirror) admits its limits. Chapter 17 (The Choice) is what the open questions are addressed to — the reader still has to choose, even with the questions open.</p>
+  </div>
+
+  <div class="actions">
+    <button class="copy" id="copy-focus">
+      <span class="main">Copy this spine</span>
+      <span class="hint">focus work</span>
+    </button>
+  </div>
+
+  <div class="nav"><a href="section-15.html">← #15 Universe 25 and Universe Zero</a><a href="section-17.html">#17 The Choice →</a></div>
+
+</div>
+
+<script src="build.js?v=b97245c4"></script>
+<script src="content.js?v=b97245c4"></script>
+<script src="render.js?v=b97245c4"></script>
+<script>
+(function() {
+  const S = window.SPINE;
+  const R = window.SPINE_RENDER;
+  // Unit number is baked in at build time so the page knows which unit it is
+  // without parsing the URL. content.js still provides the cross-unit data
+  // the Copy buttons need (for "This + others as spines").
+  const unit = S.allUnits().find(u => u.n === 16);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    R.copyText(R.buildFocus(S, unit), this);
+  });
+}());
+</script>
+</body>
+</html>

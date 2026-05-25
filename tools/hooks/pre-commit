@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-# pre-commit — rebuild spine/content.js when any spine source is staged.
+# pre-commit — keep generated artifacts in sync with their sources.
 #
-# The deploy workflow uploads /spine/ as-is, so a stale content.js means
-# a stale rendered site. This hook closes that gap: edit a .md, commit,
-# and the regenerated content.js lands in the same commit.
+# Two responsibilities:
+#  1. Rebuild spine/content.js when any manuscript markdown is staged.
+#  2. Re-stamp the cache-bust hash on spine/*.html when any spine asset
+#     (CSS / JS / HTML) is staged.
 #
-# Triggers when any of these are staged:
-#   spine/*.md, spine/meta.json, spine/build-content.js
+# The deploy workflow uploads /spine/ as-is, so stale generated files mean
+# a stale rendered site. Both steps stage the regenerated files into the
+# same commit.
 #
 # To activate in a fresh clone:
 #   git config core.hooksPath tools/hooks
@@ -16,19 +18,32 @@ set -euo pipefail
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
-# Anything spine-source staged?
-if ! git diff --cached --name-only --diff-filter=ACMR \
+# --- 1. Rebuild content.js when manuscript markdown changes --------------
+
+if git diff --cached --name-only --diff-filter=ACMR \
      | grep -E '^spine/([^/]+\.md|meta\.json|build-content\.js)$' \
      > /dev/null; then
-  exit 0
+  echo "pre-commit: spine source staged — rebuilding content.js"
+  node spine/build-content.js
+  if ! git diff --cached --quiet -- spine/content.js \
+     || ! git diff --quiet -- spine/content.js; then
+    git add spine/content.js
+    echo "pre-commit: staged regenerated spine/content.js"
+  fi
 fi
 
-echo "pre-commit: spine source staged — rebuilding content.js"
-node spine/build-content.js
+# --- 2. Re-stamp cache-bust hash when any asset or HTML changes ----------
+# Runs after content.js rebuild above so the hash reflects the latest content.
+# Idempotent — no-op if the hash hasn't changed.
 
-# If the rebuild changed content.js relative to the index, stage it.
-if ! git diff --cached --quiet -- spine/content.js \
-   || ! git diff --quiet -- spine/content.js; then
-  git add spine/content.js
-  echo "pre-commit: staged regenerated spine/content.js"
+if git diff --cached --name-only --diff-filter=ACMR \
+     | grep -E '^spine/[^/]+\.(css|js|html)$' \
+     > /dev/null; then
+  echo "pre-commit: spine asset/HTML staged — stamping cache-bust hash"
+  node spine/stamp-assets.js
+  for h in spine/index.html spine/section.html spine/iris.html; do
+    if [ -f "$h" ] && ! git diff --quiet -- "$h"; then
+      git add "$h"
+    fi
+  done
 fi
