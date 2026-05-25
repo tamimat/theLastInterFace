@@ -116,36 +116,41 @@ h1 {
   text-align: center;
   margin-bottom: var(--space-m);
 }
-.page-mini-title {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--muted);
-  margin: 6px 0 0;
-}
 .page-bottom {
   text-align: center;
   margin-top: var(--space-l);
 }
+/* Default = X (close). On hover the X collapses toward the center and a
+   circle blooms out — one continuous gesture: contract, then release. This
+   is the one transition the reading surface allows; the rest stays static. */
 .page-close {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   color: var(--text);
   background: none;
   text-decoration: none;
 }
 .page-close:visited { color: var(--text); }
 .page-close:hover {
-  background: var(--button-hover);
+  background: none;
   color: var(--text);
 }
 .page-close svg {
+  position: absolute;
   width: 24px;
   height: 24px;
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Default frame: X at full scale, circle invisible + collapsed. */
+.page-close .icon-x      { opacity: 1; transform: scale(1); }
+.page-close .icon-circle { opacity: 0; transform: scale(0); }
+/* Hover frame: X collapses to a point, circle expands from one. */
+.page-close:hover .icon-x      { opacity: 0; transform: scale(0); }
+.page-close:hover .icon-circle { opacity: 1; transform: scale(1); }
 
 /* Prev/next nav at the bottom of per-unit pages. */
 .nav {
