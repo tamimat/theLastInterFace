@@ -11,14 +11,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=3e22240a">
+<link rel="stylesheet" href="styles.css?v=a05c7f3c">
 </head>
 <body>
 <div class="wrap">
 
   <header class="spine-header">
     <h1 id="title">Spine</h1>
-    <div class="meta" id="meta"></div>
   </header>
 
   <details class="membrane-wrap" id="membrane-wrap">
@@ -34,10 +33,10 @@
 
   <div class="actions">
     <button class="copy" id="copy-book">
-      <span class="main">Copy the spine</span>
+      <span class="main">Copy whole body</span>
       <span class="hint">paste into any AI chat</span>
     </button>
-    <span class="work-in-progress">v0 — work in progress</span>
+    <span class="work-in-progress" id="work-in-progress"></span>
   </div>
 
   <footer class="page-footer">
@@ -53,9 +52,9 @@
 
 </div>
 
-<script src="build.js?v=3e22240a"></script>
-<script src="content.js?v=3e22240a"></script>
-<script src="render.js?v=3e22240a"></script>
+<script src="build.js?v=a05c7f3c"></script>
+<script src="content.js?v=a05c7f3c"></script>
+<script src="render.js?v=a05c7f3c"></script>
 <script>
 (function() {
   const S = window.SPINE;
@@ -63,8 +62,12 @@
 
   // Header
   document.getElementById('title').textContent = S.meta.title;
-  const metaEl = document.getElementById('meta');
-  metaEl.innerHTML = (S.buildLabelHtml || S.lastUpdatedLinkHtml)();
+
+  // WIP badge — doubles as the version trail. buildLabelHtml emits a link
+  // to the current commit (git #N) when the deploy step has written
+  // build.js, or falls back to a "last updated <date>" link.
+  document.getElementById('work-in-progress').innerHTML =
+    (S.buildLabelHtml || S.lastUpdatedLinkHtml)() + ' — work in progress';
 
   // Membrane — collapsed by default; populate the <dl> inside the <details>.
   // Hide the whole block if no membrane rules are defined so the page stays clean.

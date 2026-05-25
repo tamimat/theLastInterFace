@@ -119,25 +119,6 @@ h1 {
   color: var(--muted);
 }
 
-.meta {
-  font-family: var(--font-sans);
-  color: var(--muted);
-  white-space: nowrap;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  line-height: 1.2;
-}
-.meta .last-updated {
-  font-size: 12px;
-  font-family: var(--font-mono);
-  color: var(--link);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-a.last-updated:visited { color: var(--link-visited); }
-a.last-updated:hover { background: var(--link-hover); }
-
 .back-link {
   display: inline-block;
   margin-bottom: var(--space-m);
@@ -374,8 +355,9 @@ button.copy.copied {
    BADGES
    ========================================================================== */
 
-/* Draft-state badge under the primary action — small yellow pill with
-   muted Geist Mono inside, like a caution / TODO marker. */
+/* Draft-state badge under the page action — small yellow pill in Geist Mono.
+   Doubles as the version trail: contains a link to the current commit so the
+   reader can see exactly which draft they're looking at. */
 .work-in-progress {
   align-self: center;
   display: inline-block;
@@ -388,6 +370,16 @@ button.copy.copied {
   padding: 5px 10px;
   border-radius: 3px;
   margin-top: 14px;
+}
+/* Inherit color so the link doesn't go blue on yellow; keep underline as
+   the only affordance that the "git #N" portion is clickable. */
+.work-in-progress a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.work-in-progress a:hover {
+  background: none;
 }
 
 /* =============================================================================
