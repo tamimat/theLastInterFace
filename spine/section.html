@@ -7,11 +7,11 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>Section — theLastInterface</title>
+<title>Chapter — theLastInterface</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile6">
+<link rel="stylesheet" href="styles.css?v=mobile7">
 </head>
 <body>
 <div class="wrap">
@@ -68,9 +68,9 @@
   }
 
   // Header
-  document.title = 'Section ' + sec.n + ' — ' + S.meta.title;
-  document.getElementById('section-heading').textContent =
-    'Section ' + sec.n + '. ' + sec.title;
+  document.title = 'Chapter ' + sec.n + ' — ' + S.meta.title;
+  document.getElementById('section-heading').innerHTML =
+    '<span class="unit-prefix">Chapter ' + sec.n + '.</span> ' + sec.title;
 
   const metaEl = document.getElementById('meta');
   metaEl.innerHTML = (S.buildLabelHtml || S.lastUpdatedLinkHtml)();

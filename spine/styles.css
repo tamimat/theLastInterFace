@@ -50,6 +50,21 @@ h1 {
   letter-spacing: 0;
 }
 
+/* Per-unit page headings (chapter, tailbone, atlas) are smaller than the
+   index page's 'theLastInterface' h1 — they're identifying a piece of the
+   spine, not the whole project. The chapter prefix ('Chapter N.') is
+   smaller still and muted, so the chapter title is what reads as the title. */
+#section-heading,
+#tailbone-heading,
+#atlas-heading {
+  font-size: 22px;
+}
+.unit-prefix {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
 .meta {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--muted);
