@@ -20,7 +20,7 @@ The `prepare-commit-msg` hook prepends `[N]` automatically — don't add it your
 
 ## Don't touch
 
-- `/chats/`, `/artifacts/`, `/archive/`, `/review/` — historical records.
+- `/chats/`, `/artifacts/`, `/archive/`, `/_review/` — historical records.
 - Old vocabulary in archived material. The current term is `notochord` (was `thesis`); don't backport the rename into archives.
 
 ## More
