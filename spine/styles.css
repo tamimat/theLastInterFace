@@ -357,6 +357,9 @@ button.copy.primary.copied {
 .footer-iris a:hover {
   opacity: 0.8;
 }
+.footer-iris .icon-eye-closed { display: none; }
+.footer-iris a:hover .icon-eye { display: none; }
+.footer-iris a:hover .icon-eye-closed { display: inline; }
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
 .copy .main {
