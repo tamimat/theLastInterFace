@@ -183,15 +183,16 @@ const HEAD = `// content.js — the canonical content of the book's spine.
 `;
 
 const TAIL = `
-// Unified view across the 19 units of the spine. Tailbone (n=0), chapters
-// (n=1..17), and atlas (n=18) all expose the same shape:
+// Unified view across the 19 units of the spine. All units (tailbone n=0,
+// chapters n=1..17, atlas n=18) carry n in their data; allUnits just adds
+// kind, derived tag, and a default title for the bookends.
 //   { kind, n, tag, title, vertebra, spine, skeleton }
 window.SPINE.allUnits = function() {
   const S = window.SPINE;
   return [
-    { kind: 'tailbone', n: 0, tag: '#0', title: 'Tailbone', ...S.tailbone },
-    ...S.spine.map(c => ({ kind: 'chapter', tag: '#' + c.n, ...c })),
-    { kind: 'atlas', n: 18, tag: '#18', title: 'Atlas', ...S.atlas }
+    { kind: 'tailbone', title: 'Tailbone', ...S.tailbone, tag: '#' + S.tailbone.n },
+    ...S.spine.map(c => ({ kind: 'chapter', ...c, tag: '#' + c.n })),
+    { kind: 'atlas', title: 'Atlas', ...S.atlas, tag: '#' + S.atlas.n }
   ];
 };
 
@@ -229,6 +230,7 @@ out.push('    repoUrl: ' + dq(meta.repoUrl));
 out.push('  },');
 out.push('');
 out.push('  tailbone: {');
+out.push('    n: ' + tailbone.front.n + ',');
 if (tailbone.front.summary) out.push('    summary: ' + tlit(tailbone.front.summary) + ',');
 out.push('    vertebra: ' + tlit(tailbone.vertebra) + ',');
 out.push('    spine: ' + tlit(tailbone.spine) + ',');
@@ -259,6 +261,7 @@ chapters.forEach((c, i) => {
 out.push('  ],');
 out.push('');
 out.push('  atlas: {');
+out.push('    n: ' + atlas.front.n + ',');
 if (atlas.front.summary) out.push('    summary: ' + tlit(atlas.front.summary) + ',');
 out.push('    vertebra: ' + tlit(atlas.vertebra) + ',');
 out.push('    spine: ' + tlit(atlas.spine) + ',');

@@ -21,33 +21,30 @@ Don't edit `content.js` by hand. It will be overwritten on the next build.
 | `meta.json` | `lastUpdated`, `title`, `repoUrl`. The only non-prose state. |
 | `notochord.md` | The book's one-sentence axial statement. |
 | `membrane.md` | The author-AI working layer. Each H2 is one rule. |
-| `01-tailbone.md` | The opening unit. |
-| `02-…` through `18-…` | The 17 chapters in order. |
-| `19-atlas.md` | The closing unit. |
+| `00-tailbone.md` | The opening unit (n=0). |
+| `01-…` through `17-…` | The 17 chapters in order (n=1..17). |
+| `18-atlas.md` | The closing unit (n=18). |
 | `build-content.js` | The build script. Reads the above, writes `content.js`. |
 | `content.js` | Generated. The form the browser pages consume. |
 
-Each unit file has YAML frontmatter (`title`, `summary` for tailbone/atlas, `n` for chapters) and three H2 sections: `Vertebra`, `Spine`, `Skeleton`. Prose verbatim — blank lines between paragraphs become `\n\n` in the emitted strings.
+Each unit file has YAML frontmatter (`n`, `title`, plus `summary` for the bookends) and three H2 sections: `Vertebra`, `Spine`, `Skeleton`. Prose verbatim — blank lines between paragraphs become `\n\n` in the emitted strings.
 
-## Filename number vs frontmatter `n` — read this before you "fix" it
+## Filename prefix == frontmatter `n`
 
-The filename prefix and the frontmatter `n` are deliberately not the same number, because they answer different questions.
-
-- **Filename prefix** numbers the files 01..19 in reading order — tailbone first, atlas last, chapters in between. One numbered chain across the whole spine.
-- **Frontmatter `n`** is the chapter's chapter-number, 1..17. Tailbone and atlas have no `n` — they aren't chapters. The renderer still uses `n` for chapter labels, so it has to match the original numbering.
-
-That means for every chapter file, the filename prefix is `n + 1`:
+Every unit's filename prefix is its `n`, zero-padded:
 
 | Filename | `n` | Title |
 | --- | --- | --- |
-| 01-tailbone.md | (none) | Tailbone |
-| 02-sensor-and-universe.md | 1 | The Sensor and the Universe |
-| 03-inverted-relationship.md | 2 | The Inverted Relationship |
+| 00-tailbone.md | 0 | Tailbone |
+| 01-sensor-and-universe.md | 1 | The Sensor and the Universe |
+| 02-inverted-relationship.md | 2 | The Inverted Relationship |
 | … | … | … |
-| 18-choice.md | 17 | The Choice |
-| 19-atlas.md | (none) | Atlas |
+| 17-choice.md | 17 | The Choice |
+| 18-atlas.md | 18 | Atlas |
 
-This is a transitional compromise. The renderer (`index.html`, `section.html`) still consumes the old shape — `window.SPINE.tailbone`, `window.SPINE.spine[]` indexed by `n`, `window.SPINE.atlas`. Folding everything into one numbered array is a follow-up, not this migration's job.
+Earlier in this migration the bookends had no `n` and the chapter prefixes were `n + 1`. That asymmetry is gone — tailbone and atlas now carry `n: 0` and `n: 18` in their frontmatter, the build script reads `n` uniformly from every file, and the renderer's `allUnits()` helper computes tags from the data instead of hardcoding `#0` and `#18`.
+
+The JS data shape that `content.js` emits is still `window.SPINE.{tailbone, spine[], atlas}` — chapters indexed by their `n` inside `spine[]`, bookends as named fields. Folding that into a single numbered array is a follow-up; not this migration's job.
 
 ## Notochord, not thesis
 

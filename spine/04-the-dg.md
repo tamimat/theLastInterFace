@@ -5,11 +5,11 @@ title: The dg
 
 ## Vertebra
 
-dg — lowercase. Sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.
+dg — sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.
 
 ## Spine
 
-dg is the term. Lowercase. Always. When first introduced, the concept unfolds through multiple resonances: your digital ghost, your data ghost, your djinn — and possibly your digital genius or your digital guardian, depending on how many threads you want to invoke in the chapter where it lands.
+dg is the term. When first introduced, the concept unfolds through multiple resonances: your digital ghost, your data ghost, your djinn — and possibly your digital genius or your digital guardian, depending on how many threads you want to invoke in the chapter where it lands.
 
 The spelling djinn with the j is deliberate. It preserves the lineage through Arabic and Roman traditions of the companion spirit. The slight unfamiliarity of the spelling on the page is part of the work the word does. Genie and genius descend from this root.
 
@@ -26,8 +26,6 @@ This matters philosophically. Digital-afterlife companies currently claim to bri
 Lineage of the word — djinn in Arabic folklore (Quranic and pre-Islamic), the daimon of Greek philosophy (Socrates' inner voice), the genius of Roman household religion, the guardian angel of Christian thought. All companion-spirit traditions that the dg deliberately invokes. The point of the resonance is not mysticism; it is that humans have for millennia imagined an entity that knows them in their particularity. The architecture names what that entity actually is.
 
 Push against — sovereign-identity literature (W3C SSI, Sovrin, ION, KILT) describes credentials; the dg is larger. It is a continuous growing representation of a life, not a wallet of verifiable claims. Digital-afterlife companies (HereAfter AI, Eternos, You Only Virtual, StoryFile, Re;memory) and the academic literature on griefbots and deadbots (Lindemann, Stokes, the CARE framework) are the closest contemporary work; the dg differs by being grown during life by the holder, not constructed posthumously from inherited material.
-
-Capitalization discipline: lowercase always. dg, not DG, not Dg, not the dg (capitalized after a period only because grammar). The lowercase visually de-emphasizes the term, which paradoxically makes the concept easier to use as a noun in flowing prose.
 
 Open question: where the dg physically lives. Who custodies it after death. Post-quantum encryption across centuries. The bridge chapter (11) names this. The open-questions chapter (16) does too.
 

@@ -43,6 +43,7 @@ window.SPINE = {
   },
 
   tailbone: {
+    n: 0,
     summary: `The grandmother. The chain in a single moment.`,
     vertebra: `A grandmother tells her grandchild what she learned in a long life. This is what we are.`,
     spine: `A grandmother tells her grandchild what she learned in a long life.
@@ -88,7 +89,7 @@ Cross-link: chapter 1 (The Sensor and the Universe) picks the grandmother back u
     },
     {
       title: "Terminology discipline",
-      body: `dg is always lowercase. "Faithful trace, not continuing self" (Ch. 14 — the donated dg is not the person). "The heartbeat is for continuity, not authentication" (Ch. 5). These lines drift in drafting; hold them.`
+      body: `dg is always lowercase — in vertebra, spine, skeleton, and in conversation. Never DG, never Dg. Rewrite to avoid sentence-initial dg rather than capitalize it. Use the form throughout; do not instruct about the form in the chapters themselves — the rule lives here, the text just renders it. "Faithful trace, not continuing self" (Ch. 14 — the donated dg is not the person). "The heartbeat is for continuity, not authentication" (Ch. 5). These lines drift in drafting; hold them.`
     }
   ],
 
@@ -189,8 +190,8 @@ Cross-link: chapter 8 (Neural Computer) reads the signal. Chapter 9 (Settlement)
     {
       n: 4,
       title: "The dg",
-      vertebra: `dg — lowercase. Sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.`,
-      spine: `dg is the term. Lowercase. Always. When first introduced, the concept unfolds through multiple resonances: your digital ghost, your data ghost, your djinn — and possibly your digital genius or your digital guardian, depending on how many threads you want to invoke in the chapter where it lands.
+      vertebra: `dg — sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.`,
+      spine: `dg is the term. When first introduced, the concept unfolds through multiple resonances: your digital ghost, your data ghost, your djinn — and possibly your digital genius or your digital guardian, depending on how many threads you want to invoke in the chapter where it lands.
 
 The spelling djinn with the j is deliberate. It preserves the lineage through Arabic and Roman traditions of the companion spirit. The slight unfamiliarity of the spelling on the page is part of the work the word does. Genie and genius descend from this root.
 
@@ -204,8 +205,6 @@ This matters philosophically. Digital-afterlife companies currently claim to bri
       skeleton: `Lineage of the word — djinn in Arabic folklore (Quranic and pre-Islamic), the daimon of Greek philosophy (Socrates' inner voice), the genius of Roman household religion, the guardian angel of Christian thought. All companion-spirit traditions that the dg deliberately invokes. The point of the resonance is not mysticism; it is that humans have for millennia imagined an entity that knows them in their particularity. The architecture names what that entity actually is.
 
 Push against — sovereign-identity literature (W3C SSI, Sovrin, ION, KILT) describes credentials; the dg is larger. It is a continuous growing representation of a life, not a wallet of verifiable claims. Digital-afterlife companies (HereAfter AI, Eternos, You Only Virtual, StoryFile, Re;memory) and the academic literature on griefbots and deadbots (Lindemann, Stokes, the CARE framework) are the closest contemporary work; the dg differs by being grown during life by the holder, not constructed posthumously from inherited material.
-
-Capitalization discipline: lowercase always. dg, not DG, not Dg, not the dg (capitalized after a period only because grammar). The lowercase visually de-emphasizes the term, which paradoxically makes the concept easier to use as a noun in flowing prose.
 
 Open question: where the dg physically lives. Who custodies it after death. Post-quantum encryption across centuries. The bridge chapter (11) names this. The open-questions chapter (16) does too.
 
@@ -564,6 +563,7 @@ Spine sentences candidates to keep in orbit through the chapter:
   ],
 
   atlas: {
+    n: 18,
     summary: `Universe Zero — the return of meaningful struggle.`,
     vertebra: `Not the end of struggle. The return of meaningful struggle, to the creatures who were built for it, after a long detour through screens.`,
     spine: `We have reached the end of the chain laid out in the tailbone. The grandmother told. The child received. We followed that act into the architecture of an interface that could honor it.
@@ -594,15 +594,16 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
   }
 };
 
-// Unified view across the 19 units of the spine. Tailbone (n=0), chapters
-// (n=1..17), and atlas (n=18) all expose the same shape:
+// Unified view across the 19 units of the spine. All units (tailbone n=0,
+// chapters n=1..17, atlas n=18) carry n in their data; allUnits just adds
+// kind, derived tag, and a default title for the bookends.
 //   { kind, n, tag, title, vertebra, spine, skeleton }
 window.SPINE.allUnits = function() {
   const S = window.SPINE;
   return [
-    { kind: 'tailbone', n: 0, tag: '#0', title: 'Tailbone', ...S.tailbone },
-    ...S.spine.map(c => ({ kind: 'chapter', tag: '#' + c.n, ...c })),
-    { kind: 'atlas', n: 18, tag: '#18', title: 'Atlas', ...S.atlas }
+    { kind: 'tailbone', title: 'Tailbone', ...S.tailbone, tag: '#' + S.tailbone.n },
+    ...S.spine.map(c => ({ kind: 'chapter', ...c, tag: '#' + c.n })),
+    { kind: 'atlas', title: 'Atlas', ...S.atlas, tag: '#' + S.atlas.n }
   ];
 };
 

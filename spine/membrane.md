@@ -24,4 +24,4 @@ Different chats producing different drafts of the same material is a feature. Do
 
 ## Terminology discipline
 
-dg is always lowercase. "Faithful trace, not continuing self" (Ch. 14 — the donated dg is not the person). "The heartbeat is for continuity, not authentication" (Ch. 5). These lines drift in drafting; hold them.
+dg is always lowercase — in vertebra, spine, skeleton, and in conversation. Never DG, never Dg. Rewrite to avoid sentence-initial dg rather than capitalize it. Use the form throughout; do not instruct about the form in the chapters themselves — the rule lives here, the text just renders it. "Faithful trace, not continuing self" (Ch. 14 — the donated dg is not the person). "The heartbeat is for continuity, not authentication" (Ch. 5). These lines drift in drafting; hold them.
