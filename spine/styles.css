@@ -25,8 +25,8 @@
      character is "monochrome with one earned register" — the phosphor ramp
      and the dark-on-dark surfaces are that register; everything else here
      is a state color (link hover, copied flash, caution badge). */
-  --green:        #00AA00;  /* phosphor — the one earned accent. Primary copy button, membrane chevron + $ prefix, focus rings, hint text. */
-  --dark-hover:   #232323;  /* hover on dark surfaces (membrane toggle, primary button) */
+  --green:        #00AA00;  /* phosphor — the one earned accent. Membrane chevron + $ prefix + focus ring. */
+  --dark-hover:   #232323;  /* hover on dark surfaces (membrane toggle) */
   --cream:        #f5f3ec;  /* foreground on dark (membrane heading, primary button label) */
   --cream-muted:  #c2bfb6;  /* secondary foreground on dark (membrane body) */
   --link-hover:   #eef0fa;  /* link hover wash */
@@ -368,32 +368,6 @@ button.copy.copied {
   background: #e8f3ec;
   border-color: var(--success-text);
   color: var(--success-text);
-}
-
-/* Primary action button — inverted palette, matching the Membrane toggle
-   at the top of the index page so the two dark elements bookend the
-   content. Text uses the same phosphor green that marks the "$"
-   prefix on the membrane rules, so the button reads as part of the same
-   terminal-prompt vocabulary already established on the page. Slightly
-   larger than the default .copy so it reads as the page's main action. */
-button.copy.primary {
-  background: var(--text);
-  color: var(--green);
-  border-color: var(--text);
-  padding: 20px 24px;
-  font-size: 15px;
-  font-family: var(--font-mono);
-}
-button.copy.primary:hover {
-  background: var(--dark-hover);
-}
-button.copy.primary:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 2px;
-}
-button.copy.primary .hint {
-  color: var(--green);
-  margin-top: 4px;
 }
 
 /* =============================================================================

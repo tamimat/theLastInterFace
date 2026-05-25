@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=b97245c4">
-<link rel="stylesheet" href="iris.css?v=b97245c4">
+<link rel="stylesheet" href="styles.css?v=3e22240a">
+<link rel="stylesheet" href="iris.css?v=3e22240a">
 </head>
 <body>
 <div class="wrap">
@@ -49,7 +49,7 @@
 
       <div class="ds-character-block">
         <h3 class="ds-character-heading">monochrome with one earned register</h3>
-        <p>Black, off-white, grey, and the browser's default link blue. The phosphor green (<code>--green</code> / <code>#00AA00</code>) earns its place as the color of a terminal cursor — the thing that blinks and waits for input. It appears in exactly one register: the terminal-prompt vocabulary that runs from the membrane disclosure (the <code>$</code> prefix and chevron) to the primary <em>Copy</em> button. One value, used wherever the register reaches. Outside it, nothing else gets a color.</p>
+        <p>Black, off-white, grey, and the browser's default link blue. The phosphor green (<code>--green</code> / <code>#00AA00</code>) earns its place as the color of a terminal cursor — the thing that blinks and waits for input. It appears in exactly one register: the membrane disclosure — the <code>$</code> prefix on each rule and the chevron on the toggle. Outside it, nothing else gets a color.</p>
       </div>
 
       <div class="ds-character-block">
@@ -75,7 +75,7 @@
        =================================================================== -->
   <section class="ds-section" id="colors">
     <h2>colors</h2>
-    <p class="ds-desc">Every color lives in <code>:root</code> as a CSS custom property. Three groups: the monochrome page palette, the terminal-prompt vocabulary that runs through the membrane and primary button, and the small set of state colors (link hover, caution, success).</p>
+    <p class="ds-desc">Every color lives in <code>:root</code> as a CSS custom property. Three groups: the monochrome page palette, the terminal-prompt vocabulary that runs through the membrane, and the small set of state colors (link hover, caution, success).</p>
 
     <h3 class="ds-subheading">page palette</h3>
     <div class="ds-swatches">
@@ -85,7 +85,7 @@
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#1a1a1a;"></div>
-        <div class="ds-swatch-meta"><strong>--text</strong>#1a1a1a<span class="ds-note">body text, h1, primary button</span></div>
+        <div class="ds-swatch-meta"><strong>--text</strong>#1a1a1a<span class="ds-note">body text, h1, membrane surface</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#6b6b6b;"></div>
@@ -121,11 +121,11 @@
     <div class="ds-swatches">
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#00AA00;"></div>
-        <div class="ds-swatch-meta"><strong>--green</strong>#00AA00<span class="ds-note">phosphor — the one earned accent. Membrane chevron + $ prefix, primary button label + hint, focus rings.</span></div>
+        <div class="ds-swatch-meta"><strong>--green</strong>#00AA00<span class="ds-note">phosphor — the one earned accent. Membrane chevron + $ prefix + focus ring. Nothing else.</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#232323;"></div>
-        <div class="ds-swatch-meta"><strong>--dark-hover</strong>#232323<span class="ds-note">hover on dark surfaces (membrane toggle, primary button)</span></div>
+        <div class="ds-swatch-meta"><strong>--dark-hover</strong>#232323<span class="ds-note">hover on the membrane toggle</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#f5f3ec;"></div>
@@ -230,7 +230,7 @@
        =================================================================== -->
   <section class="ds-section" id="buttons">
     <h2>buttons</h2>
-    <p class="ds-desc">Default <code>.copy</code> is the neutral button used on per-unit pages. <code>.copy.primary</code> is the dark-fill, phosphor-green-text primary action — used once on the index page for "Copy book."</p>
+    <p class="ds-desc">One button style across the site — neutral <code>.copy</code> with a two-line label. The index uses it to copy the whole spine; each unit page uses it to copy its own focus payload. No inverted/primary variant — the bar above (membrane) is the only dark element on the page.</p>
 
     <div class="ds-sample">
       <button class="copy" style="width:auto;display:inline-block;">A default button</button>
@@ -246,16 +246,6 @@
       </div>
     </div>
     <div class="ds-caption">.copy with .main + .hint — the two-line variant used as the single page action on each unit page.</div>
-
-    <div class="ds-sample">
-      <div class="actions">
-        <button class="copy primary">
-          <span class="main">Copy book</span>
-          <span class="hint">ready to paste into any AI chat</span>
-        </button>
-      </div>
-    </div>
-    <div class="ds-caption">.copy.primary — inverted: dark fill (--text), phosphor green text (#00AA00), Geist Mono, 20px/24px padding, 15px font. Page's primary CTA.</div>
   </section>
 
   <!-- ===================================================================
@@ -276,7 +266,7 @@
        =================================================================== -->
   <section class="ds-section" id="states">
     <h2>states</h2>
-    <p class="ds-desc">One state is felt by the reader: <code>.copy.copied</code> — the soft green wash that confirms a clipboard write on the default button. The primary button doesn't get a color flash; its label simply swaps "Copy" → "Copied" for ~1.5s, and the word change carries the feedback.</p>
+    <p class="ds-desc">One state is felt by the reader: <code>.copy.copied</code> — a soft green wash that confirms a clipboard write. The label also swaps "Copy" → "Copied" for ~1.5s; the wash and the word change carry the feedback together.</p>
 
     <div class="ds-sample">
       <button class="copy copied" style="width:auto;display:inline-block;">Copied</button>
@@ -407,6 +397,6 @@
 
 </div>
 
-<script src="iris.js?v=b97245c4"></script>
+<script src="iris.js?v=3e22240a"></script>
 </body>
 </html>
