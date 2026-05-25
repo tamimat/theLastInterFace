@@ -76,6 +76,29 @@
   margin: 0;
 }
 
+.ds-spacing-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.ds-space-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ds-space-bar {
+  height: 4px;
+  background: var(--text);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.ds-space-label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .ds-intro {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--muted);
@@ -530,6 +553,23 @@ code {
     <div class="ds-typespec">
       <code>border-top: 1px solid var(--rule)</code>
       <div class="ds-typespec-label">the only divider treatment used — header underline, actions delimiter, ds-section openers.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       SPACING
+       =================================================================== -->
+  <section class="ds-section" id="spacing">
+    <h2>spacing</h2>
+    <p class="ds-desc">Six-step scale defined in <code>:root</code>. All structural margin and padding uses these tokens. Component micro-values (≤14px) stay hardcoded.</p>
+
+    <div class="ds-spacing-scale">
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-xs)"></div><span class="ds-space-label"><code>--space-xs</code> 8px — tight internal gaps</span></div>
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-s)"></div><span class="ds-space-label"><code>--space-s</code> 16px — compact spacing</span></div>
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-m)"></div><span class="ds-space-label"><code>--space-m</code> 24px — standard delimiter</span></div>
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-l)"></div><span class="ds-space-label"><code>--space-l</code> 40px — loose gap</span></div>
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-xl)"></div><span class="ds-space-label"><code>--space-xl</code> 48px — section break</span></div>
+      <div class="ds-space-row"><div class="ds-space-bar" style="width:var(--space-2xl)"></div><span class="ds-space-label"><code>--space-2xl</code> 96px — page-level padding</span></div>
     </div>
   </section>
 
