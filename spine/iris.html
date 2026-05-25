@@ -20,6 +20,16 @@
   text-align: center;
   margin-bottom: 16px;
   color: var(--text);
+  position: sticky;
+  top: 24px;
+  z-index: 10;
+}
+.iris-icon svg {
+  transition: width 0.3s ease, height 0.3s ease;
+}
+.iris-icon.is-sticky svg {
+  width: 28px;
+  height: 28px;
 }
 .iris-icon a { display: inline-flex; color: var(--text); background: none; }
 .iris-icon a:hover { background: none; }
@@ -544,6 +554,17 @@ code {
 
   pupil.style.transition = 'transform 0.18s ease-out';
 
+  /* Sticky shrink — add class once page has scrolled past the icon's natural position */
+  var stickyThreshold = wrap.offsetTop;
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > stickyThreshold) {
+      wrap.classList.add('is-sticky');
+    } else {
+      wrap.classList.remove('is-sticky');
+    }
+  }, { passive: true });
+
+  /* Cursor tracking */
   document.addEventListener('mousemove', function (e) {
     var r = wrap.getBoundingClientRect();
     var cx = r.left + r.width / 2;
