@@ -12,6 +12,16 @@
   --button-bg: #ffffff;
   --button-border: #c8c8c2;
   --button-hover: #f0f0ea;
+
+  /* Spacing scale — 6 steps, 8px base.
+     Use these for all structural margin/padding.
+     Component-specific micro-values (≤14px) stay hardcoded. */
+  --space-xs:   8px;
+  --space-s:   16px;
+  --space-m:   24px;
+  --space-l:   40px;
+  --space-xl:  48px;
+  --space-2xl: 96px;
 }
 
 * { box-sizing: border-box; }
@@ -29,12 +39,12 @@ html, body {
 .wrap {
   max-width: 720px;
   margin: 0 auto;
-  padding: 48px 32px 96px;
+  padding: var(--space-xl) 32px var(--space-2xl);
 }
 
 header.spine-header {
   border-bottom: 1px solid var(--rule);
-  padding-bottom: 16px;
+  padding-bottom: var(--space-s);
   margin-bottom: 32px;
   display: flex;
   align-items: baseline;
@@ -66,7 +76,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-m);
 }
 .page-nav .back-link {
   margin-bottom: 0;
@@ -249,8 +259,8 @@ a:hover { background: #eef0fa; }
 }
 
 .actions {
-  margin-top: 48px;
-  padding-top: 24px;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
   border-top: 1px solid var(--rule);
   display: flex;
   flex-direction: column;
@@ -331,8 +341,8 @@ button.copy.primary.copied {
 /* Page footer — small unobtrusive links (e.g. design-system) at the very
    bottom of the index page, well below the content. */
 .page-footer {
-  margin-top: 16px;
-  padding-top: 24px;
+  margin-top: var(--space-s);
+  padding-top: var(--space-m);
   text-align: center;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 10px;
@@ -347,7 +357,7 @@ button.copy.primary.copied {
   color: var(--link);
 }
 .footer-iris {
-  margin-top: 40px;
+  margin-top: var(--space-l);
   opacity: 0.4;
 }
 .footer-iris a {
@@ -386,7 +396,7 @@ button.copy.copied {
   font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 24px;
   font-weight: 600;
-  margin: 0 0 24px;
+  margin: 0 0 var(--space-m);
   letter-spacing: 0;
 }
 
@@ -400,7 +410,7 @@ button.copy.copied {
 }
 
 .section-spine {
-  margin: 0 0 16px;
+  margin: 0 0 var(--space-s);
 }
 .section-spine p {
   font-size: 17px;
@@ -419,8 +429,8 @@ button.copy.copied {
 }
 
 .nav {
-  margin-top: 48px;
-  padding-top: 24px;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-m);
   border-top: 1px solid var(--rule);
   display: flex;
   justify-content: space-between;
@@ -430,7 +440,7 @@ button.copy.copied {
 
 .back-link {
   display: inline-block;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-m);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
 }
