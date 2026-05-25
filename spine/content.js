@@ -1,5 +1,5 @@
 // content.js — the canonical content of the book's spine.
-// Both index.html, tailbone.html, and section.html read from here.
+// Both index.html and section.html read from here.
 //
 // Top-level shape:
 //   meta     — version, status, title.

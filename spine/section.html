@@ -7,11 +7,11 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>Chapter — theLastInterface</title>
+<title>theLastInterface</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile8">
+<link rel="stylesheet" href="styles.css?v=mobile9">
 </head>
 <body>
 <div class="wrap">
@@ -22,7 +22,7 @@
   </div>
 
   <header class="spine-header">
-    <h1 id="section-heading">Chapter</h1>
+    <h1 id="section-heading"></h1>
   </header>
 
   <div class="label">Vertebra</div>
@@ -36,12 +36,12 @@
 
   <div class="actions">
     <div class="action-row">
-      <button class="copy" id="copy-section">
-        <span class="main">Just this chapter</span>
+      <button class="copy" id="copy-focus">
+        <span class="main" id="copy-focus-main"></span>
         <span class="hint">self-contained</span>
       </button>
       <button class="copy" id="copy-with-spines">
-        <span class="main">This chapter + every other in outline</span>
+        <span class="main" id="copy-spines-main"></span>
         <span class="hint">for cross-chapter work</span>
       </button>
     </div>
@@ -57,114 +57,124 @@
 (function() {
   const S = window.SPINE;
 
-  // Parse ?n=N
+  // Parse ?n=N (0 = tailbone, 1..17 = chapters, 18 = atlas).
   const params = new URLSearchParams(window.location.search);
   const n = parseInt(params.get('n'), 10);
-  const sec = S.spine.find(s => s.n === n);
 
-  if (!sec) {
+  // Resolve any n in [0, 18] to a unit with a uniform shape:
+  //   { kind, n, tag, title, vertebra, spine, skeleton }
+  // Tailbone and atlas share this shape with chapters so the rest of the page
+  // can render and reason without per-kind branching.
+  function getUnit(n) {
+    if (n === 0) {
+      return { kind: 'tailbone', n: 0, tag: 'Tailbone', title: 'Tailbone',
+               vertebra: S.tailbone.vertebra, spine: S.tailbone.spine, skeleton: S.tailbone.skeleton };
+    }
+    if (n === 18) {
+      return { kind: 'atlas', n: 18, tag: 'Atlas', title: 'Atlas',
+               vertebra: S.atlas.vertebra, spine: S.atlas.spine, skeleton: S.atlas.skeleton };
+    }
+    const c = S.spine.find(s => s.n === n);
+    if (c) return { kind: 'chapter', n: c.n, tag: 'Chapter ' + c.n, title: c.title,
+                    vertebra: c.vertebra, spine: c.spine, skeleton: c.skeleton };
+    return null;
+  }
+
+  const unit = getUnit(n);
+  if (!unit) {
     document.querySelector('.wrap').innerHTML =
       '<a href="index.html" class="back-link">← back to spine</a>'
-      + '<p>Section not found.</p>';
+      + '<p>Not found.</p>';
     return;
   }
 
-  // Header — chapter tag sits in the breadcrumb row (top right), the h1 below
-  // carries just the chapter title. No git counter on chapter pages — the
-  // version label belongs on the spine index, not the per-chapter view.
-  document.title = 'Chapter ' + sec.n + ' — ' + S.meta.title;
-  document.getElementById('unit-tag').textContent = 'Chapter ' + sec.n;
-  document.getElementById('section-heading').textContent = sec.title;
+  // Header — tag in the breadcrumb row (top right), title in the h1 below.
+  // For tailbone/atlas the tag and title are the same word; that's fine —
+  // the visual structure matches chapters so the page reads consistently.
+  document.title = unit.tag + ' — ' + S.meta.title;
+  document.getElementById('unit-tag').textContent = unit.tag;
+  document.getElementById('section-heading').textContent = unit.title;
 
-  // Vertebra — the single load-bearing line
-  document.getElementById('vertebra').textContent = sec.vertebra;
+  // Body
+  document.getElementById('vertebra').textContent = unit.vertebra;
 
-  // Body — render spine as paragraphs (split on blank lines)
   const spineEl = document.getElementById('spine');
   spineEl.innerHTML = '';
-  sec.spine.split(/\n\n+/).forEach(para => {
+  unit.spine.split(/\n\n+/).forEach(para => {
     const p = document.createElement('p');
     p.textContent = para;
     spineEl.appendChild(p);
   });
 
-  // Skeleton — also as paragraphs
   const skelEl = document.getElementById('skeleton');
   skelEl.innerHTML = '';
-  sec.skeleton.split(/\n\n+/).forEach(para => {
+  unit.skeleton.split(/\n\n+/).forEach(para => {
     const p = document.createElement('p');
     p.textContent = para;
     skelEl.appendChild(p);
   });
 
-  // Prev/next nav — chapter 1's prev is the tailbone; the last chapter's next is the atlas
-  const navEl = document.getElementById('nav');
-  const prev = S.spine.find(s => s.n === sec.n - 1);
-  const next = S.spine.find(s => s.n === sec.n + 1);
-  const isLast = sec.n === S.spine[S.spine.length - 1].n;
-  const prevHtml = prev
-    ? '<a href="section.html?n=' + prev.n + '">← ' + prev.n + '. ' + prev.title + '</a>'
-    : (sec.n === 1 ? '<a href="tailbone.html">← Tailbone</a>' : '<span></span>');
-  const nextHtml = next
-    ? '<a href="section.html?n=' + next.n + '">' + next.n + '. ' + next.title + ' →</a>'
-    : (isLast ? '<a href="atlas.html">Atlas →</a>' : '<span></span>');
-  navEl.innerHTML = prevHtml + nextHtml;
-
-  // Copy: thesis (for orientation) + this section's spine + skeleton
-  function header() {
-    return 'SPINE — ' + S.meta.title
-      + ' — last updated ' + S.meta.lastUpdated
-      + ' — focus: chapter ' + sec.n;
+  // Prev/next nav — unit-agnostic now. Prev exists for n>0, next for n<18.
+  function navLabel(u) {
+    return u.kind === 'chapter' ? u.n + '. ' + u.title : u.tag;
   }
+  const prev = n > 0 ? getUnit(n - 1) : null;
+  const next = n < 18 ? getUnit(n + 1) : null;
+  const navEl = document.getElementById('nav');
+  navEl.innerHTML =
+      (prev ? '<a href="section.html?n=' + prev.n + '">← ' + navLabel(prev) + '</a>' : '<span></span>')
+    + (next ? '<a href="section.html?n=' + next.n + '">' + navLabel(next) + ' →</a>' : '<span></span>');
 
-  function buildSectionContext() {
-    const lines = [header(), ''];
+  // Button labels — same shape for every unit, with the focus name interpolated.
+  // 'Chapter N only' for chapters, 'Tailbone only' / 'Atlas only' for framing units.
+  document.getElementById('copy-focus-main').textContent = unit.tag + ' only';
+  document.getElementById('copy-spines-main').textContent =
+    unit.tag + ' in full + ' + (unit.kind === 'chapter' ? 'other chapters' : 'chapters') + ' as spines';
+
+  // Focus-only payload: ALL-CAPS labels (legacy format the previous
+  // per-unit copy buttons emitted). Includes thesis + this unit only.
+  function buildFocus() {
+    const lines = [];
+    lines.push('SPINE — ' + S.meta.title
+      + ' — last updated ' + S.meta.lastUpdated
+      + ' — focus: ' + unit.tag);
+    lines.push('');
     lines.push('THESIS');
     lines.push(S.thesis);
     lines.push('');
-    lines.push('SECTION ' + sec.n + ': ' + sec.title);
+    lines.push(unit.kind === 'chapter'
+      ? 'CHAPTER ' + unit.n + ': ' + unit.title
+      : unit.tag.toUpperCase());
     lines.push('');
-    lines.push('VERTEBRA');
-    lines.push(sec.vertebra);
-    lines.push('');
-    lines.push('SPINE');
-    lines.push(sec.spine);
-    lines.push('');
-    lines.push('SKELETON');
-    lines.push(sec.skeleton);
+    lines.push('VERTEBRA'); lines.push(unit.vertebra); lines.push('');
+    lines.push('SPINE');    lines.push(unit.spine);    lines.push('');
+    lines.push('SKELETON'); lines.push(unit.skeleton);
     return lines.join('\n');
   }
 
-  // Cross-chapter context payload: the focus chapter in full + every other
-  // chapter's spine (the structural cross-reference layer, without skeletons
-  // or full prose). Read at click time from window.SPINE so it's always
-  // current. The focus chapter's own spine stays inside the full block —
-  // never duplicated in the spines section.
-  function buildChapterWithAllSpines() {
+  // Cross-chapter context payload: focus in full + every chapter spine.
+  // Reads from window.SPINE at click time so it's always current.
+  // If focus is a chapter, its own spine stays inside the full block and is
+  // never duplicated in the spines section. Tailbone and atlas are framing
+  // units (not chapters), so the spines section always covers all 17 chapters.
+  function buildWithAllSpines() {
     const out = [];
-    out.push('# Chapter ' + sec.n + '. ' + sec.title + ' — full chapter');
+    const focusHeading = unit.kind === 'chapter'
+      ? 'Chapter ' + unit.n + '. ' + unit.title
+      : unit.title;
+    out.push('# ' + focusHeading + ' — full');
     out.push('');
-    out.push('## Vertebra');
+    out.push('## Vertebra'); out.push(''); out.push(unit.vertebra); out.push('');
+    out.push('## Spine');    out.push(''); out.push(unit.spine);    out.push('');
+    out.push('## Skeleton'); out.push(''); out.push(unit.skeleton); out.push('');
+    out.push('---'); out.push('');
+    out.push('# Spines of chapters (for cross-reference context)');
     out.push('');
-    out.push(sec.vertebra);
-    out.push('');
-    out.push('## Spine');
-    out.push('');
-    out.push(sec.spine);
-    out.push('');
-    out.push('## Skeleton');
-    out.push('');
-    out.push(sec.skeleton);
-    out.push('');
-    out.push('---');
-    out.push('');
-    out.push('# Spines of other chapters (for cross-reference context)');
-    out.push('');
-    S.spine.forEach(other => {
-      if (other.n === sec.n) return;  // focus chapter's spine is already above
-      out.push('## Chapter ' + other.n + '. ' + other.title + ' — spine');
+    S.spine.forEach(c => {
+      if (unit.kind === 'chapter' && c.n === unit.n) return;
+      out.push('## Chapter ' + c.n + '. ' + c.title + ' — spine');
       out.push('');
-      out.push(other.spine);
+      out.push(c.spine);
       out.push('');
     });
     return out.join('\n');
@@ -172,7 +182,7 @@
 
   function copyText(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-      // Save innerHTML so multi-line button structure survives the flash.
+      // innerHTML save/restore so the multi-line button label survives.
       const original = btn.innerHTML;
       btn.textContent = 'Copied';
       btn.classList.add('copied');
@@ -185,11 +195,11 @@
     });
   }
 
-  document.getElementById('copy-section').addEventListener('click', function() {
-    copyText(buildSectionContext(), this);
+  document.getElementById('copy-focus').addEventListener('click', function() {
+    copyText(buildFocus(), this);
   });
   document.getElementById('copy-with-spines').addEventListener('click', function() {
-    copyText(buildChapterWithAllSpines(), this);
+    copyText(buildWithAllSpines(), this);
   });
 })();
 </script>

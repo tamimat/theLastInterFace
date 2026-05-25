@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile8">
+<link rel="stylesheet" href="styles.css?v=mobile9">
 </head>
 <body>
 <div class="wrap">
@@ -86,13 +86,12 @@
   // The tailbone and atlas use a `summary` field for the index line; chapters use their vertebra.
   const list = document.getElementById('spine-list');
 
-  // Tailbone is 0, chapters are 1..17, atlas is 18 — all on the same hierarchical level.
-  // The tailbone and atlas have their own pages (not section.html) but otherwise render
-  // identically to chapters in the list.
+  // Tailbone is 0, chapters are 1..17, atlas is 18 — all rendered through
+  // the same section.html template (?n=N), same visual treatment, same code path.
   const items = [
     {
       n: 0,
-      href: 'tailbone.html',
+      href: 'section.html?n=0',
       title: 'Tailbone',
       line: S.tailbone.summary || S.tailbone.vertebra
     },
@@ -104,7 +103,7 @@
     })),
     {
       n: 18,
-      href: 'atlas.html',
+      href: 'section.html?n=18',
       title: 'Atlas',
       line: S.atlas.summary || S.atlas.vertebra
     }
