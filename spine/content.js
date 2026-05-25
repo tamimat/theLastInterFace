@@ -610,6 +610,23 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
   }
 };
 
+// Unified view across the 19 units of the spine. Tailbone (n=0), chapters
+// (n=1..17), and atlas (n=18) all expose the same shape:
+//   { kind, n, tag, title, vertebra, spine, skeleton }
+// kind is 'tailbone' | 'chapter' | 'atlas' — kept for cases that genuinely
+// care about role, but rendering code should iterate this list rather than
+// branch on kind whenever possible. The stored shape (meta.tailbone /
+// meta.spine[] / meta.atlas) stays human-friendly in the file above;
+// allUnits() is the canonical iteration order for everything else.
+window.SPINE.allUnits = function() {
+  const S = window.SPINE;
+  return [
+    { kind: 'tailbone', n: 0, tag: 'Tailbone', title: 'Tailbone', ...S.tailbone },
+    ...S.spine.map(c => ({ kind: 'chapter', tag: 'Chapter ' + c.n, ...c })),
+    { kind: 'atlas', n: 18, tag: 'Atlas', title: 'Atlas', ...S.atlas }
+  ];
+};
+
 // Source-link helpers. The "last updated" date in each page links to the current
 // spine/content.js on main. The commit/tag history on GitHub is the version record.
 window.SPINE.sourceUrl = function() {
