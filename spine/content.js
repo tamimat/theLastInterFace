@@ -1,6 +1,10 @@
 // content.js — the canonical content of the book's spine.
 // Both index.html and section.html read from here.
 //
+// THIS FILE IS GENERATED. Edit the markdown manuscript in /spine/*.md and run:
+//   node spine/build-content.js
+// See spine/README.md.
+//
 // Top-level shape:
 //   meta     — version, status, title.
 //   thesis   — one sentence stating what the book argues.
@@ -24,17 +28,10 @@
 //   For each paragraph, ask: "would a chat seeded with everything except this paragraph
 //   still write the right unit?" If yes, it belongs in the skeleton. If no, in the spine.
 //
-// Paragraphs are promotable/demotable between spine and skeleton. They're not permanently
-// assigned. Err toward spine while drafting — easier to demote later than to discover a
-// chat wrote the wrong section because something load-bearing was buried in skeleton.
-//
 // Versioning:
-//   - The git commit + tag history IS the version record. No integer to bump.
-//   - meta.lastUpdated is the human-friendly date shown next to the title; bump it
-//     whenever you make a change worth noting. The blue "last updated" link points
-//     at the current spine/content.js on main. To anchor a particular state, tag
-//     the commit: `git tag spine-<name>; git push --follow-tags`.
-//   - meta.repoUrl is the GitHub base used to build that link.
+//   - The git commit + tag history IS the version record.
+//   - meta.lastUpdated is the human-friendly date shown next to the title.
+//   - meta.repoUrl is the GitHub base used to build the source link.
 
 window.SPINE = {
   meta: {
@@ -43,9 +40,6 @@ window.SPINE = {
     repoUrl: "https://github.com/tamimat/theLastInterFace"
   },
 
-  // The tailbone is the opening — same vertebra/spine/skeleton structure as the chapters,
-  // but it sits before chapter 1 and grounds the reader in the book's central image
-  // before any of the architectural argument begins.
   tailbone: {
     summary: `The grandmother. The chain in a single moment.`,
     vertebra: `A grandmother tells her grandchild what she learned in a long life. This is what we are.`,
@@ -69,19 +63,13 @@ The closing line — "the book is about the interface that finally remembers it"
 Cross-link: chapter 1 (The Sensor and the Universe) picks the grandmother back up as the carrying image and unpacks the chain into the central proposition. Chapter 17 (The Choice) is where the loop closes — the reader who finished the book returns to the grandmother knowing what stands between her and the interface that remembers her. The tailbone seeds; chapter 1 grows; chapter 17 completes.`
   },
 
-  // Membrane — the working layer between author and AI. Selectively permeable: lets
-  // some language through, refuses others; holds the terms that drift in drafting.
-  // These are the rules a fresh chat doesn't get from the spine and skeleton alone —
-  // language discipline, edit framing, terminology guardrails. Placed above the thesis
-  // so they prime everything that follows (in the file, on the rendered page, and in
-  // the spine.md export). Editable freely; the page and export both read from this array.
   membrane: [
     {
       title: "No emojis",
       body: `Don't put them in prose, headers, file output, or anything that might be kept.`
     },
     {
-      title: `"Organisms," not "machines"`,
+      title: "\"Organisms,\" not \"machines\"",
       body: `Humans in this book are organisms. The alive/not-alive distinction is structural to Chapter 12 (The Mirror); calling humans machines anywhere undercuts it.`
     },
     {
@@ -104,14 +92,11 @@ Cross-link: chapter 1 (The Sensor and the Universe) picks the grandmother back u
 
   thesis: `Humans are meaning-transmitting organisms who must reach toward each other to connect, and the technology of the coming era — biometric identity, sovereign accumulated selves, shared intelligence, trustless settlement — must be built to honor that, not to replace, simulate, or extract it.`,
 
-  // The spine is the chain of chapters — each one a vertebra in the book's spine.
-  // Each chapter has its own internal {vertebra, spine, skeleton} structure: the bone,
-  // the prose holding it in place, and the surrounding tissue. The recursion is intentional.
   spine: [
     {
       n: 1,
       title: "The Sensor and the Universe",
-      vertebra: "Sense → make meaning → tell, because we need to connect → the other receives → we see their reaction → connection.",
+      vertebra: `Sense → make meaning → tell, because we need to connect → the other receives → we see their reaction → connection.`,
       spine: `Sense → make meaning → tell, because we need to connect → the other receives → we see their reaction → connection.
 
 We are meaning-transmitting organisms.
@@ -158,7 +143,7 @@ Cross-link: chapter 2 (Inverted Relationship) names the consequence — the inte
     {
       n: 2,
       title: "The Inverted Relationship",
-      vertebra: "Seventy years of humans serving machines. The reversal is overdue.",
+      vertebra: `Seventy years of humans serving machines. The reversal is overdue.`,
       spine: `For seventy years humans have served machines. We adapt to their menus, memorize their passwords, fill their forms, surrender our attention to their algorithms.
 
 The machines were built to serve us. The relationship is inverted and must be reversed.
@@ -181,7 +166,7 @@ Cross-link: chapter 8 (Neural Computer) is the technical answer to why reversal 
     {
       n: 3,
       title: "The Body as Key",
-      vertebra: "The key is you — face, fingerprint, voice, gait, and the involuntary signals that prove you are free in this moment.",
+      vertebra: `The key is you — face, fingerprint, voice, gait, and the involuntary signals that prove you are free in this moment.`,
       spine: `Your body is the key. Face geometry. Fingerprint. Voice. Gait. Iris. The constellation of involuntary signals that, taken together, are unforgeable. The body is the only thing you cannot lose, cannot forget, and cannot have stolen and reissued.
 
 This is solved engineering, mostly. Depth-sensed face and ultrasonic fingerprint are robust. Voice and gait are improving. The cryptographic primitives that bind biometric reading to signed action are well understood. What is novel is not the biometrics. It is the second thing the body broadcasts: state.
@@ -202,7 +187,7 @@ Cross-link: chapter 8 (Neural Computer) reads the signal. Chapter 9 (Settlement)
     {
       n: 4,
       title: "The dg",
-      vertebra: "dg — lowercase. Sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.",
+      vertebra: `dg — lowercase. Sovereign accumulated record of who you have been. Lens through which the shared intelligence becomes personal. Not itself an intelligence.`,
       spine: `dg is the term. Lowercase. Always. When first introduced, the concept unfolds through multiple resonances: your digital ghost, your data ghost, your djinn — and possibly your digital genius or your digital guardian, depending on how many threads you want to invoke in the chapter where it lands.
 
 The spelling djinn with the j is deliberate. It preserves the lineage through Arabic and Roman traditions of the companion spirit. The slight unfamiliarity of the spelling on the page is part of the work the word does. Genie and genius descend from this root.
@@ -227,7 +212,7 @@ Cross-link: chapter 5 (The Heartbeat) is what makes the dg one continuous life r
     {
       n: 5,
       title: "The Heartbeat",
-      vertebra: "The heartbeat is the unbroken thread of a life. Everything else attaches to it.",
+      vertebra: `The heartbeat is the unbroken thread of a life. Everything else attaches to it.`,
       spine: `The dg needs an unbroken thread — a continuous signal that turns accumulated data into one continuous life. The heartbeat is that thread.
 
 Cardiac morphology — the shape of the P-wave, the QRS complex, the T-wave — is distinctive between people. It is shaped by individual heart anatomy, conduction pathway, position in the chest. It has been studied as a biometric since the early 2000s. It is not the key. It is not static enough — it changes with exercise, illness, age, medication, stress, pregnancy. But it is continuous. The unbroken trace of one beating heart across a lifetime.
@@ -258,7 +243,7 @@ Cross-link: chapter 10 (Seed) is what a reader can begin tomorrow — start reco
     {
       n: 6,
       title: "The Personal Device",
-      vertebra: "Worn close. Picks up the whisper. Companion to the body, not the body. Replaceable.",
+      vertebra: `Worn close. Picks up the whisper. Companion to the body, not the body. Replaceable.`,
       spine: `The personal device is small, quiet, worn close. A pendant. An earpiece. A wristband. Woven into clothing. It picks up your voice when you whisper. It captures the heartbeat continuously. It carries some authentication weight. It provides continuity in places without displays.
 
 It is not a phone. It is not the device. It is a companion to the body. Replaceable. Convenience, not dependency.
@@ -279,7 +264,7 @@ Cross-link: chapter 5 (The Heartbeat) is what the device primarily captures. Cha
     {
       n: 7,
       title: "The Displays",
-      vertebra: "Public surfaces. No account, no profile, no memory. Yours when you stand before them; forget you when you walk away.",
+      vertebra: `Public surfaces. No account, no profile, no memory. Yours when you stand before them; forget you when you walk away.`,
       spine: `The displays are hardware with sensors and screens — wall panels, smart glass, paintings that are screens, slim tablets, the surfaces of vehicles and rooms. Owned by whoever bought them. No account. No profile. No memory. They become yours the moment you stand before them. They forget you when you walk away.
 
 This is the inversion of device ownership. Today: your phone, your laptop, your account, your install, your subscription, your data on someone else's server tied to a username that is functionally a leash. Proposed: devices as impersonal infrastructure, personal only in the moment of authenticated use. Personalization in the human, not the object.
@@ -300,7 +285,7 @@ Cross-link: chapter 6 (Personal Device) is what carries you between display surf
     {
       n: 8,
       title: "The Neural Computer",
-      vertebra: "One intelligence, not many. The same neural computer serves every human. The personalization happens in the meeting between the AI and your dg.",
+      vertebra: `One intelligence, not many. The same neural computer serves every human. The personalization happens in the meeting between the AI and your dg.`,
       spine: `The neural computer is the intelligence. One, not many. The same neural computer serves every human, everywhere. It reaches you through displays when interaction needs to be visual, through your personal device when you speak quietly, through ambient audio when sound is right.
 
 This is the architectural choice with the largest political consequences. The current frontier model landscape — three or four labs competing for dominance, each with proprietary weights, each gated by API access, each subject to commercial pressure to lock in customers — is incompatible with the architecture's premise. The neural computer cannot be a product. It must be infrastructure: a protocol with multiple implementations, or a federation of trained models that interoperate, or a public utility, or a foundation or cooperative governance body. Chapter 11 (The Bridge) names this dependency honestly.
@@ -323,7 +308,7 @@ Cross-link: chapter 4 (dg) is what makes the shared intelligence personal. Chapt
     {
       n: 9,
       title: "The Settlement",
-      vertebra: "Bitcoin. Not because fashionable — because it is the only payment system that cannot be frozen, surveilled, or denied.",
+      vertebra: `Bitcoin. Not because fashionable — because it is the only payment system that cannot be frozen, surveilled, or denied.`,
       spine: `The settlement layer is Bitcoin. Not because fashionable. Not as a synecdoche for cryptocurrency. Specifically Bitcoin, because it is the only payment system that cannot be frozen, surveilled, or denied without the consent of the parties to the transaction.
 
 Sovereignty leaks at the moment of payment if anything else is used. Stablecoins have admin keys and freeze functions. Permissioned chains have validators who can be subpoenaed or pressured. Card networks have chargeback regimes and merchant blacklists. Bank rails have AML thresholds and sanctions enforcement. Each of these is reasonable in its own framing; each is incompatible with an architecture that promises the body's signed intent will be honored without third-party permission.
@@ -344,7 +329,7 @@ Cross-link: chapter 3 (Body as Key) is what signs the transaction. Chapter 11 (B
     {
       n: 10,
       title: "The Seed",
-      vertebra: "What you can start tomorrow. The minimum viable dg. The reader's door into the vision.",
+      vertebra: `What you can start tomorrow. The minimum viable dg. The reader's door into the vision.`,
       spine: `Everything else in the architecture requires civilizational infrastructure that does not yet exist — sovereign network storage, impersonal authenticated surfaces, the shared neural computer, Bitcoin-settled commerce. Decades of build-out.
 
 The heartbeat does not require any of it. A person can begin tomorrow.
@@ -371,7 +356,7 @@ Cross-link: chapter 5 (The Heartbeat) is the technical foundation. Chapter 14 (W
     {
       n: 11,
       title: "The Bridge",
-      vertebra: "The honest catalog of what civilization must build between the seed and the vision.",
+      vertebra: `The honest catalog of what civilization must build between the seed and the vision.`,
       spine: `Between the seed (chapter 10) and the finished architecture stands a bridge — the honest catalog of what civilization must build. Not a roadmap with dates. An inventory of dependencies, with failure modes named.
 
 Governance of the neural computer. Cannot be corporate-owned the way current frontier models are. Possible shapes: protocol with multiple implementations, federation of trained models that interoperate, public utility, foundation or cooperative governance body. Failure mode: capture by one provider, and the whole vision becomes a product.
@@ -402,7 +387,7 @@ Cross-link: every architectural chapter that names an external dependency points
     {
       n: 12,
       title: "The Mirror",
-      vertebra: "AI as collective reflection. Two scales. The mirror has read about a thousand thousand skies and never looked up at one.",
+      vertebra: `AI as collective reflection. Two scales. The mirror has read about a thousand thousand skies and never looked up at one.`,
       spine: `The neural computer (chapter 8) is the mirror. The mirror exists at two scales but is one structure.
 
 Personal scale. When the neural computer reaches you through your dg, you encounter the mirror as a personal interaction. Your slice of it, summoned to serve you. This is what the dg is, in use.
@@ -429,7 +414,7 @@ Cross-link: chapter 13 (Two Mirrors) takes the metaphor a step deeper into human
     {
       n: 13,
       title: "The Two Mirrors",
-      vertebra: "The AI is one mirror — faithful, holds the record. The deeper mirror is each human as mirror for other humans. The witness calls the spark forward.",
+      vertebra: `The AI is one mirror — faithful, holds the record. The deeper mirror is each human as mirror for other humans. The witness calls the spark forward.`,
       spine: `The AI is one mirror — faithful, holds the record. The deeper mirror is each human as mirror for other humans. When I see you alive, my own aliveness wakes. The architecture, by removing interface noise, creates more occasions for this deeper mirroring.
 
 This is not metaphor extended for its own sake. It is the structural answer to the loneliness epidemic. Atomization, partial exile at scale, technically-connected populations whose signals do not land — these are not random afflictions. They are the visible cost of an interface paradigm that has placed itself between humans, capturing the meaning that was meant to travel from one to another. When the architecture removes that interface, the human-to-human channel reopens. Not because the architecture creates connection. Because it stops obstructing it.
@@ -450,7 +435,7 @@ Cross-link: chapter 15 (Universe 25) is the strongest counter-argument the archi
     {
       n: 14,
       title: "What Remains",
-      vertebra: "Death, donation, the gift across time. Not personal immortality — a faithful trace.",
+      vertebra: `Death, donation, the gift across time. Not personal immortality — a faithful trace.`,
       spine: `When a person dies, the node leaves the conversation. The natural exit. Across all of human history, the exit has been almost total — the stories that did not get told are lost forever. Billions of irreplaceable vantage points, gone.
 
 Donation reframes the exit. The node leaves; the stories continue. Three options at death: private (accessible only to those you loved, fades when they too pass), donated to the neural computer (becomes part of what future humans encounter at scale), or sealed (kept but inaccessible — also a legitimate choice). Granular donation is possible: some attached layers released, others withheld.
@@ -475,7 +460,7 @@ Cross-link: chapter 4 (dg) is what gets donated. Chapter 5 (The Heartbeat) is wh
     {
       n: 15,
       title: "Universe 25 and Universe Zero",
-      vertebra: "Not Universe 26 — Universe Zero. Removal of the enclosure, not a better enclosure.",
+      vertebra: `Not Universe 26 — Universe Zero. Removal of the enclosure, not a better enclosure.`,
       spine: `The deepest objection to the architecture is the Universe 25 objection: that removing friction produces the behavioral sink Calhoun observed in mice given material abundance. The objection lineage includes Huxley's Brave New World, Forster's The Machine Stops, Nozick's experience machine.
 
 The answer has several layers.
@@ -506,7 +491,7 @@ Cross-link: this is the chapter every other chapter is implicitly addressed to. 
     {
       n: 16,
       title: "The Open Questions",
-      vertebra: "What this work does not yet resolve. Honest acknowledgment of uncertainty.",
+      vertebra: `What this work does not yet resolve. Honest acknowledgment of uncertainty.`,
       spine: `Each of these requires its own treatment in the book. None defeats the architecture; each deserves serious work.
 
 The metaphysical bet on consciousness. The work assumes biological consciousness is irreducible. Defensible but not settled. A stronger fallback: even if machines someday have experiences, those experiences will not be human, and the human contribution remains uniquely valuable.
@@ -541,7 +526,7 @@ Cross-link: this is the chapter the bridge (chapter 11) hands the unresolved ite
     {
       n: 17,
       title: "The Choice",
-      vertebra: "What humans are now being asked to choose, and why the choice matters.",
+      vertebra: `What humans are now being asked to choose, and why the choice matters.`,
       spine: `Two architectures stand in front of us.
 
 One is the continuation of the present trajectory. Identity issued by platforms. Selves accumulated by surveillance capital. Intelligence concentrated in three or four labs and rented back to users by the query. Money mediated by gatekeepers who can freeze, reverse, and surveil. Devices that own us. Interfaces that consume us. The mirror owned by the few who built it.
@@ -576,9 +561,6 @@ Spine sentences candidates to keep in orbit through the chapter:
     }
   ],
 
-  // The atlas is the closing — the last vertebra of the spine. Symmetric with the tailbone:
-  // same {vertebra, spine, skeleton} structure, framing the chapters from the other end.
-  // The tailbone seeds; the atlas releases.
   atlas: {
     summary: `Universe Zero — the return of meaningful struggle.`,
     vertebra: `Not the end of struggle. The return of meaningful struggle, to the creatures who were built for it, after a long detour through screens.`,
@@ -613,17 +595,8 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
 // Unified view across the 19 units of the spine. Tailbone (n=0), chapters
 // (n=1..17), and atlas (n=18) all expose the same shape:
 //   { kind, n, tag, title, vertebra, spine, skeleton }
-// kind is 'tailbone' | 'chapter' | 'atlas' — kept for cases that genuinely
-// care about role, but rendering code should iterate this list rather than
-// branch on kind whenever possible. The stored shape (meta.tailbone /
-// meta.spine[] / meta.atlas) stays human-friendly in the file above;
-// allUnits() is the canonical iteration order for everything else.
 window.SPINE.allUnits = function() {
   const S = window.SPINE;
-  // tag is the bare identifier ("#0", "#1", ..., "#18") — same scheme for every
-  // unit; the kind tells you whether it's tailbone, a chapter, or atlas if you
-  // need to branch. title carries the human-readable name (the chapter title,
-  // or "Tailbone" / "Atlas").
   return [
     { kind: 'tailbone', n: 0, tag: '#0', title: 'Tailbone', ...S.tailbone },
     ...S.spine.map(c => ({ kind: 'chapter', tag: '#' + c.n, ...c })),
