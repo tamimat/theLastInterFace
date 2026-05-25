@@ -568,13 +568,20 @@ button.copy.copied {
    just a clickable word that flips html.theme-dark.
    ========================================================================== */
 
+/* Sun/moon swap: both icons absolute-stacked. Hover previews the *other*
+   state — sun collapses and moon expands (or vice versa in dark) — so the
+   reader sees what clicking will do. Click flips html.theme-dark, which
+   moves the resting state. Same transition timing as the chapter page-close
+   X-to-circle so the gestural vocabulary stays consistent. */
 .theme-toggle {
+  position: relative;
+  width: 26px;
+  height: 26px;
   color: var(--muted);
   background: transparent;
   border: 0;
-  padding: 4px;
+  padding: 0;
   cursor: pointer;
-  line-height: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -587,10 +594,24 @@ button.copy.copied {
   outline-offset: 2px;
   border-radius: 2px;
 }
-/* Show the icon that matches the current state — sun in light, moon in dark. */
-.theme-toggle .icon-moon { display: none; }
-html.theme-dark .theme-toggle .icon-sun { display: none; }
-html.theme-dark .theme-toggle .icon-moon { display: inline; }
+.theme-toggle svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Light, resting: sun full, moon collapsed. */
+.theme-toggle .icon-sun  { opacity: 1; transform: scale(1); }
+.theme-toggle .icon-moon { opacity: 0; transform: scale(0); }
+/* Light, hover: preview the swap — sun collapses, moon expands. */
+.theme-toggle:hover .icon-sun  { opacity: 0; transform: scale(0); }
+.theme-toggle:hover .icon-moon { opacity: 1; transform: scale(1); }
+/* Dark, resting: moon full, sun collapsed (mirror of light). */
+html.theme-dark .theme-toggle .icon-sun  { opacity: 0; transform: scale(0); }
+html.theme-dark .theme-toggle .icon-moon { opacity: 1; transform: scale(1); }
+/* Dark, hover: preview the swap — moon collapses, sun expands. */
+html.theme-dark .theme-toggle:hover .icon-sun  { opacity: 1; transform: scale(1); }
+html.theme-dark .theme-toggle:hover .icon-moon { opacity: 0; transform: scale(0); }
 
 /* =============================================================================
    DARK MODE — overrides the :root tokens. Membrane uses --surface-inverse,
