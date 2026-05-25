@@ -108,4 +108,4 @@ The browser's local timezone is captured via `Intl.DateTimeFormat().resolvedOpti
 
 ## License
 
-Same as the parent repo. (License decision deferred at time of writing — likely CC BY 4.0.)
+Same as the parent repo: CC BY-NC-SA 4.0. See root LICENSE.

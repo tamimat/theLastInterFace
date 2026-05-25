@@ -24,7 +24,7 @@ Conversations on claude.ai are archived manually via the share-link flow. Cowork
 
 ## License
 
-CC BY 4.0. See [LICENSE](LICENSE). Use it, share it, build on it — just credit the source. The license choice is structurally consistent with the book's argument: protocols, not products; reusable substrates, not gatekept assets.
+Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — share and adapt with attribution, non-commercial only, derivatives must carry the same license. See [LICENSE](LICENSE).
 
 ## Status
 
