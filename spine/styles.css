@@ -328,6 +328,19 @@ button.copy.primary.copied {
   margin-top: 14px;
 }
 
+/* Page footer — small unobtrusive links (e.g. design-system) at the very
+   bottom of the index page, well below the content. */
+.page-footer {
+  margin-top: 96px;
+  padding-top: 24px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+}
+.page-footer a {
+  color: var(--link);
+}
+
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
 .copy .main {
   display: block;

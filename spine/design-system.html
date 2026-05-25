@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafaf7">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>Design system — theLastInterface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=mobile16">
+<style>
+/* Page-specific styles for this reference doc only. Anything reused
+   across the book lives in styles.css; the styles below are scaffolding
+   for the catalog itself (swatch grid, code labels, etc.). */
+.ds-intro {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 24px;
+}
+
+.ds-section {
+  margin-top: 56px;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+}
+.ds-section > h2 {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 16px;
+  margin: 0 0 6px;
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.ds-section > .ds-desc {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+}
+
+/* Swatch grid for color tokens. */
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+.ds-swatch {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+}
+.ds-swatch-chip {
+  height: 72px;
+  border-bottom: 1px solid var(--rule);
+}
+.ds-swatch-meta {
+  padding: 8px 10px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.ds-swatch-meta strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.ds-swatch-meta .ds-note {
+  display: block;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* Type specimen — sample text + small caption noting family/size. */
+.ds-typespec {
+  margin: 14px 0;
+}
+.ds-typespec-label {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Wrapper that frames a live component sample (a button, a list, etc.). */
+.ds-sample {
+  padding: 20px;
+  border: 1px dashed var(--rule);
+  border-radius: 4px;
+  margin: 8px 0 12px;
+  background: var(--bg);
+}
+.ds-sample.dark {
+  background: #f0efe9;
+}
+.ds-caption {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 4px 0 18px;
+}
+
+/* For samples that need to demo flex behaviour at smaller widths. */
+.ds-actions-wrap {
+  max-width: 520px;
+}
+
+/* Tiny code-like inline marker for class names. */
+code {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--text);
+  background: #ecebe4;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-nav">
+    <a href="index.html" class="back-link">← back to spine</a>
+    <span class="unit-tag">design system</span>
+  </div>
+
+  <header class="spine-header">
+    <h1>Design system</h1>
+  </header>
+
+  <p class="ds-intro">A catalog of every color, type style, and component used across theLastInterface. The book's pages all read from <code>styles.css</code>; this page demonstrates what's in there so you can see the toolbox before adding anything new.</p>
+
+  <!-- ===================================================================
+       COLORS
+       =================================================================== -->
+  <section class="ds-section" id="colors">
+    <h2>colors</h2>
+    <p class="ds-desc">CSS tokens defined in <code>:root</code> plus the inline hex values used by the membrane and primary-action button.</p>
+
+    <h3 style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:var(--muted);margin:16px 0 8px;text-transform:lowercase;">page palette (CSS variables)</h3>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#fafaf7;"></div>
+        <div class="ds-swatch-meta"><strong>--bg</strong>#fafaf7<span class="ds-note">page background</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#1a1a1a;"></div>
+        <div class="ds-swatch-meta"><strong>--text</strong>#1a1a1a<span class="ds-note">body text, h1, primary button</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#6b6b6b;"></div>
+        <div class="ds-swatch-meta"><strong>--muted</strong>#6b6b6b<span class="ds-note">labels, section numbers, breadcrumb tag</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#0033cc;"></div>
+        <div class="ds-swatch-meta"><strong>--link</strong>#0033cc<span class="ds-note">all inline links</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#551a8b;"></div>
+        <div class="ds-swatch-meta"><strong>--link-visited</strong>#551a8b<span class="ds-note">visited link state</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#d8d8d2;"></div>
+        <div class="ds-swatch-meta"><strong>--rule</strong>#d8d8d2<span class="ds-note">hairlines, dividers, borders</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#8a6d00;"></div>
+        <div class="ds-swatch-meta"><strong>--lock-working</strong>#8a6d00<span class="ds-note">in-flux / draft state</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#1f6f3a;"></div>
+        <div class="ds-swatch-meta"><strong>--lock-locked</strong>#1f6f3a<span class="ds-note">settled / done state</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#ffffff;"></div>
+        <div class="ds-swatch-meta"><strong>--button-bg</strong>#ffffff<span class="ds-note">default button fill</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#c8c8c2;"></div>
+        <div class="ds-swatch-meta"><strong>--button-border</strong>#c8c8c2<span class="ds-note">default button border</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#f0f0ea;"></div>
+        <div class="ds-swatch-meta"><strong>--button-hover</strong>#f0f0ea<span class="ds-note">default button hover fill</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:var(--muted);margin:32px 0 8px;text-transform:lowercase;">accent colors (inline)</h3>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#8fb78f;"></div>
+        <div class="ds-swatch-meta"><strong>phosphor green</strong>#8fb78f<span class="ds-note">membrane chevron, $ prefix, primary button text</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#232323;"></div>
+        <div class="ds-swatch-meta"><strong>dark hover</strong>#232323<span class="ds-note">primary button + membrane hover state</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#f5f3ec;"></div>
+        <div class="ds-swatch-meta"><strong>cream</strong>#f5f3ec<span class="ds-note">membrane toggle/heading text on dark</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#c2bfb6;"></div>
+        <div class="ds-swatch-meta"><strong>cream-muted</strong>#c2bfb6<span class="ds-note">membrane body text on dark</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#ffd866;"></div>
+        <div class="ds-swatch-meta"><strong>caution yellow</strong>#ffd866<span class="ds-note">work-in-progress badge</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#eef0fa;"></div>
+        <div class="ds-swatch-meta"><strong>link hover</strong>#eef0fa<span class="ds-note">hover bg on links</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       TYPOGRAPHY
+       =================================================================== -->
+  <section class="ds-section" id="typography">
+    <h2>typography</h2>
+    <p class="ds-desc">Three families — Georgia for long-form prose, system sans for chrome, Geist Mono for code-adjacent UI. No bold treatments for the prose; weight is reserved for buttons and tags.</p>
+
+    <div class="ds-typespec">
+      <h1>The Sensor and the Universe</h1>
+      <div class="ds-typespec-label">h1 • Geist Mono 28px / 600 — the index page's project title</div>
+    </div>
+
+    <div class="ds-typespec">
+      <h1 id="section-heading">The dg</h1>
+      <div class="ds-typespec-label">#section-heading / #tailbone-heading / #atlas-heading • Geist Mono 24px / 600 — per-unit page heading</div>
+    </div>
+
+    <div class="ds-typespec">
+      <p style="font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-size:18px;line-height:1.6;margin:0;">Humans are meaning-transmitting organisms who must reach toward each other to connect.</p>
+      <div class="ds-typespec-label">body • Georgia 18px / 1.6 — default reading text</div>
+    </div>
+
+    <div class="ds-typespec">
+      <p class="thesis" style="margin:0;">The book lays out four layers and argues the load-bearing innovation is the one most people miss: physiological consent.</p>
+      <div class="ds-typespec-label">.thesis • Georgia 19px — thesis statement on index</div>
+    </div>
+
+    <div class="ds-typespec">
+      <p class="section-vertebra" style="margin:0;">Sense → make meaning → tell → the other receives → we see their reaction → connection.</p>
+      <div class="ds-typespec-label">.section-vertebra • Georgia italic 22px / 500 — load-bearing sentence at top of each unit</div>
+    </div>
+
+    <div class="ds-typespec">
+      <span class="section-vertebra-line" style="margin:0;display:inline-block;">dg — lowercase. Sovereign accumulated record of who you have been.</span>
+      <div class="ds-typespec-label">.section-vertebra-line • Georgia italic 18px — vertebra preview under each item in the spine list</div>
+    </div>
+
+    <div class="ds-typespec">
+      <div class="label">Vertebra</div>
+      <div class="ds-typespec-label">.label • system sans 11px / 0.12em letter-spacing / uppercase — section delimiter (THESIS, VERTEBRA, SPINE, SKELETON)</div>
+    </div>
+
+    <div class="ds-typespec">
+      <span class="section-num">#4</span>
+      <div class="ds-typespec-label">.section-num • system sans 13px / muted — unit number prefix in spine list</div>
+    </div>
+
+    <div class="ds-typespec">
+      <span class="unit-tag">#4</span>
+      <div class="ds-typespec-label">.unit-tag • Geist Mono 14px / muted — breadcrumb identifier on per-unit pages</div>
+    </div>
+
+    <div class="ds-typespec">
+      <a class="last-updated" href="#" onclick="event.preventDefault()">last updated 2026-05-23</a>
+      <div class="ds-typespec-label">.meta .last-updated • Geist Mono 12px / link blue — date pinned to header on index page</div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       LINKS
+       =================================================================== -->
+  <section class="ds-section" id="links">
+    <h2>links</h2>
+    <p class="ds-desc">Single inline-link treatment across the site — blue with a thin underline; hover paints a soft link-blue background.</p>
+
+    <div class="ds-sample">
+      <p style="margin:0;">Reading the chapter you may encounter a <a href="#" onclick="event.preventDefault()">cross-reference</a> to another section, or a callout like <a href="#" onclick="event.preventDefault()">The Sensor and the Universe</a>.</p>
+    </div>
+    <div class="ds-caption">a — color: var(--link); text-decoration: underline; underline-offset: 2px</div>
+  </section>
+
+  <!-- ===================================================================
+       BUTTONS
+       =================================================================== -->
+  <section class="ds-section" id="buttons">
+    <h2>buttons</h2>
+    <p class="ds-desc">Default <code>.copy</code> is the neutral button used on per-unit pages. <code>.copy.primary</code> is the dark-fill, phosphor-green-text primary action — used once on the index page for "Copy book."</p>
+
+    <div class="ds-sample">
+      <button class="copy" style="width:auto;display:inline-block;">A default button</button>
+    </div>
+    <div class="ds-caption">button.copy — system sans 14px, white fill, --button-border, padding 16px/20px</div>
+
+    <div class="ds-sample ds-actions-wrap">
+      <div class="actions">
+        <div class="action-row">
+          <button class="copy">
+            <span class="main">Just this</span>
+            <span class="hint">self-contained</span>
+          </button>
+          <button class="copy">
+            <span class="main">This + others as spines</span>
+            <span class="hint">for cross-unit work</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="ds-caption">.action-row — two buttons paired in a flex row; both flex:1 to share the width. Each button uses .copy with .main + .hint spans for the two-line label.</div>
+
+    <div class="ds-sample">
+      <div class="actions">
+        <button class="copy primary">
+          <span class="main">Copy book</span>
+          <span class="hint">ready to paste into any AI chat</span>
+        </button>
+      </div>
+    </div>
+    <div class="ds-caption">.copy.primary — inverted: dark fill (--text), phosphor green text (#8fb78f), Geist Mono, 20px/24px padding, 15px font. Page's primary CTA.</div>
+  </section>
+
+  <!-- ===================================================================
+       BADGES
+       =================================================================== -->
+  <section class="ds-section" id="badges">
+    <h2>badges</h2>
+    <p class="ds-desc">Small inline markers — caution / state indicators.</p>
+
+    <div class="ds-sample">
+      <span class="work-in-progress">WORK IN PROGRESS</span>
+    </div>
+    <div class="ds-caption">.work-in-progress — yellow pill (#ffd866), black Geist Mono 11px, padding 5px/10px</div>
+  </section>
+
+  <!-- ===================================================================
+       MEMBRANE / ACCORDION
+       =================================================================== -->
+  <section class="ds-section" id="membrane">
+    <h2>membrane</h2>
+    <p class="ds-desc">Collapsed-by-default disclosure panel — the "$" prefix on each <code>dt</code> nods at a terminal prompt, and the phosphor-green chevron is the only color accent inside.</p>
+
+    <div class="ds-sample">
+      <details class="membrane-wrap">
+        <summary class="membrane-toggle">Membrane</summary>
+        <dl class="membrane">
+          <dt>No emojis</dt>
+          <dd>Don't put them in prose, headers, file output, or anything that might be kept.</dd>
+          <dt>"Organisms," not "machines"</dt>
+          <dd>Humans in this book are organisms. The alive/not-alive distinction is structural.</dd>
+        </dl>
+      </details>
+    </div>
+    <div class="ds-caption">.membrane-toggle — dark bar (var(--text)), cream text, Geist Mono 14px. .membrane — dark panel that abuts the bar (no top margin, top corners squared) so the two shapes merge into one rounded rectangle when open.</div>
+  </section>
+
+  <!-- ===================================================================
+       SPINE LIST
+       =================================================================== -->
+  <section class="ds-section" id="spine-list-section">
+    <h2>spine list</h2>
+    <p class="ds-desc">The atlas of units on the index page — each row is a numbered link plus the italic vertebra-line preview.</p>
+
+    <div class="ds-sample">
+      <ol class="sections-list">
+        <li>
+          <span class="section-num">#0</span>
+          <a href="#" onclick="event.preventDefault()">Tailbone</a>
+          <span class="section-vertebra-line">The grandmother. The chain in a single moment.</span>
+        </li>
+        <li>
+          <span class="section-num">#1</span>
+          <a href="#" onclick="event.preventDefault()">The Sensor and the Universe</a>
+          <span class="section-vertebra-line">Sense → make meaning → tell, because we need to connect.</span>
+        </li>
+      </ol>
+    </div>
+    <div class="ds-caption">.sections-list / .section-num / .section-vertebra-line — list without bullets; each row has a muted #N prefix, a blue link to the unit, and a Georgia-italic preview line indented under it.</div>
+  </section>
+
+  <!-- ===================================================================
+       NAVIGATION
+       =================================================================== -->
+  <section class="ds-section" id="navigation">
+    <h2>navigation</h2>
+    <p class="ds-desc">Breadcrumb row at the top of per-unit pages, prev/next row at the bottom.</p>
+
+    <div class="ds-sample">
+      <div class="page-nav" style="margin-bottom:0;">
+        <a href="#" class="back-link" onclick="event.preventDefault()">← back to spine</a>
+        <span class="unit-tag">#4</span>
+      </div>
+    </div>
+    <div class="ds-caption">.page-nav — flex space-between row at the top. .back-link on the left, .unit-tag on the right, baseline-aligned.</div>
+
+    <div class="ds-sample">
+      <div class="nav" style="margin-top:0;padding-top:0;border-top:0;">
+        <a href="#" onclick="event.preventDefault()">← #3 The Body as Key</a>
+        <a href="#" onclick="event.preventDefault()">#5 The Heartbeat →</a>
+      </div>
+    </div>
+    <div class="ds-caption">.nav — flex space-between row at the bottom; prev on left, next on right. Stacks vertically on mobile.</div>
+  </section>
+
+  <!-- ===================================================================
+       LAYOUT PRIMITIVES
+       =================================================================== -->
+  <section class="ds-section" id="layout">
+    <h2>layout primitives</h2>
+    <p class="ds-desc">The two pieces that govern every page's geometry.</p>
+
+    <div class="ds-typespec">
+      <code>.wrap { max-width: 720px; padding: 48px 32px 96px; }</code>
+      <div class="ds-typespec-label">single content column. Tightens to 32px/18px/80px padding on mobile (≤640px).</div>
+    </div>
+
+    <div class="ds-typespec">
+      <code>border-top: 1px solid var(--rule)</code>
+      <div class="ds-typespec-label">the only divider treatment used — header underline, actions delimiter, ds-section openers.</div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       MOBILE
+       =================================================================== -->
+  <section class="ds-section" id="mobile">
+    <h2>mobile (≤640px)</h2>
+    <p class="ds-desc">A single <code>@media (max-width: 640px)</code> block in styles.css tightens padding, scales type down a touch, and lets the prev/next nav stack vertically when chapter titles would collide.</p>
+  </section>
+
+</div>
+</body>
+</html>
