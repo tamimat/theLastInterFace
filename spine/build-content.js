@@ -325,6 +325,7 @@ for (let i = 0; i < allUnits.length; i++) {
 
   const filled = template
     .replace(/\{\{page_title\}\}/g,    htmlEscape(u.tag + ' — ' + meta.title))
+    .replace(/\{\{og_title\}\}/g,      htmlEscape(meta.title + ' # ' + u.n))
     .replace(/\{\{canonical_url\}\}/g, htmlEscape(meta.baseUrl + '/section-' + u.n + '.html'))
     .replace(/\{\{tag\}\}/g,           htmlEscape(u.tag))
     .replace(/\{\{title\}\}/g,         htmlEscape(u.title))
