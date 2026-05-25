@@ -331,14 +331,31 @@ button.copy.primary.copied {
 /* Page footer — small unobtrusive links (e.g. design-system) at the very
    bottom of the index page, well below the content. */
 .page-footer {
-  margin-top: 96px;
+  margin-top: 40px;
   padding-top: 24px;
   text-align: center;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
 }
 .page-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.page-footer a:hover {
   color: var(--link);
+}
+.footer-iris {
+  margin-top: 12px;
+  opacity: 0.4;
+}
+.footer-iris a {
+  display: inline-flex;
+  align-items: center;
+}
+.footer-iris a:hover {
+  opacity: 0.8;
 }
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
