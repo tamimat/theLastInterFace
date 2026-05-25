@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile9">
+<link rel="stylesheet" href="styles.css?v=mobile10">
 </head>
 <body>
 <div class="wrap">
@@ -52,7 +52,7 @@
 </div>
 
 <script src="build.js?v=mobile2"></script>
-<script src="content.js?v=mobile9"></script>
+<script src="content.js?v=mobile10"></script>
 <script>
 (function() {
   const S = window.SPINE;
@@ -100,7 +100,7 @@
     const li = document.createElement('li');
     const num = document.createElement('span');
     num.className = 'section-num';
-    num.textContent = item.n + '.';
+    num.textContent = '#' + item.n;
     li.appendChild(num);
     const link = document.createElement('a');
     link.href = item.href;
@@ -120,9 +120,9 @@
   // bare italic epigraphs under each title (position implies the role — no
   // "Vertebra:" label). Tailbone and Atlas open straight with their spine
   // prose; their vertebras would be redundant with the spine's opening line.
-  // Heading used in markdown export — chapters get "Chapter N. Title",
-  // framing units (tailbone, atlas) just their tag.
-  const unitHeading = u => u.kind === 'chapter' ? 'Chapter ' + u.n + '. ' + u.title : u.tag;
+  // Heading used in markdown export — "#N Title" for every unit. Same shape
+  // for tailbone, chapters, and atlas (their tag is already the bare "#N").
+  const unitHeading = u => u.tag + ' ' + u.title;
 
   function buildReadMarkdown() {
     const out = [];

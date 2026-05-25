@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=mobile9">
+<link rel="stylesheet" href="styles.css?v=mobile10">
 </head>
 <body>
 <div class="wrap">
@@ -37,11 +37,11 @@
   <div class="actions">
     <div class="action-row">
       <button class="copy" id="copy-focus">
-        <span class="main" id="copy-focus-main"></span>
+        <span class="main">Just this</span>
         <span class="hint">self-contained</span>
       </button>
       <button class="copy" id="copy-with-spines">
-        <span class="main" id="copy-spines-main"></span>
+        <span class="main">This + others as spines</span>
         <span class="hint">for cross-unit work</span>
       </button>
     </div>
@@ -52,7 +52,7 @@
 </div>
 
 <script src="build.js?v=mobile2"></script>
-<script src="content.js?v=mobile9"></script>
+<script src="content.js?v=mobile10"></script>
 <script>
 (function() {
   const S = window.SPINE;
@@ -65,9 +65,11 @@
   // Single source of truth, defined in content.js so index + section share it.
   const units = S.allUnits();
   const getUnit = n => units.find(u => u.n === n) || null;
-  // For headings/citations: "Chapter N. Title" for chapters, just "Tailbone" / "Atlas"
-  // for framing units (their tag and title are the same word).
-  const unitHeading = u => u.kind === 'chapter' ? 'Chapter ' + u.n + '. ' + u.title : u.tag;
+  // Heading used wherever a unit needs to identify itself in long-form output
+  // (markdown headers, plain-text section markers). Same shape for every kind:
+  // "#N Title". The breadcrumb tag shows just unit.tag ("#N") since the h1
+  // already carries the title.
+  const unitHeading = u => u.tag + ' ' + u.title;
 
   const unit = getUnit(n);
   if (!unit) {
@@ -103,21 +105,13 @@
     skelEl.appendChild(p);
   });
 
-  // Prev/next nav — unit-agnostic now. Prev exists for n>0, next for n<18.
-  function navLabel(u) {
-    return u.kind === 'chapter' ? u.n + '. ' + u.title : u.tag;
-  }
+  // Prev/next nav — same '#N Title' label everywhere. Prev exists for n>0, next for n<18.
   const prev = n > 0 ? getUnit(n - 1) : null;
   const next = n < 18 ? getUnit(n + 1) : null;
   const navEl = document.getElementById('nav');
   navEl.innerHTML =
-      (prev ? '<a href="section.html?n=' + prev.n + '">← ' + navLabel(prev) + '</a>' : '<span></span>')
-    + (next ? '<a href="section.html?n=' + next.n + '">' + navLabel(next) + ' →</a>' : '<span></span>');
-
-  // Button labels — same shape for every unit, with the focus name interpolated.
-  document.getElementById('copy-focus-main').textContent = unit.tag + ' only';
-  document.getElementById('copy-spines-main').textContent =
-    unit.tag + ' in full + other units as spines';
+      (prev ? '<a href="section.html?n=' + prev.n + '">← ' + unitHeading(prev) + '</a>' : '<span></span>')
+    + (next ? '<a href="section.html?n=' + next.n + '">' + unitHeading(next) + ' →</a>' : '<span></span>');
 
   // Focus-only payload: ALL-CAPS labels (legacy format the previous
   // per-unit copy buttons emitted). Includes thesis + this unit only.
@@ -125,14 +119,12 @@
     const lines = [];
     lines.push('SPINE — ' + S.meta.title
       + ' — last updated ' + S.meta.lastUpdated
-      + ' — focus: ' + unit.tag);
+      + ' — focus: ' + unitHeading(unit));
     lines.push('');
     lines.push('THESIS');
     lines.push(S.thesis);
     lines.push('');
-    lines.push(unit.kind === 'chapter'
-      ? 'CHAPTER ' + unit.n + ': ' + unit.title
-      : unit.tag.toUpperCase());
+    lines.push(unitHeading(unit));
     lines.push('');
     lines.push('VERTEBRA'); lines.push(unit.vertebra); lines.push('');
     lines.push('SPINE');    lines.push(unit.spine);    lines.push('');

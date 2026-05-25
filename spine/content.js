@@ -620,10 +620,14 @@ Cross-link: the atlas closes the loop the tailbone opened. Together they are the
 // allUnits() is the canonical iteration order for everything else.
 window.SPINE.allUnits = function() {
   const S = window.SPINE;
+  // tag is the bare identifier ("#0", "#1", ..., "#18") — same scheme for every
+  // unit; the kind tells you whether it's tailbone, a chapter, or atlas if you
+  // need to branch. title carries the human-readable name (the chapter title,
+  // or "Tailbone" / "Atlas").
   return [
-    { kind: 'tailbone', n: 0, tag: 'Tailbone', title: 'Tailbone', ...S.tailbone },
-    ...S.spine.map(c => ({ kind: 'chapter', tag: 'Chapter ' + c.n, ...c })),
-    { kind: 'atlas', n: 18, tag: 'Atlas', title: 'Atlas', ...S.atlas }
+    { kind: 'tailbone', n: 0, tag: '#0', title: 'Tailbone', ...S.tailbone },
+    ...S.spine.map(c => ({ kind: 'chapter', tag: '#' + c.n, ...c })),
+    { kind: 'atlas', n: 18, tag: '#18', title: 'Atlas', ...S.atlas }
   ];
 };
 
