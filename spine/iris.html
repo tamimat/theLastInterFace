@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=3d63214e">
-<link rel="stylesheet" href="iris.css?v=3d63214e">
+<link rel="stylesheet" href="styles.css?v=79264cd4">
+<link rel="stylesheet" href="iris.css?v=79264cd4">
 </head>
 <body>
 <div class="wrap">
@@ -25,7 +25,7 @@
   </div>
 
   <div class="ds-intro-wrap">
-    <p class="ds-intro"><svg class="iris-inline-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13C6.6 5 17.4 5 21 13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg> — The visual identity the book wears — every color, type style, and component the pages put on. A biometric in the same sense the book argues for: pattern inscribed in flesh, recognizable on sight. All the page styles below come from the same <code>styles.css</code>; this catalog is just the look at what's in it.</p>
+    <p class="ds-intro"><svg class="iris-inline-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13C6.6 5 17.4 5 21 13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg> — The visual identity theLastInterface wears — every color, type style, and component the pages put on. A biometric in the same sense the book argues for: pattern inscribed in flesh, recognizable on sight. All the page styles below come from the same <code>styles.css</code>; this catalog is just the look at what's in it.</p>
   </div>
 
   <!-- ===================================================================
@@ -115,6 +115,10 @@
         <div class="ds-swatch-chip" style="background:#f0f0ea;"></div>
         <div class="ds-swatch-meta"><strong>--button-hover</strong>#f0f0ea<span class="ds-note">default button hover fill</span></div>
       </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#a8a8a0;"></div>
+        <div class="ds-swatch-meta"><strong>--button-edge</strong>#a8a8a0<span class="ds-note">3px keycap depth shadow under the button</span></div>
+      </div>
     </div>
 
     <h3 class="ds-subheading">terminal vocabulary</h3>
@@ -145,7 +149,11 @@
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#FEFF9C;"></div>
-        <div class="ds-swatch-meta"><strong>--caution-bg</strong>#FEFF9C<span class="ds-note">work-in-progress badge fill</span></div>
+        <div class="ds-swatch-meta"><strong>--caution-bg</strong>#FEFF9C<span class="ds-note">work-in-progress badge fill (same yellow in dark)</span></div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-chip" style="background:#1a1a1a;"></div>
+        <div class="ds-swatch-meta"><strong>--caution-text</strong>#1a1a1a<span class="ds-note">badge text — stays dark on yellow in both themes</span></div>
       </div>
       <div class="ds-swatch">
         <div class="ds-swatch-chip" style="background:#1f6f3a;"></div>
@@ -206,10 +214,6 @@
       <div class="ds-typespec-label">.unit-tag • Geist Mono 14px / muted — breadcrumb identifier on per-unit pages</div>
     </div>
 
-    <div class="ds-typespec">
-      <a class="last-updated" href="#" onclick="event.preventDefault()">last updated 2026-05-23</a>
-      <div class="ds-typespec-label">.meta .last-updated • Geist Mono 12px / link blue — date pinned to header on index page</div>
-    </div>
   </section>
 
   <!-- ===================================================================
@@ -235,7 +239,7 @@
     <div class="ds-sample">
       <button class="copy" style="width:auto;display:inline-block;">A default button</button>
     </div>
-    <div class="ds-caption">button.copy — system sans 14px, white fill, --button-border, padding 16px/20px. Full-width when used as a page action; the .main/.hint span pair gives a two-line label.</div>
+    <div class="ds-caption">button.copy — system sans 14px, white fill (cream in dark theme), --button-border, padding 16px/20px, 3px keycap depth via --button-edge. Presses down (translateY 3px) with the depth shadow collapsed on :active and .copied. Full-width when used as a page action; the .main/.hint span pair gives a two-line label.</div>
 
     <div class="ds-sample ds-actions-wrap">
       <div class="actions">
@@ -334,7 +338,7 @@
         </a>
       </div>
     </div>
-    <div class="ds-caption">.page-top — centered .page-close (40×40 hit area, 24px icon). Default shows the X; on hover the X collapses to a point and a circle blooms out (~0.25s). One continuous gesture.</div>
+    <div class="ds-caption">.page-close — centered (40×40 hit area, 24px icon). Default shows the X; on hover the X collapses to a point and a circle blooms out (~0.25s). One continuous gesture. Used at both ends of each chapter: .page-top above the heading and .page-bottom below the prev/next row.</div>
 
     <div class="ds-sample">
       <div class="nav" style="margin-top:0;padding-top:0;border-top:0;">
@@ -343,16 +347,6 @@
       </div>
     </div>
     <div class="ds-caption">.nav — flex space-between row at the bottom; prev on left, next on right. Stacks vertically on mobile.</div>
-
-    <div class="ds-sample">
-      <div class="page-bottom" style="margin-top:0;">
-        <a class="page-close" href="#" onclick="event.preventDefault()" aria-label="back to spine">
-          <svg class="icon-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"/></svg>
-          <svg class="icon-circle" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="ds-caption">.page-bottom — centered .page-close after the prev/next row. Same icon, same behavior — second exit point for readers who finished the chapter.</div>
   </section>
 
   <!-- ===================================================================
@@ -409,6 +403,6 @@
 
 </div>
 
-<script src="iris.js?v=3d63214e"></script>
+<script src="iris.js?v=79264cd4"></script>
 </body>
 </html>

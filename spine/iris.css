@@ -6,7 +6,7 @@
    the footer eye comes into view. */
 .iris-icon {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--space-s);
   color: var(--text);
   position: sticky;
   top: 24px;
@@ -42,11 +42,11 @@
 .ds-character {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: var(--space-m);
 }
 .ds-character-block {
   border-left: 2px solid var(--rule);
-  padding-left: 16px;
+  padding-left: var(--space-s);
 }
 .ds-character-heading {
   font-family: var(--font-mono);
@@ -95,14 +95,14 @@
   color: var(--muted);
   font-size: 14px;
   line-height: 1.55;
-  margin: 0 0 24px;
+  margin: 0 0 var(--space-m);
 }
 
 /* Section primitive — every catalog block opens with a hairline and h2. */
 .ds-section {
-  margin-top: 56px;
+  margin-top: var(--space-xl);
   border-top: 1px solid var(--rule);
-  padding-top: 24px;
+  padding-top: var(--space-m);
 }
 .ds-section > h2 {
   font-family: var(--font-mono);
@@ -116,7 +116,7 @@
   font-family: var(--font-sans);
   color: var(--muted);
   font-size: 13px;
-  margin: 0 0 20px;
+  margin: 0 0 var(--space-s);
 }
 
 /* Swatch grid for color tokens. */
@@ -155,7 +155,7 @@
 
 /* Type specimen — sample text + small caption noting family/size. */
 .ds-typespec {
-  margin: 14px 0;
+  margin: var(--space-s) 0;
 }
 .ds-typespec-label {
   font-family: var(--font-mono);
@@ -166,11 +166,19 @@
 
 /* Wrapper that frames a live component sample (a button, a list, etc.). */
 .ds-sample {
-  padding: 20px;
+  padding: var(--space-s);
   border: 1px dashed var(--rule);
   border-radius: 4px;
   margin: 8px 0 12px;
   background: var(--bg);
+  text-align: center;
+}
+/* Centering on .ds-sample is for inline-level specimens (the badge, a lone
+   button). Block-level children (membrane, spine list, nav row, actions
+   wrapper) carry real reading text — reset them to start so they read
+   naturally and don't inherit the catalog's centering. */
+.ds-sample > * {
+  text-align: initial;
 }
 .ds-sample.dark {
   background: #f0efe9;
@@ -179,7 +187,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--muted);
-  margin: 4px 0 18px;
+  margin: 4px 0 var(--space-s);
 }
 
 /* For samples that need to demo flex behaviour at smaller widths. */
@@ -194,11 +202,11 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--muted);
-  margin: 32px 0 8px;
+  margin: var(--space-m) 0 var(--space-xs);
   text-transform: lowercase;
 }
 .ds-subheading:first-of-type {
-  margin-top: 16px;
+  margin-top: var(--space-s);
 }
 
 /* Tiny code-like inline marker for class names + token names. */

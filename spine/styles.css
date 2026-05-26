@@ -13,6 +13,9 @@
   --button-bg: #ffffff;
   --button-border: #c8c8c2;
   --button-hover: #f0f0ea;
+  --button-edge: #a8a8a0;
+  --button-text: var(--text);
+  --button-muted: var(--muted);
 
   /* The dark plate used by the membrane. In light mode it equals --text;
      in dark mode it stays dark (and goes a touch deeper than --bg) so the
@@ -36,6 +39,7 @@
   --cream-muted:  #c2bfb6;  /* secondary foreground on dark (membrane body) */
   --link-hover:   #eef0fa;  /* link hover wash */
   --caution-bg:   #FEFF9C;  /* work-in-progress badge fill */
+  --caution-text: var(--text);
   --success-bg:   #e8f3ec;  /* .copy.copied flash fill */
   --success-text: #1f6f3a;  /* .copy.copied flash text + border */
 
@@ -83,11 +87,11 @@ html, body {
 header.spine-header {
   border-bottom: 1px solid var(--rule);
   padding-bottom: var(--space-s);
-  margin-bottom: 32px;
+  margin-bottom: var(--space-l);
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--space-s);
 }
 
 h1 {
@@ -191,7 +195,7 @@ a:hover { background: var(--link-hover); }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-top: 28px;
+  margin-top: var(--space-m);
   margin-bottom: 6px;
 }
 
@@ -223,8 +227,9 @@ a:hover { background: var(--link-hover); }
    ========================================================================== */
 
 .membrane-wrap {
-  margin-top: 28px;
-  margin-bottom: 6px;
+  /* No own margins — its placement is controlled by the page sections
+     above (header margin-bottom) and below (.label margin-top). Keeps the
+     component a clean primitive the catalog can render without ghost gaps. */
 }
 .membrane-toggle {
   list-style: none;
@@ -282,7 +287,7 @@ a:hover { background: var(--link-hover); }
   font-size: 14px;
   font-weight: 600;
   color: var(--cream);
-  margin-top: 18px;
+  margin-top: var(--space-s);
   margin-bottom: 4px;
 }
 .membrane dt:first-child {
@@ -317,7 +322,7 @@ a:hover { background: var(--link-hover); }
 }
 
 .sections-list li {
-  margin: 14px 0;
+  margin: var(--space-s) 0;
   padding-left: 0;
 }
 
@@ -349,7 +354,7 @@ a:hover { background: var(--link-hover); }
   border-top: 1px solid var(--rule);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-m);
 }
 
 button.copy {
@@ -357,12 +362,14 @@ button.copy {
   font-size: 14px;
   background: var(--button-bg);
   border: 1px solid var(--button-border);
-  color: var(--text);
+  color: var(--button-text);
   padding: 16px 20px;
   cursor: pointer;
   border-radius: 6px;
   width: 100%;
   text-align: center;
+  box-shadow: 0 3px 0 0 var(--button-edge);
+  transition: transform 60ms ease, box-shadow 60ms ease, background 120ms ease;
 }
 
 /* Two-line button label: bold primary line + smaller muted hint underneath. */
@@ -372,15 +379,21 @@ button.copy {
 .copy .hint {
   display: block;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--button-muted);
   font-weight: 400;
   margin-top: 3px;
 }
 button.copy:hover { background: var(--button-hover); }
+button.copy:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 0 var(--button-edge);
+}
 button.copy.copied {
   background: var(--success-bg);
   border-color: var(--success-text);
   color: var(--success-text);
+  transform: translateY(3px);
+  box-shadow: 0 0 0 0 var(--success-text);
 }
 
 /* =============================================================================
@@ -394,14 +407,13 @@ button.copy.copied {
   align-self: center;
   display: inline-block;
   background: var(--caution-bg);
-  color: var(--text);
+  color: var(--caution-text);
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.06em;
   padding: 5px 10px;
   border-radius: 3px;
-  margin-top: 14px;
 }
 /* Inherit color so the link doesn't go blue on yellow; keep underline as
    the only affordance that the "git #N" portion is clickable. */
@@ -442,7 +454,7 @@ button.copy.copied {
 .section-spine p {
   font-size: 17px;
   line-height: 1.6;
-  margin: 0 0 14px;
+  margin: 0 0 var(--space-s);
   color: var(--text);
 }
 
@@ -568,7 +580,7 @@ button.copy.copied {
 
   /* Membrane panel — tighten so it doesn't dominate on small screens. */
   .membrane-toggle {
-    padding: 10px 16px;
+    padding: 10px var(--space-s);
     font-size: 13px;
   }
   .membrane {
@@ -651,12 +663,15 @@ html.theme-dark {
   --link:          #8aa9ff;
   --link-visited:  #c4a3ff;
   --link-hover:    #1d2638;
-  --button-bg:     #1f1e18;
-  --button-border: #3a3832;
-  --button-hover:  #2a2922;
+  --button-bg:     #f5f3ec;
+  --button-border: #d8d2c3;
+  --button-hover:  #e9e5d4;
+  --button-edge:   #a8a3a0;
+  --button-text:   #1a1a1a;
+  --button-muted:  #6b6b6b;
   --green:         #4ade65;
   --dark-hover:    #1a1916;
-  --caution-bg:    #6b5e1a;
+  --caution-text:  #1a1a1a;
   --success-bg:    #1a3a26;
   --success-text:  #5fdc6b;
   --surface-inverse: #0a0907;
