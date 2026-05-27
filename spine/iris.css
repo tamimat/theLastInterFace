@@ -195,6 +195,108 @@
   max-width: 520px;
 }
 
+/* Mark tiles — favicon / iOS-bookmark previews. The eye SVG sits centered
+   on a dark plate; sizes mirror the real-world contexts (180px iOS tile,
+   32px browser favicon scaled up to 40px so the stroke reads at preview
+   resolution). Token references are commented inline because these
+   colors are picked to mock the OS rendering, not theme-aware. */
+.ds-marks {
+  display: flex;
+  gap: var(--space-m);
+  justify-content: center;
+  align-items: center;
+}
+.ds-mark {
+  background: #1a1a1a;  /* --text in light mode, the system's "near-black" */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-mark--ios {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  background: #0a0907;  /* dark-mode --surface-inverse — the deepest black */
+  color: #333333;       /* deep gray on near-black */
+}
+.ds-mark--ios svg {
+  width: 54px;
+  height: 54px;
+}
+.ds-mark--favicon-white,
+.ds-mark--favicon-green {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+}
+.ds-mark--favicon-white {
+  color: #fafaf7;       /* --bg in light mode — off-white */
+}
+.ds-mark--favicon-green {
+  color: #00AA00;       /* --green — phosphor */
+}
+.ds-mark--favicon-white svg,
+.ds-mark--favicon-green svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Chrome tab mockups — approximate the active-tab fill so the favicon can
+   be judged in its real-world context. Two rows: light Chrome on top,
+   dark Chrome below. */
+.ds-tabs {
+  display: flex;
+  gap: var(--space-s);
+  justify-content: center;
+}
+.ds-tabs--dark-row {
+  margin-top: var(--space-s);
+  padding: var(--space-s);
+  background: #202124;
+  border-radius: 6px;
+}
+.ds-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px 8px 0 0;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  width: 220px;
+}
+.ds-tab--light {
+  background: #ffffff;
+  color: #202124;
+  border: 1px solid #dadce0;
+  border-bottom: none;
+}
+.ds-tab--dark {
+  background: #35363a;
+  color: #e8eaed;
+}
+.ds-tab .ds-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.ds-tab .ds-mark svg {
+  width: 11px;
+  height: 11px;
+}
+.ds-tab-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-tab-x {
+  opacity: 0.55;
+  font-size: 14px;
+  line-height: 1;
+}
+
 /* Subheading inside a section — used inside the colors block to label
    the swatch sub-grids ("page palette", "terminal vocabulary", "states"). */
 .ds-subheading {

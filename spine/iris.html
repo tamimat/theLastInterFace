@@ -8,11 +8,13 @@
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
 <title>iris — theLastInterface</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=79264cd4">
-<link rel="stylesheet" href="iris.css?v=79264cd4">
+<link rel="stylesheet" href="styles.css?v=034b406f">
+<link rel="stylesheet" href="iris.css?v=034b406f">
 </head>
 <body>
 <div class="wrap">
@@ -266,6 +268,47 @@
   </section>
 
   <!-- ===================================================================
+       MARKS — the iris in saved-state form: browser favicon + iOS bookmark
+       =================================================================== -->
+  <section class="ds-section" id="marks">
+    <h2>marks</h2>
+    <p class="ds-desc">The eye in its saved-state forms — what the operating system shows when you bookmark the site or pin the tab. Same biometric as the page logo, scaled down to where the OS draws it.</p>
+
+    <h3 class="ds-subheading">iOS bookmark tile</h3>
+    <div class="ds-sample">
+      <div class="ds-marks">
+        <div class="ds-mark ds-mark--ios">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13C6.6 5 17.4 5 21 13"/><path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" fill="currentColor"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="ds-caption">180×180 (iOS rounds the corners): #333 eye on #0a0907 (dark-mode --surface-inverse, the system's deepest black).</div>
+
+    <h3 class="ds-subheading">browser favicon — in a chrome tab</h3>
+    <div class="ds-sample">
+      <div class="ds-tabs">
+        <div class="ds-tab ds-tab--light">
+          <div class="ds-mark ds-mark--favicon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13C6.6 5 17.4 5 21 13"/><path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" fill="currentColor"/></svg>
+          </div>
+          <span class="ds-tab-title">theLastInterface</span>
+          <span class="ds-tab-x">×</span>
+        </div>
+      </div>
+      <div class="ds-tabs ds-tabs--dark-row">
+        <div class="ds-tab ds-tab--dark">
+          <div class="ds-mark ds-mark--favicon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13C6.6 5 17.4 5 21 13"/><path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" fill="currentColor"/></svg>
+          </div>
+          <span class="ds-tab-title">theLastInterface</span>
+          <span class="ds-tab-x">×</span>
+        </div>
+      </div>
+    </div>
+    <div class="ds-caption">phosphor-green eye on near-black, shown in a light Chrome tab (top) and a dark Chrome tab (bottom). The tab mocks approximate Chrome's active-tab fill and the 16×16 favicon slot.</div>
+  </section>
+
+  <!-- ===================================================================
        STATES
        =================================================================== -->
   <section class="ds-section" id="states">
@@ -403,6 +446,6 @@
 
 </div>
 
-<script src="iris.js?v=79264cd4"></script>
+<script src="iris.js?v=034b406f"></script>
 </body>
 </html>
