@@ -16,11 +16,14 @@ window.SPINE_RENDER = (function() {
   const unitHeading = u => u.tag + ' ' + u.title;
 
   // Clipboard write with a brief "Copied" flash on the button.
-  // innerHTML save/restore so multi-line labels (.main + .hint) survive.
+  // Replace with the same two-line .main/.hint structure so the button's
+  // height doesn't jump from two lines to one during the flash. The hint
+  // shifts from an instruction ("paste into any AI chat") to a confirmation
+  // ("now chat with any AI") — same imperative shape, after-action voice.
   function copyText(text, btn, timeout) {
     navigator.clipboard.writeText(text).then(() => {
       const original = btn.innerHTML;
-      btn.textContent = 'Copied';
+      btn.innerHTML = '<span class="main">Copied</span><span class="hint">now chat with any AI</span>';
       btn.classList.add('copied');
       setTimeout(() => {
         btn.innerHTML = original;

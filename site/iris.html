@@ -13,8 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=00e914af">
-<link rel="stylesheet" href="iris.css?v=00e914af">
+<link rel="stylesheet" href="styles.css?v=2ace62a7">
+<link rel="stylesheet" href="iris.css?v=2ace62a7">
 </head>
 <body>
 <div class="wrap">
@@ -313,12 +313,12 @@
        =================================================================== -->
   <section class="ds-section" id="states">
     <h2>states</h2>
-    <p class="ds-desc">One state is felt by the reader: <code>.copy.copied</code> — a soft green wash that confirms a clipboard write. The label also swaps "Copy" → "Copied" for ~1.5s; the wash and the word change carry the feedback together.</p>
+    <p class="ds-desc">One state is felt by the reader: <code>.copy.copied</code> — a soft green wash that confirms a clipboard write. The label swaps from its instructional pair ("Copy whole body" / "paste into any AI chat") to its confirmation pair ("Copied" / "now chat with any AI") for ~1.5s; the wash and the two-line swap carry the feedback together without the button's height jumping.</p>
 
     <div class="ds-sample">
-      <button class="copy copied" style="width:auto;display:inline-block;">Copied</button>
+      <button class="copy copied" style="width:auto;display:inline-block;"><span class="main">Copied</span><span class="hint">now chat with any AI</span></button>
     </div>
-    <div class="ds-caption">.copy.copied — #e8f3ec fill (inline), --success-text (#1f6f3a) border + text. Default-button flash.</div>
+    <div class="ds-caption">.copy.copied — #e8f3ec fill (inline), --success-text (#1f6f3a) border + text. Two-line label preserved (.main + .hint) so the flash doesn't collapse the button.</div>
   </section>
 
   <!-- ===================================================================
@@ -446,6 +446,6 @@
 
 </div>
 
-<script src="iris.js?v=00e914af"></script>
+<script src="iris.js?v=2ace62a7"></script>
 </body>
 </html>
