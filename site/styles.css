@@ -468,6 +468,37 @@ button.copy.copied {
 }
 
 /* =============================================================================
+   404 — "off the spine" page. Honest about its state: a quiet Geist Mono
+   code, a single line of explanation, a link back to the index. No
+   illustration, no hero, no apology. Inherits everything else from the
+   system tokens.
+   ========================================================================== */
+
+.not-found {
+  padding-top: var(--space-2xl);
+  text-align: center;
+}
+.not-found-code {
+  font-family: var(--font-mono);
+  font-size: 72px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.not-found-line {
+  margin: var(--space-m) 0 0;
+  font-size: 19px;
+  color: var(--text);
+}
+.not-found-back {
+  margin: var(--space-l) 0 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+/* =============================================================================
    FOOTER — small unobtrusive links (license, design-system) at the very
    bottom of the index page, well below the content.
    ========================================================================== */
