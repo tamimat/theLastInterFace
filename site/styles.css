@@ -498,16 +498,6 @@ button.copy.copied {
   margin-top: var(--space-m);
   margin-bottom: 0;
 }
-/* Monochrome link on the way-home — the 404 is intentionally quiet and
-   doesn't earn the system's link-blue register. The underline is the only
-   affordance. */
-.not-found-line a,
-.not-found-line a:visited {
-  color: var(--text);
-}
-.not-found-line a:hover {
-  background: none;
-}
 
 /* =============================================================================
    FOOTER — small unobtrusive links (license, design-system) at the very
