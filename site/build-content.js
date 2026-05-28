@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// build-content.js — regenerate spine/content.js from the markdown manuscript.
+// build-content.js — regenerate site/content.js from the markdown manuscript.
 //
 // The /spine/*.md files are the canonical source. content.js is generated.
-// Run: `node spine/build-content.js`. See spine/README.md.
+// Run: `node site/build-content.js`. See site/README.md for the pipeline.
 //
 // Zero deps. fs and path only.
 
@@ -10,8 +10,9 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const SPINE = __dirname;
-const REPO_ROOT = path.dirname(SPINE);
+const SITE = __dirname;
+const REPO_ROOT = path.dirname(SITE);
+const SPINE = path.join(REPO_ROOT, 'spine');
 const TEMPLATE_PATH = path.join(REPO_ROOT, 'tools', 'section-template.html');
 
 // --- helpers ---------------------------------------------------------------
@@ -151,8 +152,8 @@ const HEAD = `// content.js — the canonical content of the book's spine.
 // Both index.html and section.html read from here.
 //
 // THIS FILE IS GENERATED. Edit the markdown manuscript in /spine/*.md and run:
-//   node spine/build-content.js
-// See spine/README.md.
+//   node site/build-content.js
+// See site/README.md.
 //
 // Top-level shape:
 //   meta     — version, status, title.
@@ -200,9 +201,9 @@ window.SPINE.allUnits = function() {
 };
 
 // Source-link helpers. The "last updated" date in each page links to the current
-// spine/content.js on main. The commit/tag history on GitHub is the version record.
+// site/content.js on main. The commit/tag history on GitHub is the version record.
 window.SPINE.sourceUrl = function() {
-  return window.SPINE.meta.repoUrl + '/tree/main/spine/content.js';
+  return window.SPINE.meta.repoUrl + '/tree/main/site/content.js';
 };
 window.SPINE.lastUpdatedLinkHtml = function() {
   return '<a class="last-updated" href="' + window.SPINE.sourceUrl()
@@ -210,7 +211,7 @@ window.SPINE.lastUpdatedLinkHtml = function() {
        + window.SPINE.meta.lastUpdated + '</a>';
 };
 
-// On GitHub Pages, the deploy workflow writes spine/build.js with the commit
+// On GitHub Pages, the deploy workflow writes site/build.js with the commit
 // count and sha — the page shows \`git #N\` linking to that commit. Locally,
 // build.js is absent (gitignored) and we fall back to the last-updated date.
 window.SPINE.buildLabelHtml = function() {
@@ -274,8 +275,8 @@ out.push('  }');
 out.push('};');
 
 const final = HEAD + '\n' + out.join('\n') + '\n' + TAIL;
-fs.writeFileSync(path.join(SPINE, 'content.js'), final);
-console.log('wrote spine/content.js (' + final.length + ' bytes; ' + unitFiles.length + ' unit files, ' + membrane.length + ' membrane rules)');
+fs.writeFileSync(path.join(SITE, 'content.js'), final);
+console.log('wrote site/content.js (' + final.length + ' bytes; ' + unitFiles.length + ' unit files, ' + membrane.length + ' membrane rules)');
 
 // --- emit pre-rendered section-N.html for every unit ----------------------
 // Each page is a self-contained artifact — vertebra/spine/skeleton baked into
@@ -336,12 +337,12 @@ for (let i = 0; i < allUnits.length; i++) {
     .replace(/\{\{next_html\}\}/g,     navLink(next, '', ' →'))
     .replace(/\{\{n\}\}/g,             String(u.n));
 
-  fs.writeFileSync(path.join(SPINE, 'section-' + u.n + '.html'), filled);
+  fs.writeFileSync(path.join(SITE, 'section-' + u.n + '.html'), filled);
 }
 console.log('wrote ' + allUnits.length + ' pre-rendered section-N.html files');
 
 // --- restamp cache-bust hash ----------------------------------------------
 // content.js just changed and new section-N.html files exist; the hash needs
-// to reflect both. Running stamp-assets here keeps a manual `node spine/build-
+// to reflect both. Running stamp-assets here keeps a manual `node site/build-
 // content.js` call fully self-contained — no second command required.
-execSync('node ' + path.join(SPINE, 'stamp-assets.js'), { stdio: 'inherit' });
+execSync('node ' + path.join(SITE, 'stamp-assets.js'), { stdio: 'inherit' });

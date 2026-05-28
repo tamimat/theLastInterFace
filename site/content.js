@@ -2,8 +2,8 @@
 // Both index.html and section.html read from here.
 //
 // THIS FILE IS GENERATED. Edit the markdown manuscript in /spine/*.md and run:
-//   node spine/build-content.js
-// See spine/README.md.
+//   node site/build-content.js
+// See site/README.md.
 //
 // Top-level shape:
 //   meta     — version, status, title.
@@ -609,9 +609,9 @@ window.SPINE.allUnits = function() {
 };
 
 // Source-link helpers. The "last updated" date in each page links to the current
-// spine/content.js on main. The commit/tag history on GitHub is the version record.
+// site/content.js on main. The commit/tag history on GitHub is the version record.
 window.SPINE.sourceUrl = function() {
-  return window.SPINE.meta.repoUrl + '/tree/main/spine/content.js';
+  return window.SPINE.meta.repoUrl + '/tree/main/site/content.js';
 };
 window.SPINE.lastUpdatedLinkHtml = function() {
   return '<a class="last-updated" href="' + window.SPINE.sourceUrl()
@@ -619,7 +619,7 @@ window.SPINE.lastUpdatedLinkHtml = function() {
        + window.SPINE.meta.lastUpdated + '</a>';
 };
 
-// On GitHub Pages, the deploy workflow writes spine/build.js with the commit
+// On GitHub Pages, the deploy workflow writes site/build.js with the commit
 // count and sha — the page shows `git #N` linking to that commit. Locally,
 // build.js is absent (gitignored) and we fall back to the last-updated date.
 window.SPINE.buildLabelHtml = function() {

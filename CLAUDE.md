@@ -1,12 +1,19 @@
 # CLAUDE.md
 
+## Repo layout (post-restructure)
+
+- `/spine/` — manuscript only. Markdown files (`00-tailbone.md` … `18-atlas.md`, `notochord.md`, `membrane.md`), `meta.json`, and `spine/README.md`. The load-bearing axis of the book.
+- `/site/` — rendering source. `index.html`, `iris.html`, `section.html`, the section-template-generated `section-N.html` files, `styles.css`, `iris.css`, `render.js`, `iris.js`, `theme-toggle.js`, `build-content.js`, `stamp-assets.js`, `content.js` (generated). What GitHub Pages uploads as the site root.
+- `/site/assets/` — web assets. `favicon.svg`, `apple-touch-icon.{svg,png}`, `og.{svg,png}`, `robots.txt`.
+- `/tools/` — build helpers. `section-template.html`, hooks, `gen-build-js.sh`, the share-archivers.
+
 ## What you handle in this repo
 
-theLastInterface is a book. You handle git, the build pipeline, repo restructure, and renderer code (`spine/index.html`, `section.html`, `styles.css`, `iris.html`, `build-content.js`, the hooks). You don't edit the manuscript markdown — that's Cowork's domain. When Tamim asks you to commit edits, they're already in the working tree.
+theLastInterface is a book. You handle git, the build pipeline, repo restructure, and renderer code (`site/index.html`, `site/section.html`, `site/styles.css`, `site/iris.html`, `site/build-content.js`, the hooks). You don't edit the manuscript markdown — that's Cowork's domain. When Tamim asks you to commit edits, they're already in the working tree.
 
 ## Build is automatic on commit
 
-A `pre-commit` hook at `tools/hooks/pre-commit` runs `node spine/build-content.js` whenever any spine source is staged, then stages the regenerated `spine/content.js`. Don't bypass it with `--no-verify` unless you have a reason — the deployed site reads from `content.js` and stale build = stale site.
+A `pre-commit` hook at `tools/hooks/pre-commit` runs `node site/build-content.js` whenever any manuscript markdown or the builder itself is staged, then stages the regenerated `site/content.js` and any restamped `site/*.html`. Don't bypass it with `--no-verify` unless you have a reason — the deployed site reads from `content.js` and stale build = stale site.
 
 In a fresh clone, confirm `git config core.hooksPath` resolves to `tools/hooks`.
 
@@ -25,4 +32,4 @@ The `prepare-commit-msg` hook prepends `[N]` automatically — don't add it your
 
 ## More
 
-`README.md` (repo root) has the project overview. `spine/README.md` documents the manuscript layout.
+`README.md` (repo root) has the project overview. `spine/README.md` documents the manuscript layout. `site/README.md` documents the rendering pipeline.

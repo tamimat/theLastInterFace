@@ -2,11 +2,11 @@
 # pre-commit — keep generated artifacts in sync with their sources.
 #
 # Two responsibilities:
-#  1. Rebuild spine/content.js when any manuscript markdown is staged.
-#  2. Re-stamp the cache-bust hash on spine/*.html when any spine asset
+#  1. Rebuild site/content.js when any manuscript markdown is staged.
+#  2. Re-stamp the cache-bust hash on site/*.html when any site asset
 #     (CSS / JS / HTML) is staged.
 #
-# The deploy workflow uploads /spine/ as-is, so stale generated files mean
+# The deploy workflow uploads /site/ as-is, so stale generated files mean
 # a stale rendered site. Both steps stage the regenerated files into the
 # same commit.
 #
@@ -19,16 +19,17 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
 # --- 1. Rebuild content.js when manuscript markdown changes --------------
+# Manuscript markdown lives under spine/. The builder lives under site/.
 
 if git diff --cached --name-only --diff-filter=ACMR \
-     | grep -E '^spine/([^/]+\.md|meta\.json|build-content\.js)$' \
+     | grep -E '^(spine/[^/]+\.md|spine/meta\.json|site/build-content\.js)$' \
      > /dev/null; then
-  echo "pre-commit: spine source staged — rebuilding content.js"
-  node spine/build-content.js
-  if ! git diff --cached --quiet -- spine/content.js \
-     || ! git diff --quiet -- spine/content.js; then
-    git add spine/content.js
-    echo "pre-commit: staged regenerated spine/content.js"
+  echo "pre-commit: manuscript or builder staged — rebuilding content.js"
+  node site/build-content.js
+  if ! git diff --cached --quiet -- site/content.js \
+     || ! git diff --quiet -- site/content.js; then
+    git add site/content.js
+    echo "pre-commit: staged regenerated site/content.js"
   fi
 fi
 
@@ -37,13 +38,13 @@ fi
 # Idempotent — no-op if the hash hasn't changed.
 
 if git diff --cached --name-only --diff-filter=ACMR \
-     | grep -E '^spine/[^/]+\.(css|js|html)$' \
+     | grep -E '^site/[^/]+\.(css|js|html)$' \
      > /dev/null; then
-  echo "pre-commit: spine asset/HTML staged — stamping cache-bust hash"
-  node spine/stamp-assets.js
-  # Stage every spine HTML the stamp (or build-content.js earlier) modified
+  echo "pre-commit: site asset/HTML staged — stamping cache-bust hash"
+  node site/stamp-assets.js
+  # Stage every site HTML the stamp (or build-content.js earlier) modified
   # in the working tree. Glob picks up section-N.html files automatically.
-  for h in spine/*.html; do
+  for h in site/*.html; do
     if [ -f "$h" ] && ! git diff --quiet -- "$h"; then
       git add "$h"
     fi
