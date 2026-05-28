@@ -468,43 +468,43 @@ button.copy.copied {
 }
 
 /* =============================================================================
-   404 — "off the spine" page. Honest about its state: a quiet Geist Mono
-   code, a single line of explanation, a link back to the index. No
-   illustration, no hero, no apology. Inherits everything else from the
-   system tokens.
+   404 — Three addresses for three possible visitors (search engine, AI
+   agent, human). The code stays in mono (system register, what just
+   happened); the three sentences read in the book's voice (Georgia),
+   each directly addressing one kind of arrival. Search engines and AI
+   agents get a flat refusal; humans get the way home.
    ========================================================================== */
 
 .not-found {
   padding-top: var(--space-2xl);
-  text-align: center;
 }
 .not-found-code {
   font-family: var(--font-mono);
   font-size: 72px;
   font-weight: 600;
   color: var(--muted);
-  margin: 0;
+  margin: 0 0 var(--space-l);
   letter-spacing: -0.02em;
   line-height: 1;
+  text-align: center;
 }
-.not-found-line {
-  margin: var(--space-m) 0 0;
-  font-size: 19px;
+.not-found-case {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0 0 var(--space-s);
+}
+.not-found-case:last-child {
+  margin-bottom: 0;
+}
+/* Monochrome link on the human's way-home — the 404 is an intentionally
+   quiet page and doesn't earn the system's link-blue register here. The
+   underline is the only affordance. */
+.not-found-case a,
+.not-found-case a:visited {
   color: var(--text);
 }
-.not-found-back {
-  margin: var(--space-l) 0 0;
-  font-family: var(--font-mono);
-  font-size: 14px;
-}
-/* Monochrome link override — the page is intentionally drained of the
-   system's one earned register (link blue) and of the visited-purple +
-   hover-wash that come with it. The underline is the only affordance. */
-.not-found-back a,
-.not-found-back a:visited {
-  color: var(--text);
-}
-.not-found-back a:hover {
+.not-found-case a:hover {
   background: none;
 }
 
