@@ -468,15 +468,15 @@ button.copy.copied {
 }
 
 /* =============================================================================
-   404 — Three addresses for three possible visitors (search engine, AI
-   agent, human). The code stays in mono (system register, what just
-   happened); the three sentences read in the book's voice (Georgia),
-   each directly addressing one kind of arrival. Search engines and AI
-   agents get a flat refusal; humans get the way home.
+   404 — The page IS a 404, not a description of one. Three beats: the code
+   (system register), a single line naming the gap in the book's vocabulary,
+   the way home. No audience addressing, no apology, no cleverness. The
+   page refuses to fill the space it admits it cannot fill.
    ========================================================================== */
 
 .not-found {
   padding-top: var(--space-2xl);
+  text-align: center;
 }
 .not-found-code {
   font-family: var(--font-mono);
@@ -486,25 +486,26 @@ button.copy.copied {
   margin: 0 0 var(--space-l);
   letter-spacing: -0.02em;
   line-height: 1;
-  text-align: center;
 }
-.not-found-case {
-  font-size: 17px;
-  line-height: 1.55;
+.not-found-line {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--text);
   margin: 0 0 var(--space-s);
 }
-.not-found-case:last-child {
+.not-found-line:last-child {
+  margin-top: var(--space-m);
   margin-bottom: 0;
 }
-/* Monochrome link on the human's way-home — the 404 is an intentionally
-   quiet page and doesn't earn the system's link-blue register here. The
-   underline is the only affordance. */
-.not-found-case a,
-.not-found-case a:visited {
+/* Monochrome link on the way-home — the 404 is intentionally quiet and
+   doesn't earn the system's link-blue register. The underline is the only
+   affordance. */
+.not-found-line a,
+.not-found-line a:visited {
   color: var(--text);
 }
-.not-found-case a:hover {
+.not-found-line a:hover {
   background: none;
 }
 
