@@ -10,13 +10,13 @@ Underneath the technical architecture is an older claim about what connection is
 
 ## How the repo is organized
 
-- **`/spine/`** — the book itself. Each chapter has a *vertebra* (one load-bearing sentence), a *spine* (the dense treatment), and a *skeleton* (supporting context). The boundary between spine and skeleton is governed by a removal test, with paragraphs free to promote or demote as the writing matures.
+- **`/spine/`** — the book itself, as manuscript. Markdown only. Each chapter has a *vertebra* (one load-bearing sentence), a *spine* (the dense treatment), and a *skeleton* (supporting context). The boundary between spine and skeleton is governed by a removal test, with paragraphs free to promote or demote as the writing matures.
+- **`/site/`** — the rendering pipeline that turns `/spine/` into a website. HTML, CSS, JS, the build scripts, the pre-rendered chapter pages, and `/site/assets/` for the favicon / apple-touch-icon / og image / robots.txt. GitHub Pages uploads `/site/` as the site root.
 - **`/chats/`** — verbatim transcripts of conversations with AI tools (claude.ai, Cowork, others) where the ideas were worked out. The paper trail behind the spine.
-- **`/artifacts/`** — standalone pieces Claude wrote inside those chats: manifestos, pitches, notes, openings. Historical snapshots, not iterations toward a single canonical version. Divergent versions are kept on purpose as a record of how thinking branched.
 - **`/visuals/`** — diagrams and images. Filenames preserve the original tool-stamped timestamps as provenance.
 - **`/_review/`** — the triage inbox for the weekly Cowork archiver. The classifier writes here only when it can't decide whether a session is book-content or operational; review and either promote to `/chats/` or delete. Empty is the steady state. The skip-log of operational sessions lives at `/_review/skip-log.md`.
 - **`/archive/`** — superseded iterations and one-time audits. Out of the active flow, but not deleted.
-- **`/tools/`** — small local scripts and skill copies the project depends on.
+- **`/tools/`** — small local scripts and skill copies the project depends on: section template, git hooks, share archivers.
 
 ## How chats find their way here
 
