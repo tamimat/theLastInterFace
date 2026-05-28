@@ -1,3 +1,15 @@
+<!--
+  Source for spine/apple-touch-icon.png (iOS bookmark / home-screen icon).
+  Regenerate the PNG with Chrome headless — NOT qlmanage, which wraps the
+  SVG in a Quick Look "document preview" (white frame + page-curl corner).
+
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+      --headless --hide-scrollbars --disable-gpu \
+      --window-size=180,180 \
+      --default-background-color=00000000 \
+      --screenshot=spine/apple-touch-icon.png \
+      "file://$PWD/spine/apple-touch-icon.svg"
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
   <rect width="180" height="180" fill="#0a0907"/>
   <g transform="translate(30 30) scale(5)" fill="none" stroke="#333333" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
