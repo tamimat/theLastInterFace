@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- The 404 is always dark, regardless of the user's site-wide theme.
+     theme-dark is hardcoded here; no theme-detection script. -->
+<html lang="en" class="theme-dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15140f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0a0b08">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
@@ -12,30 +13,19 @@
 <meta name="description" content="A book (in progress) on what humans are — and what the coming era's interface must do to honor them.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="styles.css?v=0f91f699">
+<link rel="stylesheet" href="styles.css?v=00e914af">
 </head>
-<body>
-<div class="wrap">
-
-  <header class="spine-header">
-    <h1>theLastInterface</h1>
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark theme" aria-pressed="false">
-      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z"/><path d="M22 12L23 12"/><path d="M12 2V1"/><path d="M12 23V22"/><path d="M20 20L19 19"/><path d="M20 4L19 5"/><path d="M4 20L5 19"/><path d="M4 4L5 5"/><path d="M1 12L2 12"/></svg>
-      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5066C3 16.7497 7.25034 21 12.4934 21C16.2209 21 19.4466 18.8518 21 15.7259C12.4934 15.7259 8.27411 11.5066 8.27411 3C5.14821 4.55344 3 7.77915 3 11.5066Z"/></svg>
-    </button>
-  </header>
+<body class="page-404">
+<div class="wrap wrap--no-top">
 
   <main class="not-found">
-    <p class="not-found-code">404</p>
-    <p class="not-found-line">not in the book.</p>
-    <p class="not-found-line"><a href="index.html">back to the spine →</a></p>
+    <img class="not-found-bones" src="assets/404-bones.webp" alt="An apex at the top of the frame; far below, a stapes — the smallest bone in the human body.">
+    <p class="not-found-line not-found-line--stack"><span>404</span><span aria-hidden="true">⋮</span><span>this</span><span>page</span><span>is</span><span>not</span><span>yet</span><span>part</span><span>of</span><span>the</span><span>spine</span><span aria-hidden="true">⋮</span><span>not</span><span>a</span><span>vertebra</span><span aria-hidden="true">⋮</span><span>not</span><span>an</span><span>apex</span><span aria-hidden="true">⋮</span><span>not</span><span>even</span><span>a</span><span>stapes</span><span aria-hidden="true">⋮</span><span>nothing</span><span>here</span><span>bears</span><span>weight</span><span aria-hidden="true">⋮</span><a href="index.html"><span>back</span><span>to</span><span>the</span><span>spine</span><span aria-hidden="true">↳</span></a></p>
   </main>
 
 </div>
-<script src="theme-toggle.js?v=0f91f699"></script>
 </body>
 </html>

@@ -79,6 +79,11 @@ html, body {
   margin: 0 auto;
   padding: var(--space-xl) 32px var(--space-2xl);
 }
+/* Drain the top padding — used on the 404 so the bone image sits flush
+   against the top of the viewport, no warm-grey strip above it. */
+.wrap--no-top {
+  padding-top: 0;
+}
 
 /* =============================================================================
    HEADER & NAVIGATION
@@ -468,36 +473,50 @@ button.copy.copied {
 }
 
 /* =============================================================================
-   404 — The page IS a 404, not a description of one. Three beats: the code
-   (system register), a single line naming the gap in the book's vocabulary,
-   the way home. No audience addressing, no apology, no cleverness. The
-   page refuses to fill the space it admits it cannot fill.
+   404 — Always-dark page. The bones image (apex + stapes on #0c0b09) sits
+   flush at the top; under it, a word-by-word stack of language naming the
+   absence; under that, a small footer eye links back to the index. No
+   title, no theme toggle on this page — the 404 is always shown in dark.
    ========================================================================== */
 
 .not-found {
-  padding-top: var(--space-2xl);
   text-align: center;
 }
-.not-found-code {
-  font-family: var(--font-mono);
-  font-size: 72px;
-  font-weight: 600;
-  color: var(--muted);
-  margin: 0 0 var(--space-l);
-  letter-spacing: -0.02em;
-  line-height: 1;
+.not-found-bones {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto var(--space-l);
 }
 .not-found-line {
   font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.6;
   color: var(--text);
-  margin: 0 0 var(--space-s);
+  margin: 0;
 }
-.not-found-line:last-child {
-  margin-top: var(--space-m);
-  margin-bottom: 0;
+/* Word-by-word vertical stack — each token a vertebra of language directly
+   under the bones above. Vertical-ellipsis (⋮) tokens are structural
+   pauses between phrases. The way-home link is the final segment of the
+   same stack: an <a> wrapping its own spans, monochrome to keep the stack
+   visually continuous; the ↳ at the bottom is the only directional cue. */
+.not-found-line--stack span {
+  display: block;
 }
+.not-found-line--stack a {
+  display: block;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.not-found-line--stack a:visited { color: inherit; }
+.not-found-line--stack a:hover { background: none; }
+
+/* Page background matches the image background exactly (#0a0b08, sampled
+   from the WebP) so the image edge dissolves into the page. Forced
+   regardless of the user's site-wide theme. */
+body.page-404 { background: #0a0b08; }
 
 /* =============================================================================
    FOOTER — small unobtrusive links (license, design-system) at the very
@@ -523,6 +542,7 @@ button.copy.copied {
 .footer-iris {
   margin-top: var(--space-l);
   opacity: 0.4;
+  text-align: center;
 }
 /* Eye swap: same hover-preview pattern as the theme toggle and chapter
    page-close. Open eye and closed eye sit absolute-stacked in an 18×18
