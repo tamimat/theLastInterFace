@@ -497,6 +497,16 @@ button.copy.copied {
   font-family: var(--font-mono);
   font-size: 14px;
 }
+/* Monochrome link override — the page is intentionally drained of the
+   system's one earned register (link blue) and of the visited-purple +
+   hover-wash that come with it. The underline is the only affordance. */
+.not-found-back a,
+.not-found-back a:visited {
+  color: var(--text);
+}
+.not-found-back a:hover {
+  background: none;
+}
 
 /* =============================================================================
    FOOTER — small unobtrusive links (license, design-system) at the very
